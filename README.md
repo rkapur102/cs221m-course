@@ -12,7 +12,7 @@ Course website: [https://cs221m.github.io/](https://cs221m.github.io/)
 
 | Week        | Date          | Lecture                                    | Notebook |
 | ----------- | ------------- | ------------------------------------------ | -------- |
-| **Week 1**  | Mon. March 30 | Introduction — Ekdeep Singh Lubana & Atticus Geiger | — |
+| **Week 1**  | Mon. March 30 | Introduction                               | — |
 |             | Wed. April 1  | Review of language models                  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/02_review_of_lms.ipynb) |
 | **Week 2**  | Mon. April 6  | Behavioral analysis and input attribution  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/03_behavioral_analysis.ipynb) |
 |             | Wed. April 8  | Probes for decoding activations            | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/04_probes.ipynb) |
