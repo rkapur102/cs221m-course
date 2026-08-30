@@ -1,0 +1,7 @@
+On Monday we laid out the three levels at which a model can be explained — its **behavior**, the **algorithms** it appears to follow, and the **mechanisms** inside it that implement them. We also saw that no one level is the "true" one: which explanation you want depends on the question you are asking, and finer detail usually comes at the cost of broader prediction.
+
+The rest of the course spends most of its time at the mechanism level, and that creates an immediate problem. You cannot make a claim about the machinery of a model without knowing what the machinery is made of. So before going any further, we need to open up the architecture that nearly all of these models share and get specific about its parts.
+
+That is what this lecture does. We will look at what a language model is really doing when it produces text — predicting one token at a time, from the tokens that came before — and then take apart the **transformer** that does the predicting. The pieces to know are the **residual stream** that carries each token's vector through the network, **attention**, which moves information between tokens, and the **MLP**, which processes each token on its own. We will also get comfortable loading real open-source models and poking at their insides, since every technique later in the course assumes you can reach in and grab an activation.
+
+None of this is interpretability yet. It is the vocabulary interpretability is written in.
