@@ -1,0 +1,578 @@
+<!DOCTYPE HTML>
+<!--
+	Photon by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>CS 221M</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="icon" type="image/png" href="https://www-media.stanford.edu/assets/favicon/favicon-196x196.png">
+	<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+		<section id="header">
+			<div class="inner">
+				<h1>
+					<span><img src="images/stanford_logo.png" width=80px style="vertical-align: middle;"></span>
+					CS 221M: Mechanistic Interpretability
+				</h1>
+				<p>Stanford University, Spring 2026</p>
+				<ul class="actions special">
+					<li><a href="#one" class="button scrolly">Course details</a></li>
+				</ul>
+				<ul class="actions special">
+					<li><a href="#faq" class="button wide primary scrolly">Course FAQs</a></li>
+				</ul>
+			</div>
+		</section>
+
+		<section id="one" class="main style1">
+			<div class="container">
+				<header class="major">
+					<h2>Course description</h2>
+				</header>
+				<p>
+					What is the internal structure of modern neural networks and how can we study it? 
+					This course provides a broad and deep introduction to interpretability, the subfield of machine learning concerned with understanding precisely how models process information and why they produce the outputs they do. 
+					We will cover topics such as probing, steering, causal abstraction, and sparse autoencoders, with a particular emphasis on causal methods and large language models. 
+					The course will include guest lectures from leading interpretability labs across academia and industry.
+				</p>
+				<h3>Staff</h3>
+				<div class="team-container">
+					<div class="team-member">
+						<div class="profile-layout">
+						<img src="images/thomas_icard.png" alt="Thomas Icard" class="headshot">
+						<div>
+							<span class="member-name">Thomas Icard</span>
+							<span class="member-role"><img src="https://www-media.stanford.edu/assets/favicon/favicon-196x196.png" alt="Stanford" style="height: 1em; vertical-align: middle; margin-right: 0.2em;">Instructor</span>
+						</div>
+						</div>
+					</div>
+					<div class="team-member">
+						<div class="profile-layout">
+						<img src="images/atticus_geiger.jpg" alt="Atticus Geiger" class="headshot">
+						<div>
+							<span class="member-name">Atticus Geiger</span>
+							<span class="member-role"><img src="images/goodfire_logo.PNG" alt="Goodfire" style="height: 1em; vertical-align: middle; margin-right: 0.2em;">Instructor</span>
+						</div>
+						</div>
+					</div>
+					<div class="team-member">
+						<div class="profile-layout">
+						<img src="images/amir_zur.jpg" alt="Amir Zur" class="headshot">
+						<div>
+							<span class="member-name">Amir Zur</span>
+							<span class="member-role"><img src="https://www-media.stanford.edu/assets/favicon/favicon-196x196.png" alt="Stanford" style="height: 1em; vertical-align: middle; margin-right: 0.2em;">Instructor</span>
+						</div>
+						</div>
+					</div>
+					<div class="team-member">
+						<div class="profile-layout">
+						<img src="images/jing_huang.jpg" alt="Jing Huang" class="headshot">
+						<div>
+							<span class="member-name">Jing Huang</span>
+							<span class="member-role"><img src="https://www-media.stanford.edu/assets/favicon/favicon-196x196.png" alt="Stanford" style="height: 1em; vertical-align: middle; margin-right: 0.2em;">Instructor</span>
+						</div>
+						</div>
+					</div>
+					<div class="team-member">
+						<div class="profile-layout">
+						<img src="images/junyi_tao.jpg" alt="Junyi Tao" class="headshot">
+						<div>
+							<span class="member-name">Junyi Tao</span>
+							<span class="member-role"><img src="https://www-media.stanford.edu/assets/favicon/favicon-196x196.png" alt="Stanford" style="height: 1em; vertical-align: middle; margin-right: 0.2em;">Teaching Assistant</span>
+						</div>
+						</div>
+					</div>
+					<div class="team-member">
+						<div class="profile-layout">
+						<img src="images/taka_yamakoshi.jpg" alt="Taka Yamakoshi" class="headshot">
+						<div>
+							<span class="member-name">Taka Yamakoshi</span>
+							<span class="member-role"><img src="https://www-media.stanford.edu/assets/favicon/favicon-196x196.png" alt="Stanford" style="height: 1em; vertical-align: middle; margin-right: 0.2em;">Teaching Assistant</span>
+						</div>
+						</div>
+					</div>
+					<div class="team-member">
+						<div class="profile-layout">
+						<img src="images/siri_vatsavaya.jpg" alt="Siri Vatsavaya" class="headshot" style="object-position: center 30%;">
+						<div>
+							<span class="member-name">Siri Vatsavaya</span>
+							<span class="member-role"><img src="images/goodfire_logo.PNG" alt="Goodfire" style="height: 1em; vertical-align: middle; margin-right: 0.2em;">Course Manager</span>
+						</div>
+						</div>
+					</div>
+				</div>
+				<p></p>
+				<p>Please reach the staff at <a href="mailto:cs221m-spr2526-staff@lists.stanford.edu">cs221m-spr2526-staff@lists.stanford.edu</a>.</p>
+				<h3>Logistics</h3>
+				<ul>
+					<li><b>Time:</b> Monday, Wednesday 2:30pm-3:50pm</li>
+					<li><b>Location:</b> McMurtry Art Building, Oshman</li>
+					<li><b>Office hours:</b> By appointment - email course staff to schedule (<a href="mailto:cs221m-spr2526-staff@lists.stanford.edu">cs221m-spr2526-staff@lists.stanford.edu</a>)</li>
+				</ul>
+				<h3>Coursework</h3>
+				<p>
+					The course will have five weeks of notebook-guided lectures, four weeks of guest lectures, and one week of final presentations. 
+					Students will be graded for participation in lectures and for their final project.
+				</p>
+				<ul>
+					<li><b>Participation:</b> Students are expected to attend all lectures and engage with the course materials; please notify staff if you are unable to attend lectures in advance.</li>
+					<li><b>Final project:</b> Students will implement and present the key results from a recent paper in mechanistic interpretability.</li>
+				</ul>
+				<h3>Syllabus</h3>
+				<p>Please download the syllabus <a href="materials/syllabus.pdf" target="_blank"><b>here</b></a>.</p>.				
+			</div>
+		</section>
+		<hr class="divider-small">
+		<!-- One -->
+		<section id="two" class="main style1 special">
+			<div class="container">
+				<!-- <div class="row gtr-150"> -->
+					<header class="major">
+						<h2>Schedule</h2>
+					</header>
+					<p><em>Note: schedule is subject to change.</em></p>
+
+					<div style="overflow-x: auto;">
+						<table class="table table-bordered" style="width: 100%; table-layout: fixed;">
+							<tr style="color: white; background: #53565A;">
+								<td style="width: 15%;"><b><span style="color: white;">Date</span></b></td>
+								<td style="width: 30%;"><b><span style="color: white;">Lesson</span></b></td>
+								<td style="width: 35%;"><b><span style="color: white;">Readings</span></b></td>
+								<td style="width: 20%;"><b><span style="color: white;">Materials</span></b></td>
+							</tr>
+
+							<tr>
+								<td>
+									<b>Week 1</b>
+									<br>
+									<span style="font-size: 0.85em;">Mon. March 30</span>
+								</td>
+								<td>Introduction</td>
+								<td>
+									&mdash;
+								</td>
+								<td>&mdash;</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 1</b>
+									<br>
+									<span style="font-size: 0.85em;">Wed. April 1</span>
+								</td>
+								<td>Review of language models</td>
+								<td>
+									<div style="text-align: left;">
+										<a href="https://nlp.seas.harvard.edu/annotated-transformer/">Rush et al. 2018 annotated transformer</a>
+										<br>
+										<a href="https://transformer-circuits.pub/2021/framework/index.html">Elhage et al. 2021 circuits</a>
+									</div>
+								</td>
+								<td>
+									<a href="materials/02_slides.pdf" target="_blank">Slides</a>
+									<br>
+									<a href="https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/02_review_of_lms.ipynb" target="_blank">Interactive notebook</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 2</b>
+									<br>
+									<span style="font-size: 0.85em;">Mon. April 6</span>
+								</td>
+								<td>Behavioral analysis and input attribution</td>
+								<td>
+									<div style="text-align: left;">
+										<a href="https://aclanthology.org/P19-1334/">McCoy et al. 2019 right for the wrong reasons</a>
+										<br>
+										<a href="https://aclanthology.org/D17-1215/">Jia and Liang 2017 adversarial evaluation</a>
+										<br>
+										<a href="https://arxiv.org/abs/1703.01365">Sundararajan et al. 2017 integrated gradients</a>
+									</div>
+								</td>
+								<td>
+									<a href="materials/03_slides.pdf" target="_blank">Slides</a>
+									<br>
+									<a href="https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/03_behavioral_analysis.ipynb" target="_blank">Interactive notebook</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 2</b>
+									<br>
+									<span style="font-size: 0.85em;">Wed. April 8</span>
+								</td>
+								<td>Probes for decoding activations</td>
+								<td>
+									<div style="text-align: left;">
+										<a href="https://aclanthology.org/2024.acl-long.820/">Wendler et al. 2024 llamas think in english</a>
+										<br>
+										<a href="https://aclanthology.org/P19-1452/">Tenney et al. 2019 BERT rediscovers NLP pipeline</a>
+										<br>
+										<a href="https://arxiv.org/abs/2310.06824">Marks et al. 2023 geometry of truth</a>
+									</div>
+								</td>
+								<td>
+									<a href="materials/04_slides.pdf" target="_blank">Slides</a>
+									<br>
+									<a href="https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/04_probes.ipynb" target="_blank">Interactive notebook</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 3</b>
+									<br>
+									<span style="font-size: 0.85em;">Mon. April 13</span>
+								</td>
+								<td>Causal methods for interpretability</td>
+								<td>
+									<div style="text-align: left;">
+										<a href="https://arxiv.org/abs/2004.12265">Vig et al. 2020 analyzing gender bias</a>
+										<br>
+										<a href="https://arxiv.org/abs/2106.02997">Geiger et al. 2021</a>
+									</div>
+								</td>
+								<td>
+									<a href="materials/05_slides.pdf" target="_blank">Slides</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 3</b>
+									<br>
+									<span style="font-size: 0.85em;">Wed. April 15</span>
+								</td>
+								<td>Interventions for steering activations</td>
+								<td>
+									<div style="text-align: left;">
+										<a href="https://arxiv.org/abs/2202.05262">Meng et al. 2022 editing facts</a>
+										<br>
+										<a href="https://arxiv.org/abs/2004.07667">Ravfogel et al. 2020 nullspace projection</a>
+										<br>
+										<a href="https://arxiv.org/abs/2304.14767">Geva et al. 2023 attention knockout</a>
+									</div>
+								</td>
+								<td>
+									<a href="materials/06_slides.pdf" target="_blank">Slides</a>
+									<br>
+									<a href="https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/06_interventions.ipynb" target="_blank">Interactive notebook</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 4</b>
+									<br>
+									<span style="font-size: 0.85em;">Mon. April 20</span>
+								</td>
+								<td>Theory of causal abstraction</td>
+								<td>
+									<div style="text-align: left;">
+										<a href="https://arxiv.org/abs/1707.00819">Rubenstein et al. 2017</a>
+										<br>
+										<a href="https://arxiv.org/abs/1906.11583">Beckers et al. 2019</a>
+										<br>
+										<a href="https://arxiv.org/abs/2106.02997">Geiger et al. 2021</a>, <a href="https://arxiv.org/abs/2301.04709">2025</a>
+									</div>
+								</td>
+								<td>
+									<a href="https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/07_causal_abstraction_i.ipynb" target="_blank">Interactive notebook</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 4</b>
+									<br>
+									<span style="font-size: 0.85em;">Wed. April 22</span>
+								</td>
+								<td>Causal mediation analysis</td>
+								<td>
+									<div style="text-align: left;">
+										<a href="https://arxiv.org/abs/2004.12265">Vig et al. 2020 analyzing gender bias</a>
+										<br>
+										<a href="https://arxiv.org/abs/2211.00593">Wang et al. 2023 IOI</a>
+										<br>
+										<a href="https://arxiv.org/abs/2408.01416">Mueller et al. 2025 quest for the right mediator</a>
+									</div>
+								</td>
+								<td>
+									<a href="materials/08_slides.pdf" target="_blank">Slides</a>
+									<br>
+									<a href="https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/08_causal_mediation_analysis.ipynb" target="_blank">Interactive notebook</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 5</b>
+									<br>
+									<span style="font-size: 0.85em;">Mon. April 27</span>
+								</td>
+								<td>Designing counterfactuals</td>
+								<td>
+									<div style="text-align: left;">
+										<a href="https://arxiv.org/abs/2505.14685">Parakash et al. 2025 lookback mechanism</a>
+										<br>
+										<a href="https://arxiv.org/abs/2510.06182">Gur-Arieh et al. 2025 entity binding</a>
+									</div>
+								</td>
+								<td>
+									<a href="materials/09_slides.pdf" target="_blank">Slides</a>
+									<br>
+									<a href="https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/09_counterfactual_design.ipynb" target="_blank">Interactive notebook</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 5</b>
+									<br>
+									<span style="font-size: 0.85em;">Wed. April 29</span>
+								</td>
+								<td>Automated causal interpretability</td>
+								<td>
+									<div style="text-align: left;">
+										Davies et al. 2023
+										<br>
+										Cao et al. 2020, 2022
+										<br>
+										<a href="https://arxiv.org/abs/2303.02536">Geiger et al. 2023 DAS</a>
+										<br>
+										<a href="https://arxiv.org/abs/2305.08809">Wu et al. 2023 boundless DAS</a>
+									</div>
+								</td>
+								<td>
+									<a href="https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/10_causal_abstraction_ii.ipynb" target="_blank">Interactive notebook (i)</a>
+									<br>
+									<a href="https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/10_automated_causal_interpretability.ipynb" target="_blank">Interactive notebook (ii)</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 6</b>
+									<br>
+									<span style="font-size: 0.85em;">Mon. May 4</span>
+								</td>
+								<td>
+									Guest lecture: Chris Potts
+								</td>
+								<td>
+									&mdash;
+								</td>
+								<td>
+									<a href="https://docs.google.com/presentation/d/1BOVhpBoGD-At0hrsHruK78ZYSFU0dEKW1ztY03IwDrk/edit?usp=sharing" target="_blank">Slides</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 6</b>
+									<br>
+									<span style="font-size: 0.85em;">Wed. May 6</span>
+								</td>
+								<td>
+									Guest lecture: Jack Merullo
+								</td>
+								<td>
+									&mdash;
+								</td>
+								<td>&mdash;</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 7</b>
+									<br>
+									<span style="font-size: 0.85em;">Mon. May 11</span>
+								</td>
+								<td>
+									Guest lecture: David Bau
+								</td>
+								<td>
+									&mdash;
+								</td>
+								<td>&mdash;</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 7</b>
+									<br>
+									<span style="font-size: 0.85em;">Wed. May 13</span>
+								</td>
+								<td>
+									Mid-project check-in
+								</td>
+								<td>
+									<!-- <div style="text-align: left;">
+										<a href="https://transformer-circuits.pub/2025/attribution-graphs/methods.html">Ameisen et al. 2025 circuit tracing</a>
+										<br>
+										<a href="https://arxiv.org/abs/2511.01836">Singh et al. 2025 priors in time</a>
+										<br>
+										<a href="https://arxiv.org/abs/2506.20790">Bushnaq et al. 2025 SPD</a>
+									</div> -->
+									&mdash;
+								</td>
+								<td>
+									<a href="materials/final-project.pdf" target="_blank">Final project description</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 8</b>
+									<br>
+									<span style="font-size: 0.85em;">Mon. May 18</span>
+								</td>
+								<td>
+									Guest lecture: Neel Nanda
+								</td>
+								<td>
+									&mdash;
+								</td>
+								<td>&mdash;</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 8</b>
+									<br>
+									<span style="font-size: 0.85em;">Wed. May 20</span>
+								</td>
+								<td>
+									Guest lecture: Jing Huang
+								</td>
+								<td>
+									<div style="text-align: left;">
+										<a href="https://aclanthology.org/2024.emnlp-main.598/">Huang et al. 2024 demystifying memorization</a>
+										<br>
+										<a href="https://arxiv.org/abs/2112.12938">Zhang et al. 2021 counterfactual memorization</a>
+										<br>
+										<a href="https://arxiv.org/abs/2012.07805">Carlini et al. 2021</a>, <a href="https://arxiv.org/abs/2202.07646">2023</a>
+										<br>
+										<a href="https://arxiv.org/abs/2510.19796">Kuditipudi et al. 2025 palimpsestic inference</a>
+									</div>
+								</td>
+								<td>&mdash;</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 9</b>
+									<br>
+									<span style="font-size: 0.85em;">Mon. May 25</span>
+								</td>
+								<td>No lecture - Memorial Day</td>
+								<td>&mdash;</td>
+								<td>&mdash;</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 9</b>
+									<br>
+									<span style="font-size: 0.85em;">Wed. May 27</span>
+								</td>
+								<td>
+									Guest lecture: Jack Lindsey
+								</td>
+								<td>&mdash;</td>
+								<td>&mdash;</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 10</b>
+									<br>
+									<span style="font-size: 0.85em;">Mon. June 1</span>
+								</td>
+								<td>
+									Guest lecture: Naomi Saphra
+								</td>
+								<td>&mdash;</td>
+								<td>&mdash;</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Week 10</b>
+									<br>
+									<span style="font-size: 0.85em;">Wed. June 3</span>
+								</td>
+								<td colspan="2">Project presentations</td>
+								<td><a href="materials/final-project.pdf" target="_blank">Final project description</a></td>
+							</tr>
+						</table>
+					</div>
+
+					<!-- <div class="col-6 col-12-medium">
+						<header class="major">
+							<h2>Lorem ipsum dolor adipiscing<br />
+							amet dolor consequat</h2>
+						</header>
+						<p>Adipiscing a commodo ante nunc accumsan et interdum mi ante adipiscing. A nunc lobortis non nisl amet vis sed volutpat aclacus nascetur ac non. Lorem curae et ante amet sapien sed tempus adipiscing id accumsan.</p>
+					</div>
+					<div class="col-6 col-12-medium imp-medium">
+						<span class="image fit"><img src="images/pic01.jpg" alt="" /></span>
+					</div> -->
+				<!-- </div> -->
+			</div>
+		</section>
+		<hr class="divider-small">
+		<section id="faq" class="main style1">
+			<div class="container">
+
+				<details>
+					<summary>
+						<header class="major">
+						<h2>Frequently asked questions</h2>
+						</header>
+					</summary>
+					<b>I have submitted an application but have not heard back by Mar 27th, is it still possible to enroll in the course?</b>
+					<p>We have received more than 200 applications, far more than what we initially
+					expected. It is truly exciting to see so many students interested in
+					interpretability! We have increased the course capacity to accommodate
+					as many students as we can, however, we are constrained by resources,
+					e.g., course staff, project mentors, compute, etc. At this point, we
+					do not plan to further increase the class size. We will likely have
+					another iteration of the course next year, so if you are still around,
+					check it out next spring!</p>
+
+					<b>Can I audit this course without enrollment?</b>
+					<p>We generally do not allow auditing. However, you are more than welcome to attend the guest
+					lectures, which will be in the second half of the course. We will also
+					try to make most of the course materials public.</p>
+
+					<b>I have enrolled in the class, but cannot attend some lectures in
+					person.</b>
+					<p>We value participation. Students are expected to attend all
+					lectures and engage with the course materials. If you are unable to
+					attend a lecture due to travel or other unforeseen circumstances, you
+					must notify us by email in advance, i.e., before the lecture. Please
+					include the date of the anticipated absence and the reason for your
+					absence. We will follow up with you as necessary.</p>
+
+					<b>Will the lecture be recorded? Will the recordings be available online?</b>
+					<p>As this is the first offering of the course, lectures during the first half of the course will not be recorded. 
+					Guest lectures may be recorded and shared publicly at the discretion of the speakers.</p>
+				</details>
+			</div>
+
+		</section>
+		
+		<!-- Footer -->
+		<section id="footer">
+			<h2>Sponsors</h2>
+			<ul class="icons">
+				<li><img src="images/goodfire_name_white_background.png" alt="Goodfire" style="height: 3em; vertical-align: middle;"></li>
+			</ul>
+			<!-- <ul class="copyright">
+				<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+			</ul> -->
+		</section>
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
