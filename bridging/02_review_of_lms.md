@@ -1,7 +1,0 @@
-On Monday we asked what an explanation of a model can even be, and arrived at three levels: the model's **behavior**, the **algorithms** it appears to be running, and the **mechanisms** inside the network that carry those algorithms out. Which level you want depends on the question you came in with, and each one gives you something the others cannot.
-
-Most of this course lives down at the mechanism level, which creates a practical problem for us. To say that some part of a network performs a particular job, you need to know what the parts are in the first place, and how they fit together. So this lecture goes back to fundamentals and opens up the architecture that nearly every model we study is built on.
-
-We start with what a language model is doing when it writes: given the tokens so far, it produces a probability for every possible next token, samples one, and repeats. Then we take apart the **transformer** doing that predicting. Every token gets its own vector, and those vectors travel through the layers together in the **residual stream**. Inside a layer, **attention** moves information between tokens, and the **MLP** (multi-layer perceptron) works on each token by itself. We will also load real open-source models and inspect them directly, since every technique later in the quarter assumes you can reach into a running model and pull out an activation.
-
-Think of this lecture as groundwork. It is the vocabulary the rest of the course is written in.
