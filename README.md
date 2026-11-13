@@ -2,7 +2,7 @@
 
 Stanford University, Spring 2026
 
-Course website: [https://cs221m.github.io/](https://cs221m.github.io/)
+Course website: [https://cs221m.stanford.edu/](https://cs221m.stanford.edu/)
 
 ## Syllabus
 
@@ -18,19 +18,19 @@ Course website: [https://cs221m.github.io/](https://cs221m.github.io/)
 |             | Wed. April 8  | Probes for decoding activations            | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/04_probes.ipynb) |
 | **Week 3**  | Mon. April 13 | Causal methods for interpretability        | — |
 |             | Wed. April 15 | Interventions for steering activations     | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/06_interventions.ipynb) |
-| **Week 4**  | Mon. April 20 | Theory of causal abstraction               | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/07_causal_abstraction_i.ipynb) |
-|             | Wed. April 22 | Causal mediation analysis                  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/08_causal_mediation_analysis.ipynb) |
+| **Week 4**  | Mon. April 20 | Causal mediation analysis                  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/07_causal_mediation_analysis.ipynb) |
+|             | Wed. April 22 | Theory of causal abstraction               | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/08_causal_abstraction_i.ipynb) |
 | **Week 5**  | Mon. April 27 | Designing counterfactuals                  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/09_counterfactual_design.ipynb) |
 |             | Wed. April 29 | Automated causal interpretability          | (i) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/10_causal_abstraction_ii.ipynb) (ii) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/10_automated_causal_interpretability.ipynb) |
-| **Week 6**  | Mon. May 4    | Guest lecture — Chris Potts                | — |
-|             | Wed. May 6    | Guest lecture — Jack Merullo               | — |
-| **Week 7**  | Mon. May 11   | Guest lecture — David Bau                  | — |
+| **Week 6**  | Mon. May 4    | Guest lecture: Chris Potts                 | — |
+|             | Wed. May 6    | Guest lecture: Jack Merullo                | — |
+| **Week 7**  | Mon. May 11   | Guest lecture: David Bau                   | — |
 |             | Wed. May 13   | Mid-project check-in                       | — |
-| **Week 8**  | Mon. May 18   | Guest lecture — Neel Nanda                 | — |
-|             | Wed. May 20   | Guest lecture — Jing Huang                 | — |
+| **Week 8**  | Mon. May 18   | Guest lecture: Neel Nanda                  | — |
+|             | Wed. May 20   | Guest lecture: Jing Huang                  | — |
 | **Week 9**  | Mon. May 25   | —                                          | — |
-|             | Wed. May 27   | Guest lecture — Jack Lindsey               | — |
-| **Week 10** | Mon. June 1   | Guest lecture — Naomi Saphra               | — |
+|             | Wed. May 27   | Guest lecture: Jack Lindsey                | — |
+| **Week 10** | Mon. June 1   | Guest lecture: Naomi Saphra                | — |
 |             | Wed. June 3   | Project presentations                      | — |
 
 ## Learning goals
@@ -53,7 +53,7 @@ Course website: [https://cs221m.github.io/](https://cs221m.github.io/)
  - Introduction to constructing interventions from probes (steering vectors)
 
 #### 5. Causal methods for interpretability
- - No notebook for this lecture; see the [slides](https://cs221m.github.io/materials/05_slides.pdf)
+ - No notebook for this lecture; see the [slides](materials/05_slides.pdf)
 
 #### 6. Interventions for steering activations
  - Survey different types of interventions an their respective goals
@@ -61,14 +61,14 @@ Course website: [https://cs221m.github.io/](https://cs221m.github.io/)
  - Interchange interventions for localizing representations
  - Representation fine-tuning for controlling model behavior
 
-#### 7. Theory of causal abstraction
- - Theory of constructive abstraction
- - Example constructive abstraction in hierarchical equality task
-
-#### 8. Causal mediation analysis
+#### 7. Causal mediation analysis
  - Interchange interventions on minimal pairs for tracing information flow
  - Intervening on residual stream, individual attention heads
  - Tracing information flow in factual recall, reference resolution
+
+#### 8. Theory of causal abstraction
+ - Theory of constructive abstraction
+ - Example constructive abstraction in hierarchical equality task
 
 #### 9. Designing counterfactuals
  - Guidelines for designing counterfactuals to target specific causal variables
