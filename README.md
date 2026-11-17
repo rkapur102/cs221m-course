@@ -33,6 +33,12 @@ Course website: [https://cs221m.stanford.edu/](https://cs221m.stanford.edu/)
 | **Week 10** | Mon. June 1   | Guest lecture: Naomi Saphra                | — |
 |             | Wed. June 3   | Project presentations                      | — |
 
+## Extra notebooks
+
+| | Topic | Notebook |
+| --- | --- | --- |
+| **Extra** | Pragmatic inference and Rational Speech Acts | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rkapur102/cs221m-course/blob/main/extra_rsa_pragmatics.ipynb) |
+
 ## Learning goals
 
 #### 1. Introduction
@@ -80,3 +86,8 @@ Course website: [https://cs221m.stanford.edu/](https://cs221m.stanford.edu/)
  - Disentangling entity and relation in RAVEL
  - Theory of abstraction under translation
  - Walkthrough example of DAS on hierarchical equality
+
+#### Extra. Pragmatic inference and Rational Speech Acts
+ - The Rational Speech Act model of pragmatic inference (literal listener, pragmatic speaker, pragmatic listener)
+ - Testing whether language models behave like pragmatic listeners
+ - Interchange interventions for targeting each step of the inference separately
