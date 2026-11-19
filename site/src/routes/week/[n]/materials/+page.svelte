@@ -3,7 +3,6 @@
 	import LectureBlock from '#lib/components/LectureBlock.svelte';
 	import SiteFooter from '#lib/components/SiteFooter.svelte';
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
-	import LectureList from '#lib/components/LectureList.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -19,7 +18,6 @@
 <main>
 	<header>
 		<h1>Week {week.n}</h1>
-		<LectureList lectures={week.lectures} />
 		<p class="back"><a href="/week/{week.n}"><ArrowLeft size="1em" strokeWidth={1.75} aria-hidden="true" /> Week {week.n} lead-in</a></p>
 	</header>
 

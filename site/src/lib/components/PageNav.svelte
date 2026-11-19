@@ -99,16 +99,12 @@
 		display: flex;
 		align-items: center;
 		gap: 0.6rem;
-		height: 3.25rem;
-		padding: 0 1.1rem;
-		border-radius: 999px;
-		background: rgba(255, 255, 255, 0.92);
+		padding: 0.5rem 0.25rem;
 		color: var(--ink);
 		text-decoration: none;
 		font-family: var(--font-sub);
 		font-size: 1.1rem;
 		font-weight: 600;
-		box-shadow: 0 1px 8px rgba(26, 26, 26, 0.12);
 		letter-spacing: 0.02em;
 	}
 	.back {
@@ -127,8 +123,8 @@
 	}
 	.glyph {
 		display: block;
-		width: 30px;
-		height: 30px;
+		width: 28px;
+		height: 28px;
 		flex: none;
 	}
 	.flip {

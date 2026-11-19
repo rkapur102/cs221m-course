@@ -24,7 +24,7 @@
 	<link rel="preload" href="/fonts/Forum-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
 </svelte:head>
 
-<div class:with-nav={hasNav}>
+<div class="page" class:with-nav={hasNav}>
 	{@render children()}
 </div>
 
@@ -52,7 +52,23 @@
 	}
 
 
-	/* Pills occupy 1.25rem to 4.5rem from the bottom; the footer's own bottom padding supplies the clear space above them. */
+	/* Sticky footer: the page fills the viewport and the footer takes the leftover space above it. */
+	.page {
+		display: flex;
+		flex-direction: column;
+		min-height: 100dvh;
+		box-sizing: border-box;
+	}
+
+	.page > :global(main) {
+		margin-bottom: 5rem;
+	}
+
+	.page > :global(.site-footer) {
+		margin-top: auto;
+	}
+
+	/* Back/Next float 1.25rem from the bottom, about 2.5rem tall. This band, plus the footer's own bottom padding, keeps them clear of footer text. */
 	.with-nav {
 		padding-bottom: calc(3.5rem + env(safe-area-inset-bottom));
 	}

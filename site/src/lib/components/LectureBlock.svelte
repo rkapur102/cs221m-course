@@ -18,16 +18,16 @@
 	<div class="buttons">
 		{#each lecture.notebooks as nb}
 			<a class="btn-quiet" href={colabUrl(nb.file)} target="_blank" rel="noopener">
-				<NotebookPen size="1.1em" strokeWidth={1.75} aria-hidden="true" />
+				<NotebookPen size="1em" strokeWidth={1.75} aria-hidden="true" />
 				Open notebook{nb.label ? ` (${nb.label})` : ''} in Colab
-				<ExternalLink size="1em" strokeWidth={1.75} aria-hidden="true" />
+				<ExternalLink size="0.85em" strokeWidth={1.75} aria-hidden="true" />
 			</a>
 		{/each}
 		{#if lecture.slides}
 			<a class="btn-quiet" href={slidesUrl(lecture.num)} target="_blank" rel="noopener">
-				<Presentation size="1.1em" strokeWidth={1.75} aria-hidden="true" />
+				<Presentation size="1em" strokeWidth={1.75} aria-hidden="true" />
 				Slides (PDF)
-				<ExternalLink size="1em" strokeWidth={1.75} aria-hidden="true" />
+				<ExternalLink size="0.85em" strokeWidth={1.75} aria-hidden="true" />
 			</a>
 		{/if}
 	</div>
@@ -51,12 +51,12 @@
 
 <style>
 	.lecture {
-		padding: 2.25rem 0;
+		padding: 1.5rem 0 0.5rem;
 		border-top: 1px solid rgba(26, 26, 26, 0.1);
 	}
 
 	h2 {
-		margin: 0 0 1.1rem;
+		margin: 0 0 0.8rem;
 		font-size: 1.7rem;
 	}
 
@@ -73,7 +73,7 @@
 	}
 
 	.supplemental {
-		margin-top: 1.5rem;
+		margin-top: 1.1rem;
 		font-size: 0.95rem;
 	}
 

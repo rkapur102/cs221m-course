@@ -18,10 +18,6 @@
 			{#if viewState.current === 'enrolled'}
 				<p>Please reach the staff at <a href="mailto:{email}">{email}</a>.</p>
 			{:else}
-				<p>
-					Based on the
-					<button type="button" class="linklike" onclick={() => setView('enrolled')}>Spring 2026 course offering</button>.
-				</p>
 				<p>Questions? You can reach the Spring 2026 course staff at <a href="mailto:{email}">{email}</a>.</p>
 			{/if}
 			<p class="credit">
@@ -29,7 +25,15 @@
 				<a href="https://www.goodfire.com/research/stories-in-space"><em>Meandering on Manifolds</em></a>
 				(<a href="https://arxiv.org/abs/2605.12412">Bigelow et al., 2026</a>).
 			</p>
-			<p><a href="https://github.com/rkapur102/cs221m-course">Course materials on GitHub</a></p>
+			{#if viewState.current === 'enrolled'}
+				<p><a href="https://github.com/rkapur102/cs221m-course">Course materials on GitHub</a></p>
+			{:else}
+				<p>
+					Based on the
+					<button type="button" class="linklike" onclick={() => setView('enrolled')}>Spring 2026 course offering</button>
+					&middot; <a href="https://github.com/rkapur102/cs221m-course">Course materials on GitHub</a>
+				</p>
+			{/if}
 		</div>
 	</div>
 </footer>
@@ -37,7 +41,6 @@
 <style>
 	.site-footer {
 		border-top: 1px solid rgba(26, 26, 26, 0.1);
-		margin-top: 5rem;
 		padding: 2.5rem 1rem 3rem;
 		font-size: 0.9rem;
 		color: var(--muted);

@@ -26,7 +26,7 @@
 	{#snippet footer()}
 		<p class="cta">
 			<a class="btn-quiet" href="/week/{week.n}/materials">
-				Go to Week {week.n} materials <ArrowRight size="1em" strokeWidth={1.75} aria-hidden="true" />
+				Go to Week {week.n}: Materials <ArrowRight size="1em" strokeWidth={1.75} aria-hidden="true" />
 			</a>
 		</p>
 	{/snippet}

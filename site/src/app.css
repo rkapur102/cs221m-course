@@ -105,7 +105,7 @@ html[data-view='enrolled']:not([data-ready]) body {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.5em;
-	padding: 0.6rem 1.1rem;
+	padding: 0.4rem 0.8rem;
 	font-family: var(--font-sub);
 	font-weight: 600;
 	font-size: 0.95rem;

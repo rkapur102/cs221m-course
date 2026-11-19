@@ -1,7 +1,6 @@
 <script lang="ts">
 	import TopBar from '#lib/components/TopBar.svelte';
 	import LectureBlock from '#lib/components/LectureBlock.svelte';
-	import LectureList from '#lib/components/LectureList.svelte';
 	import SiteFooter from '#lib/components/SiteFooter.svelte';
 	import { courseStoryId, extras } from '../../lib/course';
 </script>
@@ -15,7 +14,6 @@
 <main>
 	<header>
 		<h1>Extra notebooks</h1>
-		<LectureList lectures={extras} />
 	</header>
 
 	<div class="blocks">

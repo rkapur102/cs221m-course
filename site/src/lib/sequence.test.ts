@@ -15,6 +15,7 @@ describe('sequence', () => {
 		});
 		expect(neighbors('/extras').next).toBeNull();
 		expect(neighbors('/week/3/materials')).toMatchObject({ back: { href: '/week/3' }, next: { href: '/week/4' } });
+		expect(neighbors('/week/2').next?.label).toBe('Week 2: Materials');
 		expect(neighbors('/week/3/materials/')).toMatchObject({ back: { href: '/week/3' } });
 	});
 });

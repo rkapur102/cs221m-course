@@ -9,9 +9,9 @@
 {#if tag}
 	<span class="tag-mark" title={tag === 'inside' ? 'Inside the model' : 'Outside the model'}>
 		{#if tag === 'inside'}
-			<CircleDot size="1.15em" strokeWidth={1.75} aria-hidden="true" />
+			<CircleDot size="0.8em" strokeWidth={1.75} aria-hidden="true" />
 		{:else}
-			<CircleArrowOutUpRight size="1.15em" strokeWidth={1.75} aria-hidden="true" />
+			<CircleArrowOutUpRight size="0.8em" strokeWidth={1.75} aria-hidden="true" />
 		{/if}
 		<span class="visually-hidden">{tag === 'inside' ? 'Inside the model' : 'Outside the model'}</span>
 	</span>
@@ -21,7 +21,7 @@
 	.tag-mark {
 		display: inline-flex;
 		align-items: center;
-		vertical-align: -0.12em;
+		vertical-align: -0.05em;
 		line-height: 1;
 	}
 
