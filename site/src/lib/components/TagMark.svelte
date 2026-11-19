@@ -1,19 +1,18 @@
 <script lang="ts">
 	import type { Tag } from '../course';
+	import CircleDot from '@lucide/svelte/icons/circle-dot';
+	import CircleArrowOutUpRight from '@lucide/svelte/icons/circle-arrow-out-up-right';
 
 	let { tag }: { tag: Tag } = $props();
 </script>
 
 {#if tag}
 	<span class="tag-mark" title={tag === 'inside' ? 'Inside the model' : 'Outside the model'}>
-		<svg viewBox="0 0 18 14" width="18" height="14" aria-hidden="true" focusable="false">
-			<circle class="ring" cx="7" cy="7" r="5" />
-			{#if tag === 'inside'}
-				<circle class="dot" cx="7" cy="7" r="2" />
-			{:else}
-				<circle class="dot" cx="15.2" cy="3" r="2" />
-			{/if}
-		</svg>
+		{#if tag === 'inside'}
+			<CircleDot size="1.15em" strokeWidth={1.75} aria-hidden="true" />
+		{:else}
+			<CircleArrowOutUpRight size="1.15em" strokeWidth={1.75} aria-hidden="true" />
+		{/if}
 		<span class="visually-hidden">{tag === 'inside' ? 'Inside the model' : 'Outside the model'}</span>
 	</span>
 {/if}
@@ -26,14 +25,9 @@
 		line-height: 1;
 	}
 
-	.ring {
-		fill: none;
-		stroke: var(--muted);
-		stroke-width: 1.1;
-	}
-
-	.dot {
-		fill: var(--gf-orange);
+	.tag-mark :global(svg) {
+		color: var(--gf-orange);
+		opacity: 0.9;
 	}
 
 	.visually-hidden {

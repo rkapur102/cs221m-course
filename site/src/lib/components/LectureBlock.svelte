@@ -1,5 +1,6 @@
 <script lang="ts">
 	import TagMark from './TagMark.svelte';
+	import ExternalLink from '@lucide/svelte/icons/external-link';
 	import { colabUrl, slidesUrl, type Lecture } from '../course';
 
 	let { lecture }: { lecture: Lecture } = $props();
@@ -21,7 +22,7 @@
 		<div class="notebooks">
 			{#each lecture.notebooks as nb}
 				<a class="primary" href={colabUrl(nb.file)} target="_blank" rel="noopener">
-					Open notebook{nb.label ? ` (${nb.label})` : ''} in Colab <span aria-hidden="true">&rarr;</span>
+					Open notebook{nb.label ? ` (${nb.label})` : ''} in Colab <ExternalLink size="1em" strokeWidth={1.75} aria-hidden="true" />
 				</a>
 			{/each}
 		</div>
@@ -29,7 +30,7 @@
 		{#if slidesFirst}
 			<div class="notebooks">
 				<a class="primary" href={slidesUrl(lecture.num)} target="_blank" rel="noopener">
-					Open {slidesLabel} (PDF) <span aria-hidden="true">&rarr;</span>
+					Open {slidesLabel} (PDF) <ExternalLink size="1em" strokeWidth={1.75} aria-hidden="true" />
 				</a>
 			</div>
 			<p class="none beneath">No notebook for this lecture.</p>
@@ -88,7 +89,9 @@
 	}
 
 	.primary {
-		display: inline-block;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5em;
 		padding: 0.8rem 1.4rem;
 		background: var(--cardinal);
 		color: #fff;

@@ -46,6 +46,7 @@
 	--ink: #1a1a1a;
 	--muted: #5c5c5c;
 	--bg: #ffffff;
+	--content: 60rem;
 
 	--font-title: 'Forum', Georgia, serif;
 	--font-sub: 'Nunito Sans', system-ui, sans-serif;
@@ -79,6 +80,13 @@ h3 {
 	font-weight: 400;
 	line-height: 1.15;
 	margin: 0;
+}
+
+button,
+input,
+select,
+textarea {
+	font: inherit;
 }
 
 a {

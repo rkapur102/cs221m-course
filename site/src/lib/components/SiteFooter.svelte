@@ -34,7 +34,7 @@
 	}
 
 	.inner {
-		max-width: 60rem;
+		max-width: var(--content);
 		margin: 0 auto;
 		display: flex;
 		flex-wrap: wrap;

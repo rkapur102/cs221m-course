@@ -27,11 +27,11 @@
 
 <style>
 	main {
-		padding: 5.5rem 1rem 0;
+		padding: 5.5rem 0 0;
 	}
 
 	header {
-		max-width: 44rem;
+		width: min(var(--content), 100% - 2rem);
 		margin: 0 auto;
 		text-align: center;
 	}
@@ -41,7 +41,7 @@
 	}
 
 	.blocks {
-		max-width: 44rem;
+		width: min(var(--content), 100% - 2rem);
 		margin: 2.5rem auto 0;
 	}
 </style>

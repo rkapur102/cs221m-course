@@ -91,17 +91,17 @@
 
 <style>
 	main {
-		padding: 5.5rem 1rem 0;
+		padding: 5.5rem 0 0;
 	}
 
 	header {
-		max-width: 44rem;
+		width: min(var(--content), 100% - 2rem);
 		margin: 0 auto;
 		text-align: center;
 	}
 
 	.stage {
-		width: min(100%, 44rem);
+		width: min(var(--content), 100% - 2rem);
 		aspect-ratio: 4 / 3;
 		margin: 1.5rem auto 2rem;
 	}

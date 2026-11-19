@@ -37,7 +37,7 @@
 	}
 
 	.links {
-		max-width: 44rem;
+		width: min(var(--content), 100% - 2rem);
 		margin: 3rem auto 0;
 		padding-top: 1.5rem;
 		border-top: 1px solid rgba(26, 26, 26, 0.1);

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import ChevronDown from '@lucide/svelte/icons/chevron-down';
 	import Trajectory from '../trajectory/Trajectory.svelte';
 	import { easeInOutCubic, prefersReducedMotion } from '../trajectory/animate';
 	import { pathGradients } from '../trajectory/palette';
@@ -134,9 +135,7 @@
 		{:else}
 			<a class="cue" class:fade={started} href="#about">
 				Course details
-				<svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true">
-					<path d="M1 1.5 6 6.5 11 1.5" />
-				</svg>
+				<ChevronDown size="1.4em" strokeWidth={1.75} aria-hidden="true" />
 			</a>
 		{/if}
 	</div>
@@ -278,12 +277,8 @@
 		color: var(--cardinal);
 	}
 
-	.cue svg {
-		fill: none;
-		stroke: var(--gf-orange);
-		stroke-width: 1.4;
-		stroke-linecap: round;
-		stroke-linejoin: round;
+	.cue :global(svg) {
+		color: var(--gf-orange);
 	}
 
 	.cue.fade {

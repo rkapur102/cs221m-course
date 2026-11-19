@@ -44,8 +44,8 @@
 <style>
 	.logo {
 		display: block;
-		width: 2.75rem;
-		height: 2.75rem;
+		width: 4rem;
+		height: 4rem;
 		flex: none;
 	}
 </style>

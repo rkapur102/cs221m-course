@@ -3,6 +3,7 @@
 	import StaffGrid from '#lib/components/StaffGrid.svelte';
 	import Schedule from '#lib/components/Schedule.svelte';
 	import SiteFooter from '#lib/components/SiteFooter.svelte';
+	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 
 	/** Fade a section up the first time it scrolls into view (skipped under reduced motion). */
 	function reveal(node: HTMLElement) {
@@ -51,11 +52,11 @@
 		<StaffGrid />
 	</section>
 
-	<section id="schedule" class="section wide" use:reveal>
+	<section id="schedule" class="section" use:reveal>
 		<h2>Schedule</h2>
 		<Schedule />
 		<p class="logistics">
-			<a href="/logistics">Logistics and FAQ <span aria-hidden="true">&rarr;</span></a>
+			<a href="/logistics">Logistics and FAQ <ArrowRight class="icon" aria-hidden="true" size="1em" strokeWidth={1.75} /></a>
 		</p>
 	</section>
 </main>
@@ -63,22 +64,14 @@
 <SiteFooter />
 
 <style>
-	main {
-		padding: 0 1rem;
-	}
-
 	.section {
-		max-width: 44rem;
+		width: min(var(--content), 100% - 2rem);
 		margin: 0 auto;
 		padding-top: clamp(3.5rem, 9vh, 6rem);
 		scroll-margin-top: 1rem;
 		transition:
 			opacity 700ms ease,
 			transform 700ms ease;
-	}
-
-	.section.wide {
-		max-width: 56rem;
 	}
 
 	.section:global(.pending) {
@@ -89,15 +82,6 @@
 	h2 {
 		font-size: clamp(1.9rem, 4vw, 2.4rem);
 		margin-bottom: 1.5rem;
-	}
-
-	h2::before {
-		content: '';
-		display: block;
-		width: 2rem;
-		height: 2px;
-		background: var(--gf-orange);
-		margin-bottom: 1rem;
 	}
 
 	.lede {
@@ -114,6 +98,9 @@
 
 	.logistics a {
 		text-decoration: none;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35em;
 	}
 
 	.logistics a:hover {

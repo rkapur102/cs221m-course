@@ -1,5 +1,6 @@
 <script lang="ts">
 	import LeadIn from '#lib/components/LeadIn.svelte';
+	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -15,7 +16,7 @@
 	{#snippet header()}
 		<h1>Week {week.n}</h1>
 		<p class="lectures">{subtitle}</p>
-		<p class="materials"><a href="/week/{week.n}/materials">Go to materials <span aria-hidden="true">&rarr;</span></a></p>
+		<p class="materials"><a href="/week/{week.n}/materials">Go to materials <ArrowRight size="1em" strokeWidth={1.75} aria-hidden="true" /></a></p>
 	{/snippet}
 </LeadIn>
 
@@ -41,6 +42,9 @@
 
 	.materials a {
 		text-decoration: none;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35em;
 	}
 
 	.materials a:hover {

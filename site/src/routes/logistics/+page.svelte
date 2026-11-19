@@ -85,9 +85,9 @@
 
 <style>
 	main {
-		max-width: 44rem;
+		width: min(var(--content), 100% - 2rem);
 		margin: 0 auto;
-		padding: 5.5rem 1rem 0;
+		padding: 5.5rem 0 0;
 		line-height: 1.65;
 	}
 

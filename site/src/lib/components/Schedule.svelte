@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { extras, guestRows, weeks, type ScheduleRow, type Tag } from '../course';
 	import TagMark from './TagMark.svelte';
+	import ArrowRight from '@lucide/svelte/icons/arrow-right';
+	import ExternalLink from '@lucide/svelte/icons/external-link';
 
 	const guestWeeks = $derived.by(() => {
 		const byWeek = new Map<number, ScheduleRow[]>();
@@ -42,7 +44,7 @@
 							</li>
 						{/each}
 					</ul>
-					<span class="arrow" aria-hidden="true">&rarr;</span>
+					<span class="arrow" aria-hidden="true"><ArrowRight size="1.1em" strokeWidth={1.75} /></span>
 				</a>
 			</li>
 		{/each}
@@ -58,13 +60,13 @@
 								<span class="title">
 									<span class="name">{row.title}</span>
 									{#if row.link}
-										<a class="aside" href={row.link.url} target="_blank" rel="noopener">{row.link.label}</a>
+										<a class="aside" href={row.link.url} target="_blank" rel="noopener">{row.link.label} <ExternalLink class="ext" size="0.9em" strokeWidth={1.75} aria-hidden="true" /></a>
 									{/if}
 								</span>
 								{#if row.readings}
 									<ul class="readings">
 										{#each row.readings as r (r.url)}
-											<li><a href={r.url} target="_blank" rel="noopener"><strong>{r.authors}</strong> ({r.year}), <em>{r.title}</em>.</a></li>
+											<li><a href={r.url} target="_blank" rel="noopener"><strong>{r.authors}</strong> ({r.year}), <em>{r.title}</em>. <ExternalLink class="ext" size="0.95em" strokeWidth={1.75} aria-hidden="true" /></a></li>
 										{/each}
 									</ul>
 								{/if}
@@ -87,7 +89,7 @@
 						</li>
 					{/each}
 				</ul>
-				<span class="arrow" aria-hidden="true">&rarr;</span>
+				<span class="arrow" aria-hidden="true"><ArrowRight size="1.1em" strokeWidth={1.75} /></span>
 			</a>
 		</li>
 	</ol>
@@ -234,7 +236,14 @@
 		text-decoration-color: currentColor;
 	}
 
+	.readings :global(.ext),
+	.aside :global(.ext) {
+		vertical-align: -0.1em;
+		opacity: 0.7;
+	}
+
 	.arrow {
+		display: inline-flex;
 		align-self: center;
 		justify-self: end;
 		color: var(--gf-orange);

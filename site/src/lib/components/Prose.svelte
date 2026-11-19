@@ -8,7 +8,7 @@
 
 <style>
 	.prose {
-		max-width: 70ch;
+		width: min(var(--content), 100% - 2rem);
 		margin: 0 auto;
 		font-size: 1.05rem;
 		line-height: 1.8;
