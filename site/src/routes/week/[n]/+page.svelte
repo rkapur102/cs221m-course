@@ -60,7 +60,7 @@
 		<Trajectory
 			storyIds={[week.storyId]}
 			{draw}
-			gradients={[pathGradients[(week.n - 1) % pathGradients.length]]}
+			gradients={[pathGradients[0]]}
 			idle={done}
 		/>
 	</div>
