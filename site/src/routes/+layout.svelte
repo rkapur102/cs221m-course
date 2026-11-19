@@ -4,8 +4,13 @@
 	import { page } from '$app/state';
 	import { neighbors } from '../lib/sequence';
 	import PageNav from '../lib/components/PageNav.svelte';
+	import ViewToggle from '../lib/components/ViewToggle.svelte';
+	import { loadView } from '../lib/view.svelte.ts';
+	import { onMount } from 'svelte';
 
 	let { children }: LayoutProps = $props();
+
+	onMount(loadView);
 
 	const nav = $derived(neighbors(page.url.pathname));
 	const hasNav = $derived(Boolean(nav.back || nav.next));
@@ -18,6 +23,8 @@
 <div class:with-nav={hasNav}>
 	{@render children()}
 </div>
+
+<ViewToggle />
 
 {#if hasNav}
 	<PageNav />

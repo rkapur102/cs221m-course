@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { weeks, colabUrl, slidesUrl, guestRows, extras } from './course';
+import { weeks, colabUrl, slidesUrl, guestRows, extras, scheduleFor, lectureLabel } from './course';
 
 describe('course', () => {
 	it('groups lectures by week', () => {
@@ -23,5 +23,23 @@ describe('course', () => {
 		expect(guestRows).toHaveLength(10);
 		expect(guestRows.find((r) => r.title.includes('Jing Huang'))?.readings).toHaveLength(5);
 		expect(guestRows.map((r) => r.week)).toEqual([6, 6, 7, 7, 8, 8, 9, 9, 10, 10]);
+	});
+	it('self-paced schedule has no dates, guests or final project links', () => {
+		const s = scheduleFor('self');
+		expect(s.showDates).toBe(false);
+		expect(s.guestRows).toEqual([]);
+	});
+	it('enrolled schedule has every guest row and no final project links', () => {
+		const s = scheduleFor('enrolled');
+		expect(s.showDates).toBe(true);
+		expect(s.guestRows).toHaveLength(10);
+		expect(s.guestRows.some((r) => r.title === 'Guest lecture: Neel Nanda')).toBe(true);
+		expect(s.guestRows.some((r) => r.link?.label === 'Final project description')).toBe(false);
+		expect(s.guestRows.find((r) => r.title.includes('Chris Potts'))?.link?.label).toBe('Slides');
+	});
+	it('lecture labels carry dates only when enrolled', () => {
+		const lec = weeks[0].lectures[0];
+		expect(lectureLabel(lec, 'self')).toBe('Introduction');
+		expect(lectureLabel(lec, 'enrolled')).toBe('Introduction (Mon. March 30)');
 	});
 });

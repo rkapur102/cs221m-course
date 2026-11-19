@@ -1,11 +1,13 @@
 <script lang="ts">
 	import LeadIn from '#lib/components/LeadIn.svelte';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
+	import { lectureLabel } from '../../../lib/course';
+	import { viewState } from '../../../lib/view.svelte.ts';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
 	const week = $derived(data.week);
-	const subtitle = $derived(week.lectures.map((l) => l.title).join(' · '));
+	const subtitle = $derived(week.lectures.map((l) => lectureLabel(l, viewState.current)).join(' · '));
 </script>
 
 <svelte:head>

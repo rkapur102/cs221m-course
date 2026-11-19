@@ -1,12 +1,15 @@
 <script lang="ts">
-	import { extras, guestRows, weeks, type ScheduleRow, type Tag } from '../course';
+	import { extras, scheduleFor, weeks, type ScheduleRow, type Tag } from '../course';
+	import { viewState } from '../view.svelte.ts';
 	import TagMark from './TagMark.svelte';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import ExternalLink from '@lucide/svelte/icons/external-link';
 
+	const shown = $derived(scheduleFor(viewState.current));
+
 	const guestWeeks = $derived.by(() => {
 		const byWeek = new Map<number, ScheduleRow[]>();
-		for (const row of guestRows) byWeek.set(row.week, [...(byWeek.get(row.week) ?? []), row]);
+		for (const row of shown.guestRows) byWeek.set(row.week, [...(byWeek.get(row.week) ?? []), row]);
 		return [...byWeek.entries()].map(([n, rows]) => ({ n, rows }));
 	});
 
@@ -28,7 +31,7 @@
 		<span class="key"><span aria-hidden="true"><TagMark tag="outside" /></span> outside the model</span>
 	</p>
 
-	<ol class="weeks">
+	<ol class="weeks" class:dated={shown.showDates}>
 		{#each weeks as week (week.n)}
 			<li>
 				<a class="row linked" href="/week/{week.n}">
@@ -36,7 +39,7 @@
 					<ul class="items">
 						{#each week.lectures as lec (lec.num)}
 							<li>
-								<span class="date">{lec.date}</span>
+								{#if shown.showDates}<span class="date">{lec.date}</span>{/if}
 								<span class="title">
 									<span class="num">Lecture {lec.num}</span>
 									{@render titled(lec.title, lec.tag)}
@@ -56,7 +59,7 @@
 					<ul class="items">
 						{#each week.rows as row (row.date)}
 							<li>
-								<span class="date">{row.date}</span>
+								{#if shown.showDates}<span class="date">{row.date}</span>{/if}
 								<span class="title">
 									<span class="name">{row.title}</span>
 									{#if row.link}
@@ -163,12 +166,16 @@
 
 	.items li {
 		display: grid;
-		grid-template-columns: 7.5rem 1fr;
+		grid-template-columns: 1fr;
 		gap: 0 1rem;
 		align-items: baseline;
 	}
 
-	.extra .items li {
+	.dated .items li {
+		grid-template-columns: 7.5rem 1fr;
+	}
+
+	.dated .extra .items li {
 		grid-template-columns: 1fr;
 	}
 
@@ -278,7 +285,7 @@
 			grid-row: 2;
 		}
 
-		.items li {
+		.dated .items li {
 			grid-template-columns: 1fr;
 		}
 

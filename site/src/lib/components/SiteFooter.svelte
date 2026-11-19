@@ -1,6 +1,8 @@
 <script lang="ts">
 	import goodfire from '../../../../images/goodfire_name.svg';
 
+	import { setView, viewState } from '../view.svelte.ts';
+
 	const email = 'cs221m-spr2526-staff@lists.stanford.edu';
 </script>
 
@@ -13,7 +15,15 @@
 			</a>
 		</div>
 		<div class="text">
-			<p>Please reach the staff at <a href="mailto:{email}">{email}</a>.</p>
+			{#if viewState.current === 'enrolled'}
+				<p>Please reach the staff at <a href="mailto:{email}">{email}</a>.</p>
+			{:else}
+				<p>
+					Based on the
+					<button type="button" class="linklike" onclick={() => setView('enrolled')}>Spring 2026 course offering</button>.
+				</p>
+				<p>Questions? You can reach the Spring 2026 course staff at <a href="mailto:{email}">{email}</a>.</p>
+			{/if}
 			<p class="credit">
 				Trajectory visuals adapted from Goodfire's
 				<a href="https://www.goodfire.com/research/stories-in-space"><em>Meandering on Manifolds</em></a>
@@ -77,6 +87,27 @@
 		text-decoration-color: rgba(140, 21, 21, 0.35);
 		text-underline-offset: 0.15em;
 		overflow-wrap: anywhere;
+	}
+
+	.linklike {
+		padding: 0;
+		border: 0;
+		background: none;
+		font: inherit;
+		color: var(--cardinal);
+		text-decoration: underline;
+		text-decoration-color: rgba(140, 21, 21, 0.35);
+		text-underline-offset: 0.15em;
+		cursor: pointer;
+	}
+
+	.linklike:hover {
+		text-decoration-color: currentColor;
+	}
+
+	.linklike:focus-visible {
+		outline: 2px solid var(--gf-orange);
+		outline-offset: 2px;
 	}
 
 	a:hover {

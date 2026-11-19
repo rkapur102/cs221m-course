@@ -3,6 +3,7 @@
 	import StaffGrid from '#lib/components/StaffGrid.svelte';
 	import Schedule from '#lib/components/Schedule.svelte';
 	import SiteFooter from '#lib/components/SiteFooter.svelte';
+	import { viewState } from '../lib/view.svelte.ts';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 
 	/** Fade a section up the first time it scrolls into view (skipped under reduced motion). */
@@ -42,8 +43,10 @@
 			concerned with understanding precisely how models process information and why they produce
 			the outputs they do. We will cover topics such as probing, steering, causal abstraction, and
 			sparse autoencoders, with a particular emphasis on causal methods and large language models.
-			The course will include guest lectures from leading interpretability labs across academia and
-			industry.
+			{#if viewState.current === 'enrolled'}
+				The course will include guest lectures from leading interpretability labs across academia
+				and industry.
+			{/if}
 		</p>
 	</section>
 
@@ -55,9 +58,11 @@
 	<section id="schedule" class="section" use:reveal>
 		<h2>Schedule</h2>
 		<Schedule />
-		<p class="logistics">
-			<a href="/logistics">Logistics and FAQ <ArrowRight class="icon" aria-hidden="true" size="1em" strokeWidth={1.75} /></a>
-		</p>
+		{#if viewState.current === 'enrolled'}
+			<p class="logistics">
+				<a href="/logistics">Logistics and FAQ <ArrowRight class="icon" aria-hidden="true" size="1em" strokeWidth={1.75} /></a>
+			</p>
+		{/if}
 	</section>
 </main>
 

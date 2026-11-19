@@ -5,6 +5,7 @@
 	import { easeInOutCubic, prefersReducedMotion } from '../trajectory/animate';
 	import { pathGradients } from '../trajectory/palette';
 	import { homeStoryIds } from '../course';
+	import { viewState } from '../view.svelte.ts';
 	import { IntroController, introSeen } from '../intro.svelte.ts';
 	import stanfordLogo from '../../../../images/stanford_logo.png';
 	import goodfireLogo from '../../../../images/goodfire_logo.PNG';
@@ -104,7 +105,7 @@
 			<img src={goodfireLogo} alt="Goodfire" width="31" height="40" class="gf" />
 		</div>
 		<h1 id="course-title">CS 221M: Mechanistic Interpretability</h1>
-		<p class="sub">Stanford University, Spring 2026</p>
+		<p class="sub">Stanford University{viewState.current === 'enrolled' ? ', Spring 2026' : ''}</p>
 	</header>
 
 	<div class="plots" class:single aria-hidden="true">

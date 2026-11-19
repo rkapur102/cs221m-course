@@ -3,11 +3,13 @@
 	import LectureBlock from '#lib/components/LectureBlock.svelte';
 	import SiteFooter from '#lib/components/SiteFooter.svelte';
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
+	import { lectureLabel } from '../../../../lib/course';
+	import { viewState } from '../../../../lib/view.svelte.ts';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
 	const week = $derived(data.week);
-	const subtitle = $derived(week.lectures.map((l) => l.title).join(' · '));
+	const subtitle = $derived(week.lectures.map((l) => lectureLabel(l, viewState.current)).join(' · '));
 </script>
 
 <svelte:head>

@@ -2,6 +2,7 @@
 	import TopBar from '#lib/components/TopBar.svelte';
 	import SiteFooter from '#lib/components/SiteFooter.svelte';
 	import { homeStoryIds } from '../../lib/course';
+	import { setView, viewState } from '../../lib/view.svelte.ts';
 
 	const email = 'cs221m-spr2526-staff@lists.stanford.edu';
 </script>
@@ -13,6 +14,13 @@
 <TopBar storyId={homeStoryIds[0]} />
 
 <main>
+	{#if viewState.current === 'self'}
+		<p class="note">
+			This page is for students enrolled in the Stanford course.
+			<button type="button" class="linklike" onclick={() => setView('enrolled')}>Switch to the enrolled view</button>
+		</p>
+	{/if}
+
 	<h1>Logistics</h1>
 	<p class="term">Spring 2026</p>
 
@@ -95,6 +103,38 @@
 		font-size: clamp(2.6rem, 7vw, 4rem);
 		text-align: center;
 		margin-bottom: 0.25rem;
+	}
+
+	.note {
+		margin: 0 0 1.5rem;
+		padding: 0.6rem 0.9rem;
+		border-left: 2px solid var(--gf-orange);
+		background: rgba(196, 101, 45, 0.06);
+		font-family: var(--font-sub);
+		font-size: 0.9rem;
+		color: var(--muted);
+	}
+
+	.linklike {
+		padding: 0;
+		border: 0;
+		background: none;
+		font: inherit;
+		font-weight: 600;
+		color: var(--cardinal);
+		text-decoration: underline;
+		text-decoration-color: rgba(140, 21, 21, 0.35);
+		text-underline-offset: 0.15em;
+		cursor: pointer;
+	}
+
+	.linklike:hover {
+		text-decoration-color: currentColor;
+	}
+
+	.linklike:focus-visible {
+		outline: 2px solid var(--gf-orange);
+		outline-offset: 2px;
 	}
 
 	.term {

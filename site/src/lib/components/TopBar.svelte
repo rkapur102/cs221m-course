@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import TrajectoryLogo from './TrajectoryLogo.svelte';
+	import { viewState } from '../view.svelte.ts';
 
 	let { storyId }: { storyId: string } = $props();
 </script>
@@ -9,7 +10,9 @@
 	<TrajectoryLogo {storyId} />
 	<div class="links">
 		<a href="/#schedule">Schedule</a>
-		<a href="/logistics" aria-current={page.url.pathname === '/logistics' ? 'page' : undefined}>Logistics</a>
+		{#if viewState.current === 'enrolled'}
+			<a href="/logistics" aria-current={page.url.pathname === '/logistics' ? 'page' : undefined}>Logistics</a>
+		{/if}
 	</div>
 </nav>
 
