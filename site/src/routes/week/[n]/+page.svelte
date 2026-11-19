@@ -1,24 +1,34 @@
 <script lang="ts">
 	import LeadIn from '#lib/components/LeadIn.svelte';
+	import LectureList from '#lib/components/LectureList.svelte';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
-	import { lectureLabel } from '../../../lib/course';
-	import { viewState } from '../../../lib/view.svelte.ts';
+	import { progressFor } from '../../../lib/course';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
 	const week = $derived(data.week);
-	const subtitle = $derived(week.lectures.map((l) => lectureLabel(l, viewState.current)).join(' · '));
 </script>
 
 <svelte:head>
 	<title>Week {week.n} | CS 221M</title>
 </svelte:head>
 
-<LeadIn storyId={week.storyId} html={data.html}>
+<LeadIn
+	storyId={week.storyId}
+	html={data.html}
+	progress={progressFor(week.n)}
+	markerLabel="Week {week.n} of 5"
+>
 	{#snippet header()}
 		<h1>Week {week.n}</h1>
-		<p class="lectures">{subtitle}</p>
-		<p class="materials"><a href="/week/{week.n}/materials">Go to materials <ArrowRight size="1em" strokeWidth={1.75} aria-hidden="true" /></a></p>
+		<LectureList lectures={week.lectures} />
+	{/snippet}
+	{#snippet footer()}
+		<p class="cta">
+			<a class="btn-quiet" href="/week/{week.n}/materials">
+				Go to Week {week.n} materials <ArrowRight size="1em" strokeWidth={1.75} aria-hidden="true" />
+			</a>
+		</p>
 	{/snippet}
 </LeadIn>
 
@@ -27,30 +37,9 @@
 		font-size: clamp(2.6rem, 7vw, 4rem);
 	}
 
-	.lectures {
-		margin: 0.75rem 0 0;
-		font-family: var(--font-sub);
-		font-size: 1.1rem;
-		line-height: 1.5;
-		color: var(--muted);
-	}
-
-	.materials {
-		margin: 0.9rem 0 0;
-		font-family: var(--font-sub);
-		font-size: 0.95rem;
-		font-weight: 600;
-	}
-
-	.materials a {
-		text-decoration: none;
-		display: inline-flex;
-		align-items: center;
-		gap: 0.35em;
-	}
-
-	.materials a:hover {
-		text-decoration: underline;
-		text-underline-offset: 0.2em;
+	.cta {
+		width: min(var(--content), 100% - 2rem);
+		margin: 2.5rem auto 0;
+		text-align: center;
 	}
 </style>

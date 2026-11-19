@@ -269,6 +269,14 @@ export const extras: Lecture[] = [
 
 export const closing = { bridging: '05_out_of_week_5.md', storyId: '748017' };
 
+/** The one path every lead-in and the closing page trace, so progress reads as a single journey. */
+export const courseStoryId = '748017';
+
+/** How far along the course path a page sits: week n of 5 stops at n/6, the closing page reaches the end. */
+export function progressFor(page: number | 'closing'): number {
+	return page === 'closing' ? 1 : page / (weeks.length + 1);
+}
+
 export const homeStoryIds: [string, string, string] = ['2109652', '539105', '1596061'];
 
 /** What the homepage schedule shows in each view. Final project links never appear. */
@@ -278,9 +286,4 @@ export function scheduleFor(view: View): { showDates: boolean; guestRows: Schedu
 		row.link?.label === 'Final project description' ? { ...row, link: undefined } : row
 	);
 	return { showDates: true, guestRows: guestRowsShown };
-}
-
-/** A lecture title for headers, with its date only in the enrolled view. */
-export function lectureLabel(lec: Lecture, view: View): string {
-	return view === 'enrolled' ? `${lec.title} (${lec.date})` : lec.title;
 }

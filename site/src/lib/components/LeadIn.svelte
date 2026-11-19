@@ -4,6 +4,7 @@
 	import Trajectory from '#lib/trajectory/Trajectory.svelte';
 	import { animate } from '../trajectory/animate';
 	import { pathGradients } from '../trajectory/palette';
+	import { courseStoryId } from '../course';
 	import TopBar from './TopBar.svelte';
 	import Prose from './Prose.svelte';
 	import SiteFooter from './SiteFooter.svelte';
@@ -12,8 +13,22 @@
 		storyId,
 		html,
 		header,
-		after
-	}: { storyId: string; html: string; header: Snippet; after?: Snippet } = $props();
+		footer,
+		progress,
+		markerLabel,
+		markerColor
+	}: {
+		/** Story for the top-bar logo. */
+		storyId: string;
+		html: string;
+		header: Snippet;
+		/** Rendered after the essay, e.g. a call to action. */
+		footer?: Snippet;
+		/** How much of the course path to draw, 0..1. */
+		progress: number;
+		markerLabel: string;
+		markerColor?: string;
+	} = $props();
 
 	const DRAW_MS = 2000;
 	let draw = $state(0);
@@ -29,6 +44,7 @@
 	// Restart the draw-in whenever the story changes.
 	$effect(() => {
 		void storyId;
+		void progress;
 		draw = 0;
 		done = false;
 		const c = new AbortController();
@@ -78,12 +94,19 @@
 	</header>
 
 	<div class="stage">
-		<Trajectory storyIds={[storyId]} {draw} gradients={[pathGradients[0]]} idle={done} />
+		<Trajectory
+			storyIds={[courseStoryId]}
+			draw={draw * progress}
+			gradients={[pathGradients[0]]}
+			idle={done}
+			ghost
+			marker={{ label: markerLabel, color: markerColor }}
+		/>
 	</div>
 
 	<div class="essay" class:shown={done} class:instant>
 		<Prose {html} />
-		{@render after?.()}
+		{@render footer?.()}
 	</div>
 </main>
 
@@ -102,7 +125,8 @@
 
 	.stage {
 		width: min(var(--content), 100% - 2rem);
-		aspect-ratio: 4 / 3;
+		aspect-ratio: 16 / 9;
+		max-height: min(70vh, 34rem);
 		margin: 1.5rem auto 2rem;
 	}
 

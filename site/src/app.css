@@ -97,3 +97,34 @@ a {
 html[data-view='enrolled']:not([data-ready]) body {
 	visibility: hidden;
 }
+
+/* Quiet outlined button, used for calls to action that should not shout. */
+.btn-quiet {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5em;
+	padding: 0.6rem 1.1rem;
+	font-family: var(--font-sub);
+	font-weight: 600;
+	font-size: 0.95rem;
+	line-height: 1.3;
+	color: var(--ink);
+	background: rgba(255, 255, 255, 0.85);
+	border: 1px solid rgba(26, 26, 26, 0.25);
+	border-radius: 0.5rem;
+	text-decoration: none;
+	cursor: pointer;
+	transition:
+		border-color 150ms ease,
+		color 150ms ease;
+}
+
+.btn-quiet:hover {
+	color: var(--cardinal);
+	border-color: var(--cardinal);
+}
+
+.btn-quiet:focus-visible {
+	outline: 2px solid var(--cardinal);
+	outline-offset: 2px;
+}

@@ -3,13 +3,11 @@
 	import LectureBlock from '#lib/components/LectureBlock.svelte';
 	import SiteFooter from '#lib/components/SiteFooter.svelte';
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
-	import { lectureLabel } from '../../../../lib/course';
-	import { viewState } from '../../../../lib/view.svelte.ts';
+	import LectureList from '#lib/components/LectureList.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
 	const week = $derived(data.week);
-	const subtitle = $derived(week.lectures.map((l) => lectureLabel(l, viewState.current)).join(' · '));
 </script>
 
 <svelte:head>
@@ -21,7 +19,7 @@
 <main>
 	<header>
 		<h1>Week {week.n}</h1>
-		<p class="lectures">{subtitle}</p>
+		<LectureList lectures={week.lectures} />
 		<p class="back"><a href="/week/{week.n}"><ArrowLeft size="1em" strokeWidth={1.75} aria-hidden="true" /> Week {week.n} lead-in</a></p>
 	</header>
 
@@ -47,14 +45,6 @@
 
 	h1 {
 		font-size: clamp(2.6rem, 7vw, 4rem);
-	}
-
-	.lectures {
-		margin: 0.75rem 0 0;
-		font-family: var(--font-sub);
-		font-size: 1.1rem;
-		line-height: 1.5;
-		color: var(--muted);
 	}
 
 	.back {

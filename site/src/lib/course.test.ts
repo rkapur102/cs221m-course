@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { weeks, colabUrl, slidesUrl, guestRows, extras, scheduleFor, lectureLabel } from './course';
+import { weeks, colabUrl, slidesUrl, guestRows, extras, scheduleFor, progressFor, courseStoryId } from './course';
 
 describe('course', () => {
 	it('groups lectures by week', () => {
@@ -37,9 +37,11 @@ describe('course', () => {
 		expect(s.guestRows.some((r) => r.link?.label === 'Final project description')).toBe(false);
 		expect(s.guestRows.find((r) => r.title.includes('Chris Potts'))?.link?.label).toBe('Slides');
 	});
-	it('lecture labels carry dates only when enrolled', () => {
-		const lec = weeks[0].lectures[0];
-		expect(lectureLabel(lec, 'self')).toBe('Introduction');
-		expect(lectureLabel(lec, 'enrolled')).toBe('Introduction (Mon. March 30)');
+	it('progress along the course path', () => {
+		expect(progressFor(1)).toBeCloseTo(1 / 6);
+		expect(progressFor(3)).toBeCloseTo(0.5);
+		expect(progressFor(5)).toBeCloseTo(5 / 6);
+		expect(progressFor('closing')).toBe(1);
+		expect(courseStoryId).toBe('748017');
 	});
 });

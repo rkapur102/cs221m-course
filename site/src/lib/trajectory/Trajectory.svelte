@@ -17,6 +17,10 @@
 		yaw?: number;
 		/** Tilt offset added to the base camera pitch, in radians (clamped to +/-0.6 in total). */
 		pitch?: number;
+		/** Show the undrawn remainder of each path as a faint thin line. */
+		ghost?: boolean;
+		/** Marks the tip of the drawn path with a halo dot and a label, instead of the End marker. */
+		marker?: { label: string; color?: string };
 		showCloud?: boolean;
 		showLabels?: boolean;
 		gradients?: string[][];
@@ -35,6 +39,8 @@
 		lineScale = 1,
 		yaw = 0,
 		pitch = 0,
+		ghost = false,
+		marker,
 		showCloud = true,
 		showLabels = true,
 		gradients = pathGradients,
@@ -185,6 +191,19 @@
 			return out;
 		});
 
+		// Faint full path, for context on what is still to come.
+		if (ghost) {
+			ctx.strokeStyle = 'rgba(26, 26, 26, 0.12)';
+			ctx.lineWidth = Math.max(1, line * 0.5);
+			for (const pts of stories) {
+				const q = pts.map(proj);
+				ctx.beginPath();
+				ctx.moveTo(q[0].x, q[0].y);
+				for (const p of q.slice(1)) ctx.lineTo(p.x, p.y);
+				ctx.stroke();
+			}
+		}
+
 		// 3. Light halo under every path.
 		if (showCloud) {
 			ctx.strokeStyle = 'rgba(255, 255, 255, 0.92)';
@@ -246,16 +265,48 @@
 				ctx.fillText(label, tx, p.y);
 			}
 		};
+		// Progress marker: soft halo, solid dot, and a label that flips or slides to stay inside the canvas.
+		const tip = (p: { x: number; y: number }, mk: { label: string; color?: string }) => {
+			const fill = mk.color ?? '#8c1515';
+			const r = Math.max(3.5, line * 1.5);
+			ctx.beginPath();
+			ctx.arc(p.x, p.y, r * 2.6, 0, Math.PI * 2);
+			ctx.fillStyle = fill;
+			ctx.globalAlpha = 0.2;
+			ctx.fill();
+			ctx.globalAlpha = 1;
+			ctx.beginPath();
+			ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+			ctx.fill();
+			ctx.strokeStyle = '#ffffff';
+			ctx.lineWidth = 1.5;
+			ctx.stroke();
+			if (!showLabels) return;
+			const labelFont = Math.max(11, font);
+			ctx.font = `600 ${labelFont}px "Nunito Sans", system-ui, sans-serif`;
+			const tw = ctx.measureText(mk.label).width;
+			const gap = r * 2.6 + 4;
+			const edge = 4;
+			let tx = p.x + gap;
+			if (tx + tw > w - edge) tx = p.x - gap - tw;
+			tx = Math.min(w - edge - tw, Math.max(edge, tx));
+			ctx.lineWidth = 3.5;
+			ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+			ctx.strokeText(mk.label, tx, p.y);
+			ctx.fillStyle = '#1a1a1a';
+			ctx.fillText(mk.label, tx, p.y);
+		};
 		visible.forEach((q, s) => {
 			if (q.length === 0) return;
 			mark(q[0], '#1a1a1a', 'Start');
-			if (ts[s] >= 1) mark(q[q.length - 1], '#8c1515', 'End');
+			if (marker) tip(q[q.length - 1], marker);
+			else if (ts[s] >= 1) mark(q[q.length - 1], '#8c1515', 'End');
 		});
 	}
 
 	// Redraw whenever an input changes.
 	$effect(() => {
-		void [draw, draws, lineScale, yaw, pitch, idleYaw, showCloud, showLabels, cloudColors, colors, frame, size.w, size.h];
+		void [draw, draws, lineScale, yaw, pitch, idleYaw, showCloud, showLabels, ghost, marker, cloudColors, colors, frame, size.w, size.h];
 		render();
 	});
 
