@@ -3,6 +3,7 @@
 	import { project } from './projection';
 	import { cloudColors as defaultCloudColors, gradientAt, pathGradients } from './palette';
 	import { prefersReducedMotion } from './animate';
+	import { simplifyPath } from './simplify';
 
 	interface Props {
 		storyIds: string[];
@@ -19,6 +20,8 @@
 		gradients?: string[][];
 		/** Rotate very slowly while visible. */
 		idle?: boolean;
+		/** Keep only Start, End and every Nth point of each path (for small renderings). */
+		simplify?: number;
 		cloudColors?: Record<Emotion, string>;
 		class?: string;
 	}
@@ -33,6 +36,7 @@
 		showLabels = true,
 		gradients = pathGradients,
 		idle = false,
+		simplify = 0,
 		cloudColors = defaultCloudColors,
 		class: className = ''
 	}: Props = $props();
@@ -57,7 +61,7 @@
 	let size = $state({ w: 0, h: 0 });
 	let idleYaw = $state(0);
 
-	const stories = $derived(storyIds.map((id) => getStory(id).points.map(stretch)));
+	const stories = $derived(storyIds.map((id) => simplifyPath(getStory(id).points, simplify).map(stretch)));
 
 	/** Center and radius of what is drawn, so the view stays framed while it turns. */
 	const frame = $derived.by(() => {

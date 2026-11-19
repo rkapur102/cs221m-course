@@ -1,0 +1,51 @@
+<script lang="ts">
+	import { onDestroy } from 'svelte';
+	import { goto } from '$app/navigation';
+	import Trajectory from '../trajectory/Trajectory.svelte';
+	import { animate, prefersReducedMotion } from '../trajectory/animate';
+	import { pathGradients } from '../trajectory/palette';
+
+	let { storyId }: { storyId: string } = $props();
+
+	const SPIN_MS = 450;
+	let yaw = $state(0);
+	let spinning = false;
+	const ctrl = new AbortController();
+
+	onDestroy(() => ctrl.abort());
+
+	async function onclick(e: MouseEvent) {
+		if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+		e.preventDefault();
+		if (spinning) return;
+		if (prefersReducedMotion()) {
+			await goto('/');
+			return;
+		}
+		spinning = true;
+		await animate(SPIN_MS, (t) => (yaw = t * Math.PI * 2), { signal: ctrl.signal });
+		if (ctrl.signal.aborted) return;
+		await goto('/');
+	}
+</script>
+
+<a class="logo" href="/" aria-label="CS 221M home" {onclick}>
+	<Trajectory
+		storyIds={[storyId]}
+		{yaw}
+		simplify={3}
+		showCloud={false}
+		showLabels={false}
+		gradients={[pathGradients[0]]}
+		lineScale={1.1}
+	/>
+</a>
+
+<style>
+	.logo {
+		display: block;
+		width: 2.75rem;
+		height: 2.75rem;
+		flex: none;
+	}
+</style>

@@ -3,6 +3,7 @@
 	import Trajectory from '#lib/trajectory/Trajectory.svelte';
 	import { animate } from '../../../lib/trajectory/animate';
 	import { pathGradients } from '../../../lib/trajectory/palette';
+	import TopBar from '#lib/components/TopBar.svelte';
 	import Prose from '#lib/components/Prose.svelte';
 	import SiteFooter from '#lib/components/SiteFooter.svelte';
 	import type { PageProps } from './$types';
@@ -47,6 +48,8 @@
 <svelte:head>
 	<title>Week {week.n} | CS 221M</title>
 </svelte:head>
+
+<TopBar storyId={week.storyId} />
 
 <main>
 	<header>
