@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, type Snippet } from 'svelte';
+	import { afterNavigate } from '$app/navigation';
 	import Trajectory from '#lib/trajectory/Trajectory.svelte';
 	import { animate } from '../trajectory/animate';
 	import { pathGradients } from '../trajectory/palette';
@@ -18,6 +19,8 @@
 	let draw = $state(0);
 	let done = $state(false);
 	let controller: AbortController | undefined;
+	let returning = false;
+	let instant = $state(false);
 
 	function skip() {
 		controller?.abort();
@@ -30,10 +33,22 @@
 		done = false;
 		const c = new AbortController();
 		controller = c;
+		// Arriving mid-page (scroll restored) or via Back/Forward: show the essay at once.
+		if (returning || (typeof window !== 'undefined' && window.scrollY > 0)) c.abort();
+		instant = returning || window.scrollY > 0;
+		returning = false;
 		animate(DRAW_MS, (t) => (draw = t), { signal: c.signal }).then(() => {
 			if (controller === c) done = true;
 		});
 		return () => c.abort();
+	});
+
+	afterNavigate(({ type }) => {
+		if (type === 'popstate') {
+			returning = true;
+			instant = true;
+			skip();
+		}
 	});
 
 	onMount(() => {
@@ -41,8 +56,17 @@
 			if (e.metaKey || e.ctrlKey || e.altKey) return;
 			skip();
 		};
+		const onAny = () => skip();
 		window.addEventListener('keydown', onKey);
-		return () => window.removeEventListener('keydown', onKey);
+		window.addEventListener('wheel', onAny, { passive: true });
+		window.addEventListener('touchstart', onAny, { passive: true });
+		window.addEventListener('pointerdown', onAny, { passive: true });
+		return () => {
+			window.removeEventListener('keydown', onKey);
+			window.removeEventListener('wheel', onAny);
+			window.removeEventListener('touchstart', onAny);
+			window.removeEventListener('pointerdown', onAny);
+		};
 	});
 </script>
 
@@ -53,12 +77,11 @@
 		{@render header()}
 	</header>
 
-	<!-- svelte-ignore a11y_no_static_element_interactions -->
-	<div class="stage" onpointerdown={skip}>
+	<div class="stage">
 		<Trajectory storyIds={[storyId]} {draw} gradients={[pathGradients[0]]} idle={done} />
 	</div>
 
-	<div class="essay" class:shown={done}>
+	<div class="essay" class:shown={done} class:instant>
 		<Prose {html} />
 		{@render after?.()}
 	</div>
@@ -95,6 +118,10 @@
 		transition:
 			opacity 800ms ease,
 			transform 800ms ease;
+	}
+
+	.essay.instant {
+		transition: none;
 	}
 
 	.essay.shown {

@@ -4,7 +4,10 @@
 
 	let { lecture }: { lecture: Lecture } = $props();
 	const hasNotebook = $derived(lecture.notebooks.length > 0);
-	const hasSupplemental = $derived(lecture.slides || lecture.readings.length > 0);
+	const slidesFirst = $derived(!hasNotebook && lecture.slides);
+	const slidesLabel = $derived(lecture.num > 0 ? `Lecture ${lecture.num} slides` : 'Slides');
+	const showSlidesInline = $derived(lecture.slides && !slidesFirst);
+	const hasSupplemental = $derived(showSlidesInline || lecture.readings.length > 0);
 </script>
 
 <section class="lecture">
@@ -17,26 +20,35 @@
 	{#if hasNotebook}
 		<div class="notebooks">
 			{#each lecture.notebooks as nb}
-				<a class="primary" href={colabUrl(nb.file)}>
+				<a class="primary" href={colabUrl(nb.file)} target="_blank" rel="noopener">
 					Open notebook{nb.label ? ` (${nb.label})` : ''} in Colab <span aria-hidden="true">&rarr;</span>
 				</a>
 			{/each}
 		</div>
 	{:else}
-		<p class="none">No notebook for this lecture.</p>
+		{#if slidesFirst}
+			<div class="notebooks">
+				<a class="primary" href={slidesUrl(lecture.num)} target="_blank" rel="noopener">
+					Open {slidesLabel} (PDF) <span aria-hidden="true">&rarr;</span>
+				</a>
+			</div>
+			<p class="none beneath">No notebook for this lecture.</p>
+		{:else}
+			<p class="none">No notebook for this lecture.</p>
+		{/if}
 	{/if}
 
 	{#if hasSupplemental}
 		<div class="supplemental">
 			<h3>{hasNotebook ? 'Supplemental' : 'Materials'}</h3>
-			{#if lecture.slides}
-				<p class="slides"><a href={slidesUrl(lecture.num)}>{lecture.num > 0 ? `Lecture ${lecture.num} slides` : 'Slides'} (PDF)</a></p>
+			{#if showSlidesInline}
+				<p class="slides"><a href={slidesUrl(lecture.num)} target="_blank" rel="noopener">{slidesLabel} (PDF)</a></p>
 			{/if}
 			{#if lecture.readings.length > 0}
 				<ul class="readings">
 					{#each lecture.readings as r}
 						<li>
-							<a href={r.url}><strong>{r.authors}</strong> ({r.year}), <em>{r.title}</em>.</a>
+							<a href={r.url} target="_blank" rel="noopener"><strong>{r.authors}</strong> ({r.year}), <em>{r.title}</em>.</a>
 						</li>
 					{/each}
 				</ul>
@@ -100,6 +112,10 @@
 		margin: 0;
 		font-family: var(--font-sub);
 		color: var(--muted);
+	}
+
+	.beneath {
+		margin-top: 0.7rem;
 	}
 
 	.supplemental {

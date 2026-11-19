@@ -2,7 +2,7 @@ import type { Emotion } from './data';
 
 export type CloudPalette = Record<Emotion, string>;
 
-/** Candidate cloud palettes, compared on /dev/trajectory. */
+/** Candidate cloud palettes, kept side by side for comparison. */
 export const cloudPalettes: Record<string, CloudPalette> = {
 	// Brand colors as they are, at low alpha.
 	brand: {

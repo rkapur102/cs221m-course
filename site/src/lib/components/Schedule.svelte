@@ -58,9 +58,16 @@
 								<span class="title">
 									<span class="name">{row.title}</span>
 									{#if row.link}
-										<a class="aside" href={row.link.url}>{row.link.label}</a>
+										<a class="aside" href={row.link.url} target="_blank" rel="noopener">{row.link.label}</a>
 									{/if}
 								</span>
+								{#if row.readings}
+									<ul class="readings">
+										{#each row.readings as r (r.url)}
+											<li><a href={r.url} target="_blank" rel="noopener"><strong>{r.authors}</strong> ({r.year}), <em>{r.title}</em>.</a></li>
+										{/each}
+									</ul>
+								{/if}
 							</li>
 						{/each}
 					</ul>
@@ -201,6 +208,32 @@
 		white-space: nowrap;
 	}
 
+	.items .readings {
+		grid-column: 2;
+		display: block;
+		margin: 0.25rem 0 0.2rem;
+		padding: 0;
+		list-style: none;
+		font-family: var(--font-sub);
+		font-size: 0.8rem;
+		line-height: 1.45;
+	}
+
+	.items .readings li {
+		display: block;
+		margin: 0 0 0.2rem;
+	}
+
+	.readings a {
+		color: var(--cardinal);
+		text-decoration-color: rgba(140, 21, 21, 0.35);
+		text-underline-offset: 0.15em;
+	}
+
+	.readings a:hover {
+		text-decoration-color: currentColor;
+	}
+
 	.arrow {
 		align-self: center;
 		justify-self: end;
@@ -238,6 +271,10 @@
 
 		.items li {
 			grid-template-columns: 1fr;
+		}
+
+		.items .readings {
+			grid-column: 1;
 		}
 	}
 
