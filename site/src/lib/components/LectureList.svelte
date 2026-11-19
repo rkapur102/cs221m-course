@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { viewState } from '../view.svelte.ts';
-	import type { Lecture } from '../course';
+	import { lectureLabel, type Lecture } from '../course';
 
 	let { lectures }: { lectures: Lecture[] } = $props();
 </script>
 
 <ul class="lectures">
-	{#each lectures as lec (lec.num)}
+	{#each lectures as lec (lec.title)}
 		<li>
-			<span class="num">Lecture {lec.num}</span>
+			<span class="num">{lectureLabel(lec)}</span>
 			<span class="title">{lec.title}</span>
-			{#if viewState.current === 'enrolled'}<span class="date">{lec.date}</span>{/if}
+			{#if viewState.current === 'enrolled' && lec.num > 0}<span class="date">{lec.date}</span>{/if}
 		</li>
 	{/each}
 </ul>

@@ -1,25 +1,27 @@
 <script lang="ts">
 	import TopBar from '#lib/components/TopBar.svelte';
 	import LectureBlock from '#lib/components/LectureBlock.svelte';
+	import LectureList from '#lib/components/LectureList.svelte';
 	import SiteFooter from '#lib/components/SiteFooter.svelte';
-	import { closing, extras } from '../../../lib/course';
-
-	const rsa = extras[0];
+	import { courseStoryId, extras } from '../../lib/course';
 </script>
 
 <svelte:head>
-	<title>Extra: Pragmatic inference and Rational Speech Acts | CS 221M</title>
+	<title>Extra notebooks | CS 221M</title>
 </svelte:head>
 
-<TopBar storyId={closing.storyId} />
+<TopBar storyId={courseStoryId} />
 
 <main>
 	<header>
 		<h1>Extra notebooks</h1>
+		<LectureList lectures={extras} />
 	</header>
 
 	<div class="blocks">
-		<LectureBlock lecture={rsa} />
+		{#each extras as lecture (lecture.title)}
+			<LectureBlock {lecture} />
+		{/each}
 	</div>
 </main>
 

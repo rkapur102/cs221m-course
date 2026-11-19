@@ -16,6 +16,8 @@ export interface Notebook {
 
 export interface Lecture {
 	num: number;
+	/** Shown instead of "Lecture N", e.g. "Extra 1". */
+	label?: string;
 	title: string;
 	date: string;
 	tag: Tag;
@@ -44,6 +46,10 @@ const REPO = 'rkapur102/cs221m-course';
 
 export function colabUrl(file: string): string {
 	return `https://colab.research.google.com/github/${REPO}/blob/main/${file}`;
+}
+
+export function lectureLabel(lec: Lecture): string {
+	return lec.label ?? `Lecture ${lec.num}`;
 }
 
 export function slidesUrl(n: number): string {
@@ -253,6 +259,7 @@ export const guestRows: ScheduleRow[] = [
 export const extras: Lecture[] = [
 		{
 			num: 0,
+			label: 'Extra 1',
 			title: 'Pragmatic inference and Rational Speech Acts',
 			date: 'Extra',
 			tag: 'inside',

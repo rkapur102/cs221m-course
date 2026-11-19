@@ -12,7 +12,7 @@ export function readingOrder(): PageRef[] {
 		pages.push({ href: `/week/${n}/materials`, label: `Week ${n} materials` });
 	}
 	pages.push({ href: '/closing', label: 'Closing' });
-	pages.push({ href: '/extra/rsa', label: 'Extra: RSA' });
+	pages.push({ href: '/extras', label: 'Extra notebooks' });
 	return pages;
 }
 

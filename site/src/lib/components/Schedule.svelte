@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { extras, scheduleFor, weeks, type ScheduleRow, type Tag } from '../course';
+	import { extras, lectureLabel, scheduleFor, weeks, type ScheduleRow, type Tag } from '../course';
 	import { viewState } from '../view.svelte.ts';
 	import TagMark from './TagMark.svelte';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
@@ -81,12 +81,13 @@
 		{/each}
 
 		<li>
-			<a class="row linked extra" href="/extra/rsa">
-				<span class="week">Extra notebooks</span>
+			<a class="row linked extra" href="/extras">
+				<span class="week">Extras</span>
 				<ul class="items">
 					{#each extras as lec (lec.title)}
 						<li>
 							<span class="title">
+								<span class="num">{lectureLabel(lec)}</span>
 								{@render titled(lec.title, lec.tag)}
 							</span>
 						</li>
@@ -195,6 +196,8 @@
 		font-size: 0.82rem;
 		font-weight: 600;
 		color: var(--cardinal);
+		display: inline-block;
+		min-width: 4.4rem;
 		margin-right: 0.4rem;
 		white-space: nowrap;
 	}
