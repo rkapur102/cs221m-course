@@ -21,6 +21,7 @@ describe('course', () => {
 	});
 	it('guest rows', () => {
 		expect(guestRows).toHaveLength(10);
+		expect(guestRows.find((r) => r.title.includes('Jing Huang'))?.readings).toHaveLength(5);
 		expect(guestRows.map((r) => r.week)).toEqual([6, 6, 7, 7, 8, 8, 9, 9, 10, 10]);
 	});
 });

@@ -35,6 +35,7 @@ export interface ScheduleRow {
 	date: string;
 	title: string;
 	link?: { label: string; url: string };
+	readings?: Reading[];
 }
 
 const REPO = 'rkapur102/cs221m-course';
@@ -229,7 +230,18 @@ export const guestRows: ScheduleRow[] = [
 	{ week: 7, date: 'Mon. May 11', title: 'Guest lecture: David Bau' },
 	{ week: 7, date: 'Wed. May 13', title: 'Mid-project check-in', link: { label: 'Final project description', url: 'https://github.com/rkapur102/cs221m-course/blob/main/materials/final-project.pdf' } },
 	{ week: 8, date: 'Mon. May 18', title: 'Guest lecture: Neel Nanda' },
-	{ week: 8, date: 'Wed. May 20', title: 'Guest lecture: Jing Huang' },
+	{
+		week: 8,
+		date: 'Wed. May 20',
+		title: 'Guest lecture: Jing Huang',
+		readings: [
+			{ authors: 'Huang et al.', year: '2024', title: 'Demystifying Verbatim Memorization in Large Language Models', url: 'https://aclanthology.org/2024.emnlp-main.598/' },
+			{ authors: 'Zhang et al.', year: '2021', title: 'Counterfactual Memorization in Neural Language Models', url: 'https://arxiv.org/abs/2112.12938' },
+			{ authors: 'Carlini et al.', year: '2021', title: 'Extracting Training Data from Large Language Models', url: 'https://arxiv.org/abs/2012.07805' },
+			{ authors: 'Carlini et al.', year: '2023', title: 'Quantifying Memorization Across Neural Language Models', url: 'https://arxiv.org/abs/2202.07646' },
+			{ authors: 'Kuditipudi et al.', year: '2025', title: 'Blackbox Model Provenance via Palimpsestic Membership Inference', url: 'https://arxiv.org/abs/2510.19796' },
+		]
+	},
 	{ week: 9, date: 'Mon. May 25', title: 'No lecture (Memorial Day)' },
 	{ week: 9, date: 'Wed. May 27', title: 'Guest lecture: Jack Lindsey' },
 	{ week: 10, date: 'Mon. June 1', title: 'Guest lecture: Naomi Saphra' },
