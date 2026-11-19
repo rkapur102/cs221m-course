@@ -35,7 +35,8 @@
 {/if}
 
 <style>
+	/* Pills occupy 1.25rem to 4.5rem from the bottom; the footer's own bottom padding supplies the clear space above them. */
 	.with-nav {
-		padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+		padding-bottom: calc(3.5rem + env(safe-area-inset-bottom));
 	}
 </style>

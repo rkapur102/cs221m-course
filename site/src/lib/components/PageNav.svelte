@@ -94,27 +94,28 @@
 <style>
 	.ctl {
 		position: fixed;
-		bottom: max(0.75rem, env(safe-area-inset-bottom));
+		bottom: max(1.25rem, env(safe-area-inset-bottom));
 		z-index: 20;
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
-		height: 2.5rem;
-		padding: 0 0.75rem;
+		gap: 0.6rem;
+		height: 3.25rem;
+		padding: 0 1.1rem;
 		border-radius: 999px;
 		background: rgba(255, 255, 255, 0.92);
 		color: var(--ink);
 		text-decoration: none;
 		font-family: var(--font-sub);
-		font-size: 0.95rem;
+		font-size: 1.1rem;
 		font-weight: 600;
+		box-shadow: 0 1px 8px rgba(26, 26, 26, 0.12);
 		letter-spacing: 0.02em;
 	}
 	.back {
-		left: max(0.75rem, env(safe-area-inset-left));
+		left: max(1rem, env(safe-area-inset-left));
 	}
 	.next {
-		right: max(0.75rem, env(safe-area-inset-right));
+		right: max(1rem, env(safe-area-inset-right));
 	}
 	.ctl:hover,
 	.ctl:focus-visible {
@@ -126,8 +127,8 @@
 	}
 	.glyph {
 		display: block;
-		width: 20px;
-		height: 20px;
+		width: 30px;
+		height: 30px;
 		flex: none;
 	}
 	.flip {
@@ -141,6 +142,7 @@
 	@media (hover: hover) and (min-width: 48rem) {
 		.dest {
 			display: block;
+			font-size: 0.95rem;
 			max-width: 0;
 			overflow: hidden;
 			white-space: nowrap;
@@ -151,7 +153,7 @@
 		}
 		.ctl:hover .dest,
 		.ctl:focus-visible .dest {
-			max-width: 22rem;
+			max-width: 16rem;
 			opacity: 1;
 		}
 	}

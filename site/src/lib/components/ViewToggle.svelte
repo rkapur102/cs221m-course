@@ -95,27 +95,26 @@
 		outline-offset: 1px;
 	}
 
-	/* Phones: sit above the Back/Next row (bottom-right on the homepage) and show only the
-	   active label so the control stays narrow and clear of the title and top bar. */
+	/* Phones: stay top-right under the top bar like desktop, but scroll away with the page so
+	   the control never covers reading content or crowds Back and Next at the bottom. */
 	@media (max-width: 40rem) {
-		.toggle,
-		.toggle.home {
-			top: auto;
-			right: 0.75rem;
-			bottom: 4.5rem;
+		.toggle {
+			position: absolute;
+			top: 3.4rem;
 		}
 
 		.toggle.home {
-			bottom: 0.75rem;
+			top: 0.75rem;
 		}
 
 		button {
-			padding: 0 0.7rem;
+			height: 2rem;
+			padding: 0 0.6rem;
 			font-size: 0.8rem;
 		}
 
 		button:not(.active) {
-			padding: 0 0.6rem;
+			padding: 0 0.5rem;
 			font-size: 0;
 			gap: 0;
 		}
