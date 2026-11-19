@@ -92,3 +92,8 @@ textarea {
 a {
 	color: var(--cardinal);
 }
+
+/* Returning enrolled visitors: hold the prerendered self-paced page back until the view has switched. */
+html[data-view='enrolled']:not([data-ready]) body {
+	visibility: hidden;
+}
