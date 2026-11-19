@@ -3,3 +3,8 @@ busra_disambiguation.ipynb
 # Planning docs and scratch files (never commit)
 docs/superpowers/
 .ipynb_checkpoints/
+
+# SvelteKit site
+site/node_modules/
+site/build/
+site/.svelte-kit/
