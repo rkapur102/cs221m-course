@@ -18,7 +18,7 @@ export const cloud: Cloud = {
 	emotion: raw.cloud.emotion as Emotion[]
 };
 
-const stories = raw.stories as Record<string, Vec3[]>;
+const stories = raw.stories as unknown as Record<string, Vec3[]>;
 
 export const storyIds: string[] = Object.keys(stories);
 
