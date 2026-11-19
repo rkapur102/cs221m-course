@@ -18,6 +18,7 @@
 		<button
 			type="button"
 			role="radio"
+			aria-label={opt.value === 'self' ? 'Self-paced view' : 'Enrolled view'}
 			aria-checked={viewState.current === opt.value}
 			class:active={viewState.current === opt.value}
 			onclick={() => setView(opt.value)}
@@ -99,7 +100,7 @@
 	   compact: the active option shows its label, the other only its icon. */
 	@media (max-width: 40rem) {
 		.toggle {
-			top: max(3.4rem, calc(env(safe-area-inset-top) + 3.4rem));
+			top: max(4.6rem, calc(env(safe-area-inset-top) + 4.6rem));
 			right: max(0.75rem, env(safe-area-inset-right));
 			background: rgba(255, 255, 255, 0.72);
 			backdrop-filter: blur(10px);

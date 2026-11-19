@@ -133,6 +133,6 @@ html[data-view='enrolled']:not([data-ready]) body {
 
 @media (max-width: 40rem) {
 	:root {
-		--page-top: 7rem;
+		--page-top: 7.75rem;
 	}
 }

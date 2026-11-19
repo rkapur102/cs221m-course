@@ -200,6 +200,7 @@
 		onpointermove={onDragMove}
 		onpointerup={onDragEnd}
 		onpointercancel={onDragEnd}
+		onlostpointercapture={onDragEnd}
 	>
 		{#if single}
 			<div class="cell">
@@ -417,8 +418,14 @@
 			height: 1.9rem;
 		}
 
+		.hero {
+			padding-top: 3.6rem;
+		}
+
 		.sub {
 			font-size: 0.9rem;
+			letter-spacing: 0.08em;
+			text-wrap: balance;
 		}
 	}
 
@@ -440,8 +447,13 @@
 			height: 1.55rem;
 		}
 
-		h1 {
+		h1,
+		.hero.single h1 {
 			font-size: clamp(1.6rem, 4vw, 2.4rem);
+		}
+
+		.hero.single h1 .line {
+			display: inline;
 		}
 
 		.sub {
