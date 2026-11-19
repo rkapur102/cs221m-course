@@ -59,13 +59,33 @@
 		return () => ro.disconnect();
 	});
 
+	/** Cancel the next click anywhere (once), or give up after a short while if none comes. */
+	function swallowNextClick() {
+		const onClick = (e: MouseEvent) => {
+			e.preventDefault();
+			e.stopPropagation();
+			stop();
+		};
+		const timer = setTimeout(() => stop(), 800);
+		const stop = () => {
+			clearTimeout(timer);
+			window.removeEventListener('click', onClick, true);
+		};
+		window.addEventListener('click', onClick, true);
+	}
+
 	// While the intro plays, hold the page still; any input fast-forwards it.
 	$effect(() => {
 		if (!started || done) return;
 		const root = document.documentElement;
 		const prev = root.style.overflow;
 		root.style.overflow = 'hidden';
-		const skip = () => intro.skip();
+		const skip = (e: Event) => {
+			// A tap's click fires after the Skip button has been swapped for the "Course details"
+			// link in the same spot, so swallow that one click to keep the page at the hero.
+			if (e.type === 'pointerdown' || e.type === 'touchstart') swallowNextClick();
+			intro.skip();
+		};
 		const events = ['wheel', 'touchstart', 'keydown', 'pointerdown'] as const;
 		for (const e of events) window.addEventListener(e, skip, { passive: true });
 		return () => {
