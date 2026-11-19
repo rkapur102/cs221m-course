@@ -1,0 +1,250 @@
+<script lang="ts">
+	import { extras, guestRows, weeks, type ScheduleRow, type Tag } from '../course';
+	import TagMark from './TagMark.svelte';
+
+	const guestWeeks = $derived.by(() => {
+		const byWeek = new Map<number, ScheduleRow[]>();
+		for (const row of guestRows) byWeek.set(row.week, [...(byWeek.get(row.week) ?? []), row]);
+		return [...byWeek.entries()].map(([n, rows]) => ({ n, rows }));
+	});
+
+	/** Split off the last word so the mark never wraps onto a line by itself. */
+	function split(title: string): [string, string] {
+		const i = title.lastIndexOf(' ');
+		return i < 0 ? ['', title] : [title.slice(0, i + 1), title.slice(i + 1)];
+	}
+</script>
+
+{#snippet titled(title: string, tag: Tag)}
+	{@const [head, last] = split(title)}
+	<span class="name">{head}<span class="nowrap">{last}{#if tag}&nbsp;<TagMark {tag} />{/if}</span></span>
+{/snippet}
+
+<div class="schedule">
+	<p class="legend">
+		<span class="key"><span aria-hidden="true"><TagMark tag="inside" /></span> inside the model</span>
+		<span class="key"><span aria-hidden="true"><TagMark tag="outside" /></span> outside the model</span>
+	</p>
+
+	<ol class="weeks">
+		{#each weeks as week (week.n)}
+			<li>
+				<a class="row linked" href="/week/{week.n}">
+					<span class="week">Week {week.n}</span>
+					<ul class="items">
+						{#each week.lectures as lec (lec.num)}
+							<li>
+								<span class="date">{lec.date}</span>
+								<span class="title">
+									<span class="num">Lecture {lec.num}</span>
+									{@render titled(lec.title, lec.tag)}
+								</span>
+							</li>
+						{/each}
+					</ul>
+					<span class="arrow" aria-hidden="true">&rarr;</span>
+				</a>
+			</li>
+		{/each}
+
+		{#each guestWeeks as week (week.n)}
+			<li>
+				<div class="row">
+					<span class="week">Week {week.n}</span>
+					<ul class="items">
+						{#each week.rows as row (row.date)}
+							<li>
+								<span class="date">{row.date}</span>
+								<span class="title">
+									<span class="name">{row.title}</span>
+									{#if row.link}
+										<a class="aside" href={row.link.url}>{row.link.label}</a>
+									{/if}
+								</span>
+							</li>
+						{/each}
+					</ul>
+				</div>
+			</li>
+		{/each}
+
+		<li>
+			<a class="row linked extra" href="/extra/rsa">
+				<span class="week">Extra notebooks</span>
+				<ul class="items">
+					{#each extras as lec (lec.title)}
+						<li>
+							<span class="title">
+								{@render titled(lec.title, lec.tag)}
+							</span>
+						</li>
+					{/each}
+				</ul>
+				<span class="arrow" aria-hidden="true">&rarr;</span>
+			</a>
+		</li>
+	</ol>
+</div>
+
+<style>
+	.legend {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem 1.5rem;
+		margin: 0 0 1.25rem;
+		font-family: var(--font-sub);
+		font-size: 0.85rem;
+		color: var(--muted);
+	}
+
+	.key {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+	}
+
+	.weeks,
+	.items {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.weeks {
+		border-top: 1px solid rgba(26, 26, 26, 0.12);
+	}
+
+	.weeks > li {
+		border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+	}
+
+	.row {
+		display: grid;
+		grid-template-columns: 9.75rem 1fr 1.5rem;
+		gap: 0.5rem 1.25rem;
+		padding: 1.1rem 0.75rem;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.linked {
+		transition: background-color 160ms ease;
+	}
+
+	.linked:hover,
+	.linked:focus-visible {
+		background: rgba(196, 101, 45, 0.06);
+	}
+
+	.linked:focus-visible {
+		outline: 2px solid var(--gf-orange);
+		outline-offset: -2px;
+	}
+
+	.week {
+		font-family: var(--font-title);
+		font-size: 1.35rem;
+		line-height: 1.3;
+	}
+
+	.items {
+		display: grid;
+		gap: 0.55rem;
+	}
+
+	.items li {
+		display: grid;
+		grid-template-columns: 7.5rem 1fr;
+		gap: 0 1rem;
+		align-items: baseline;
+	}
+
+	.extra .items li {
+		grid-template-columns: 1fr;
+	}
+
+	.date {
+		font-family: var(--font-sub);
+		font-size: 0.82rem;
+		color: var(--muted);
+		white-space: nowrap;
+	}
+
+	.title {
+		display: inline;
+	}
+
+	.num {
+		font-family: var(--font-sub);
+		font-size: 0.82rem;
+		font-weight: 600;
+		color: var(--cardinal);
+		margin-right: 0.4rem;
+		white-space: nowrap;
+	}
+
+	.name {
+		margin-right: 0.35rem;
+	}
+
+	.nowrap {
+		white-space: nowrap;
+	}
+
+	.row:not(.linked) .name {
+		color: var(--muted);
+	}
+
+	.aside {
+		font-family: var(--font-sub);
+		font-size: 0.8rem;
+		white-space: nowrap;
+	}
+
+	.arrow {
+		align-self: center;
+		justify-self: end;
+		color: var(--gf-orange);
+		opacity: 0.45;
+		transition:
+			transform 160ms ease,
+			opacity 160ms ease;
+	}
+
+	.linked:hover .arrow,
+	.linked:focus-visible .arrow {
+		opacity: 1;
+		transform: translateX(3px);
+	}
+
+	@media (max-width: 640px) {
+		.row {
+			grid-template-columns: 1fr 1.25rem;
+			padding: 1rem 0.25rem;
+		}
+
+		.week {
+			grid-column: 1 / -1;
+		}
+
+		.items {
+			grid-column: 1;
+		}
+
+		.arrow {
+			grid-column: 2;
+			grid-row: 2;
+		}
+
+		.items li {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.linked,
+		.arrow {
+			transition: none;
+		}
+	}
+</style>

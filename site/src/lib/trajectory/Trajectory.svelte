@@ -8,6 +8,10 @@
 		storyIds: string[];
 		/** How much of each path is drawn, 0..1. The cloud fades in slightly ahead. */
 		draw?: number;
+		/** Per-story draw progress, overriding `draw` for the stories it covers. */
+		draws?: number[];
+		/** Multiplier on the path line width. */
+		lineScale?: number;
 		/** Extra rotation about the vertical axis, in radians. */
 		yaw?: number;
 		showCloud?: boolean;
@@ -22,6 +26,8 @@
 	let {
 		storyIds,
 		draw = 1,
+		draws,
+		lineScale = 1,
 		yaw = 0,
 		showCloud = true,
 		showLabels = true,
@@ -97,8 +103,10 @@
 			project([p[0] - center[0], p[1] - center[1], p[2] - center[2]], angle, size, opts);
 
 		const m = Math.min(w, h);
-		const t = Math.min(1, Math.max(0, draw));
-		const cloudAlpha = Math.min(1, t * 3);
+		const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+		const ts = stories.map((_, i) => clamp01(draws?.[i] ?? draw));
+		const t = Math.max(clamp01(draw), ...ts);
+		const cloudAlpha = Math.min(1, (draws ? Math.max(0, ...ts) : t) * 3);
 
 		// 1. Faint floor grid.
 		if (showCloud && cloudAlpha > 0) {
@@ -148,15 +156,16 @@
 
 		if (t <= 0) return;
 
-		const line = Math.min(3.4, Math.max(1.3, m * 0.0085));
+		const line = Math.min(3.4, Math.max(1.3, m * 0.0085)) * lineScale;
 		const halo = line * 2.6;
 		const markerR = m >= 160 ? line * 0.8 : 0;
 		ctx.lineCap = 'round';
 		ctx.lineJoin = 'round';
 
-		const visible = stories.map((pts) => {
+		const visible = stories.map((pts, s) => {
+			if (ts[s] <= 0) return [];
 			const q = pts.map(proj);
-			const span = (q.length - 1) * t;
+			const span = (q.length - 1) * ts[s];
 			const full = Math.floor(span);
 			const out = q.slice(0, full + 1);
 			if (full < q.length - 1 && span > full) {
@@ -194,7 +203,7 @@
 			if (markerR > 0) {
 				const n = stories[s].length;
 				for (let j = 1; j < Math.min(q.length, n - 1); j++) {
-					if (j === q.length - 1 && q.length - 1 > (n - 1) * t) continue;
+					if (j === q.length - 1 && q.length - 1 > (n - 1) * ts[s]) continue;
 					ctx.fillStyle = colors[s][j];
 					ctx.beginPath();
 					ctx.arc(q[j].x, q[j].y, markerR, 0, Math.PI * 2);
@@ -229,15 +238,16 @@
 				ctx.fillText(label, tx, p.y);
 			}
 		};
-		for (const q of visible) {
+		visible.forEach((q, s) => {
+			if (q.length === 0) return;
 			mark(q[0], '#1a1a1a', 'Start');
-			if (t >= 1) mark(q[q.length - 1], '#8c1515', 'End');
-		}
+			if (ts[s] >= 1) mark(q[q.length - 1], '#8c1515', 'End');
+		});
 	}
 
 	// Redraw whenever an input changes.
 	$effect(() => {
-		void [draw, yaw, idleYaw, showCloud, showLabels, cloudColors, colors, frame, size.w, size.h];
+		void [draw, draws, lineScale, yaw, idleYaw, showCloud, showLabels, cloudColors, colors, frame, size.w, size.h];
 		render();
 	});
 

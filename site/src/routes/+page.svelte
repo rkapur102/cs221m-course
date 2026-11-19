@@ -1,33 +1,123 @@
+<script lang="ts">
+	import Hero from '#lib/components/Hero.svelte';
+	import StaffGrid from '#lib/components/StaffGrid.svelte';
+	import Schedule from '#lib/components/Schedule.svelte';
+	import SiteFooter from '#lib/components/SiteFooter.svelte';
+
+	/** Fade a section up the first time it scrolls into view (skipped under reduced motion). */
+	function reveal(node: HTMLElement) {
+		if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		if (node.getBoundingClientRect().top < innerHeight) return;
+		node.classList.add('pending');
+		const io = new IntersectionObserver(
+			([entry]) => {
+				if (!entry.isIntersecting) return;
+				node.classList.remove('pending');
+				io.disconnect();
+			},
+			{ rootMargin: '0px 0px -8% 0px' }
+		);
+		io.observe(node);
+		return { destroy: () => io.disconnect() };
+	}
+</script>
+
 <svelte:head>
 	<title>CS 221M: Mechanistic Interpretability</title>
+	<meta
+		name="description"
+		content="CS 221M at Stanford: a broad and deep introduction to mechanistic interpretability, with an emphasis on causal methods and large language models."
+	/>
 </svelte:head>
 
+<Hero />
+
 <main>
-	<h1>CS 221M: Mechanistic Interpretability</h1>
-	<p class="sub">Stanford University</p>
-	<p>
-		Placeholder homepage. The course site is being rebuilt, and this page checks that the three
-		typefaces, the color tokens and the base layout load correctly.
-	</p>
+	<section id="about" class="section" use:reveal>
+		<h2>Course description</h2>
+		<p class="lede">
+			What is the internal structure of modern neural networks and how can we study it? This course
+			provides a broad and deep introduction to interpretability, the subfield of machine learning
+			concerned with understanding precisely how models process information and why they produce
+			the outputs they do. We will cover topics such as probing, steering, causal abstraction, and
+			sparse autoencoders, with a particular emphasis on causal methods and large language models.
+			The course will include guest lectures from leading interpretability labs across academia and
+			industry.
+		</p>
+	</section>
+
+	<section id="staff" class="section" use:reveal>
+		<h2>Staff</h2>
+		<StaffGrid />
+	</section>
+
+	<section id="schedule" class="section wide" use:reveal>
+		<h2>Schedule</h2>
+		<Schedule />
+		<p class="logistics">
+			<a href="/logistics">Logistics and FAQ <span aria-hidden="true">&rarr;</span></a>
+		</p>
+	</section>
 </main>
+
+<SiteFooter />
 
 <style>
 	main {
+		padding: 0 1rem;
+	}
+
+	.section {
 		max-width: 44rem;
 		margin: 0 auto;
-		padding: 4rem 1rem;
+		padding-top: clamp(3.5rem, 9vh, 6rem);
+		scroll-margin-top: 1rem;
+		transition:
+			opacity 700ms ease,
+			transform 700ms ease;
 	}
 
-	h1 {
-		font-size: clamp(2.25rem, 7vw, 3.5rem);
+	.section.wide {
+		max-width: 56rem;
 	}
 
-	.sub {
+	.section:global(.pending) {
+		opacity: 0;
+		transform: translateY(14px);
+	}
+
+	h2 {
+		font-size: clamp(1.9rem, 4vw, 2.4rem);
+		margin-bottom: 1.5rem;
+	}
+
+	h2::before {
+		content: '';
+		display: block;
+		width: 2rem;
+		height: 2px;
+		background: var(--gf-orange);
+		margin-bottom: 1rem;
+	}
+
+	.lede {
+		margin: 0;
+		font-size: 1.08rem;
+		line-height: 1.75;
+	}
+
+	.logistics {
+		margin: 1.75rem 0 0;
 		font-family: var(--font-sub);
 		font-weight: 600;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--cardinal);
-		margin: 0.75rem 0 2rem;
+	}
+
+	.logistics a {
+		text-decoration: none;
+	}
+
+	.logistics a:hover {
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
 	}
 </style>
