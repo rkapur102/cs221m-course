@@ -52,7 +52,7 @@ export const weeks: Week[] = [
 	{
 		n: 1,
 		bridging: '00_into_week_1.md',
-		storyId: 'TBD-1',
+		storyId: '2023196',
 		lectures: [
 		{
 			num: 1,
@@ -81,7 +81,7 @@ export const weeks: Week[] = [
 	{
 		n: 2,
 		bridging: '01_week_1_to_week_2.md',
-		storyId: 'TBD-2',
+		storyId: '942571',
 		lectures: [
 		{
 			num: 3,
@@ -116,7 +116,7 @@ export const weeks: Week[] = [
 	{
 		n: 3,
 		bridging: '02_week_2_to_week_3.md',
-		storyId: 'TBD-3',
+		storyId: '1670970',
 		lectures: [
 		{
 			num: 5,
@@ -149,7 +149,7 @@ export const weeks: Week[] = [
 	{
 		n: 4,
 		bridging: '03_week_3_to_week_4.md',
-		storyId: 'TBD-4',
+		storyId: '1692290',
 		lectures: [
 		{
 			num: 7,
@@ -189,7 +189,7 @@ export const weeks: Week[] = [
 	{
 		n: 5,
 		bridging: '04_week_4_to_week_5.md',
-		storyId: 'TBD-5',
+		storyId: '1808033',
 		lectures: [
 		{
 			num: 9,
@@ -265,6 +265,6 @@ export const extras: Lecture[] = [
 		}
 ];
 
-export const closing = { bridging: '05_out_of_week_5.md', storyId: 'TBD-6' };
+export const closing = { bridging: '05_out_of_week_5.md', storyId: '748017' };
 
-export const homeStoryIds: [string, string, string] = ['TBD-H1', 'TBD-H2', 'TBD-H3'];
+export const homeStoryIds: [string, string, string] = ['2109652', '539105', '1596061'];
