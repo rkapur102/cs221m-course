@@ -56,6 +56,16 @@
 		});
 	}
 
+	// Reset synchronously when the story changes, so a reused instance never renders the new
+	// story with the old finished state.
+	$effect.pre(() => {
+		void storyId;
+		void progress;
+		controller?.abort();
+		draw = 0;
+		done = false;
+	});
+
 	// Runs on first load and after every navigation, including week to week where the
 	// component instance is reused.
 	afterNavigate(({ type }) => play(type === 'popstate'));

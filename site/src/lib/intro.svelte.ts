@@ -2,6 +2,25 @@ import { animate, easeInOutCubic } from './trajectory/animate';
 
 export type IntroPhase = 'drawing' | 'spinning' | 'done';
 
+interface ArrivalInfo {
+	/** SvelteKit navigation type: 'enter' on load, 'link', 'goto', 'popstate', ... */
+	type: string;
+	/** Path navigated from, or null on first load. */
+	fromPath: string | null;
+	toPath: string;
+	hash: string;
+	reduced: boolean;
+}
+
+/**
+ * Whether the homepage intro should play for this arrival: on load, or when coming from another route.
+ * Never for reduced motion, a hash target, Back/Forward, or in-page navigation while already on the page.
+ */
+export function shouldPlayIntro({ type, fromPath, toPath, hash, reduced }: ArrivalInfo): boolean {
+	if (reduced || hash !== '' || type === 'popstate') return false;
+	return fromPath === null || fromPath !== toPath;
+}
+
 interface IntroOptions {
 	drawMs?: number;
 	spinMs?: number;

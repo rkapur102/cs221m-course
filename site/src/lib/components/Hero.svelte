@@ -7,7 +7,7 @@
 	import { pathGradients } from '../trajectory/palette';
 	import { homeStoryIds } from '../course';
 	import { viewState } from '../view.svelte.ts';
-	import { IntroController } from '../intro.svelte.ts';
+	import { IntroController, shouldPlayIntro } from '../intro.svelte.ts';
 	import stanfordLogo from '../../../../images/stanford_logo.png';
 	import goodfireLogo from '../../../../images/goodfire_logo.PNG';
 
@@ -105,14 +105,24 @@
 		dragging = false;
 	}
 
-	// Play on every arrival (load, reload, client navigation). Skip for reduced motion, a hash
-	// target, or browser Back/Forward, which restores the earlier scroll position.
-	afterNavigate(({ type }) => {
-		if (prefersReducedMotion() || location.hash !== '' || type === 'popstate') {
-			intro.skip();
-		} else {
+	// Play on every arrival (load, reload, coming from another route). Hero is remounted per arrival,
+	// so the controller is fresh; in-page hash navigation leaves it alone.
+	let arrived = false;
+	afterNavigate(({ type, from, to }) => {
+		if (arrived) return;
+		arrived = true;
+		const play = shouldPlayIntro({
+			type,
+			fromPath: from ? from.url.pathname : null,
+			toPath: to ? to.url.pathname : location.pathname,
+			hash: location.hash,
+			reduced: prefersReducedMotion()
+		});
+		if (play) {
 			started = true;
 			intro.start();
+		} else {
+			intro.skip();
 		}
 	});
 

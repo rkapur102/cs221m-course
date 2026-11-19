@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { IntroController } from './intro.svelte.ts';
+import { IntroController, shouldPlayIntro } from './intro.svelte.ts';
 
 beforeEach(() => {
 	// Motion allowed, and frames never fire on their own: only skip() can end the intro.
@@ -57,5 +57,33 @@ describe('natural completion', () => {
 		await run2;
 		expect(skipped).not.toHaveBeenCalled();
 		vi.useRealTimers();
+	});
+});
+
+describe('shouldPlayIntro', () => {
+	const base = { type: 'link', fromPath: '/week/1', toPath: '/', hash: '', reduced: false };
+
+	it('plays on first load', () => {
+		expect(shouldPlayIntro({ ...base, type: 'enter', fromPath: null })).toBe(true);
+	});
+
+	it('plays when arriving from another route', () => {
+		expect(shouldPlayIntro(base)).toBe(true);
+	});
+
+	it('does not play for a hash link on the page itself', () => {
+		expect(shouldPlayIntro({ ...base, fromPath: '/', hash: '#about' })).toBe(false);
+	});
+
+	it('does not play for a hash target from another route', () => {
+		expect(shouldPlayIntro({ ...base, hash: '#schedule' })).toBe(false);
+	});
+
+	it('does not play on Back/Forward', () => {
+		expect(shouldPlayIntro({ ...base, type: 'popstate' })).toBe(false);
+	});
+
+	it('does not play with reduced motion', () => {
+		expect(shouldPlayIntro({ ...base, reduced: true })).toBe(false);
 	});
 });
