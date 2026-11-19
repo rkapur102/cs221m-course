@@ -25,13 +25,13 @@ afterEach(() => {
 
 describe('view', () => {
 	it('defaults to the self-paced view', () => {
-		vi.stubGlobal('localStorage', memoryStorage());
+		vi.stubGlobal('sessionStorage', memoryStorage());
 		loadView();
 		expect(viewState.current).toBe('self');
 	});
 
-	it('persists the enrolled view and restores it', () => {
-		vi.stubGlobal('localStorage', memoryStorage());
+	it('keeps the enrolled view for the rest of the tab session', () => {
+		vi.stubGlobal('sessionStorage', memoryStorage());
 		setView('enrolled');
 		viewState.current = 'self';
 		loadView();
@@ -47,7 +47,7 @@ describe('view', () => {
 				throw new Error('blocked');
 			}
 		};
-		vi.stubGlobal('localStorage', broken);
+		vi.stubGlobal('sessionStorage', broken);
 		expect(() => loadView()).not.toThrow();
 		expect(viewState.current).toBe('self');
 		expect(() => setView('enrolled')).not.toThrow();

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import TrajectoryLogo from './TrajectoryLogo.svelte';
+	import ViewToggle from './ViewToggle.svelte';
 	import { viewState } from '../view.svelte.ts';
 
 	let { storyId }: { storyId: string } = $props();
@@ -13,6 +14,7 @@
 		{#if viewState.current === 'enrolled'}
 			<a href="/logistics" aria-current={page.url.pathname === '/logistics' ? 'page' : undefined}>Logistics</a>
 		{/if}
+		<ViewToggle />
 	</div>
 </nav>
 
@@ -26,11 +28,12 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 0.9rem 1rem;
+		padding: 0.9rem 1.5rem;
 	}
 
 	.links {
 		display: flex;
+		align-items: center;
 		gap: 1.75rem;
 		font-family: var(--font-title);
 		font-size: 1.3rem;
@@ -66,6 +69,17 @@
 	.links a:focus-visible {
 		outline: 2px solid var(--gf-orange);
 		outline-offset: 3px;
+	}
+
+	@media (max-width: 40rem) {
+		.topbar {
+			padding: 0.9rem 1rem;
+		}
+
+		.links {
+			gap: 0.9rem;
+			font-size: 1.1rem;
+		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {

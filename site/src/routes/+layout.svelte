@@ -28,13 +28,30 @@
 	{@render children()}
 </div>
 
-<ViewToggle />
+{#if page.url.pathname === '/'}
+	<div class="home-toggle"><ViewToggle /></div>
+{/if}
 
 {#if hasNav}
 	<PageNav />
 {/if}
 
 <style>
+	/* The homepage has no top bar; the toggle sits where the bar's last item would. */
+	.home-toggle {
+		position: absolute;
+		top: 0.9rem;
+		right: 1.5rem;
+		z-index: 15;
+	}
+
+	@media (max-width: 40rem) {
+		.home-toggle {
+			right: 1rem;
+		}
+	}
+
+
 	/* Pills occupy 1.25rem to 4.5rem from the bottom; the footer's own bottom padding supplies the clear space above them. */
 	.with-nav {
 		padding-bottom: calc(3.5rem + env(safe-area-inset-bottom));

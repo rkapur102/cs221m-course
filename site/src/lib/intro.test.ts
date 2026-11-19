@@ -35,7 +35,7 @@ describe('natural completion', () => {
 	it('calls onComplete when the intro runs out, but not when skipped', async () => {
 		vi.unstubAllGlobals();
 		vi.stubGlobal('matchMedia', (q: string) => ({ matches: false, media: q }));
-			vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+		vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
 		let clock = 0;
 		vi.stubGlobal('performance', { now: () => clock });
 		vi.stubGlobal('requestAnimationFrame', (cb: (t: number) => void) =>

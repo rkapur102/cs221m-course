@@ -47,8 +47,8 @@
 	--muted: #5c5c5c;
 	--bg: #ffffff;
 	--content: 60rem;
-	/* Space above a subpage's title; phones add room for the fixed view toggle under the top bar. */
-	--page-top: 5.5rem;
+	/* Space above a subpage's title, clearing the top bar (logo 4rem plus its padding). */
+	--page-top: 6.25rem;
 
 	--font-title: 'Forum', Georgia, serif;
 	--font-sub: 'Nunito Sans', system-ui, sans-serif;
@@ -129,10 +129,4 @@ html[data-view='enrolled']:not([data-ready]) body {
 .btn-quiet:focus-visible {
 	outline: 2px solid var(--cardinal);
 	outline-offset: 2px;
-}
-
-@media (max-width: 40rem) {
-	:root {
-		--page-top: 7.75rem;
-	}
 }
