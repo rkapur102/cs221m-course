@@ -2,7 +2,7 @@
 	import LeadIn from '#lib/components/LeadIn.svelte';
 	import LectureList from '#lib/components/LectureList.svelte';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
-	import { progressFor } from '../../../lib/course';
+	import { progressFor, weeks } from '../../../lib/course';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -17,7 +17,7 @@
 	storyId={week.storyId}
 	html={data.html}
 	progress={progressFor(week.n)}
-	markerLabel="Week {week.n} of 5"
+	markerLabel="Week {week.n} of {weeks.length}"
 >
 	{#snippet header()}
 		<h1>Week {week.n}</h1>

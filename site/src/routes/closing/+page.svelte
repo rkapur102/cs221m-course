@@ -1,7 +1,7 @@
 <script lang="ts">
 	import LeadIn from '#lib/components/LeadIn.svelte';
 	import { bridgingHtml } from '../../lib/bridging';
-	import { closing, progressFor } from '../../lib/course';
+	import { closing, courseStoryId, progressFor } from '../../lib/course';
 
 	const html = bridgingHtml(closing.bridging);
 </script>
@@ -11,11 +11,12 @@
 </svelte:head>
 
 <LeadIn
-	storyId={closing.storyId}
+	storyId={courseStoryId}
 	{html}
 	progress={progressFor('closing')}
 	markerLabel="The end"
 	markerColor="#eab651"
+	markerRing="#8c1515"
 >
 	{#snippet header()}
 		<h1>Closing</h1>

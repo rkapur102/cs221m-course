@@ -4,6 +4,7 @@
 	import { cloudColors as defaultCloudColors, gradientAt, pathGradients } from './palette';
 	import { prefersReducedMotion } from './animate';
 	import { simplifyPath } from './simplify';
+	import { splitPath } from './splitPath';
 
 	interface Props {
 		storyIds: string[];
@@ -20,7 +21,7 @@
 		/** Show the undrawn remainder of each path as a faint thin line. */
 		ghost?: boolean;
 		/** Marks the tip of the drawn path with a halo dot and a label, instead of the End marker. */
-		marker?: { label: string; color?: string };
+		marker?: { label: string; color?: string; ring?: string };
 		showCloud?: boolean;
 		showLabels?: boolean;
 		gradients?: string[][];
@@ -176,32 +177,22 @@
 		ctx.lineCap = 'round';
 		ctx.lineJoin = 'round';
 
-		const visible = stories.map((pts, s) => {
-			if (ts[s] <= 0) return [];
-			const q = pts.map(proj);
-			const span = (q.length - 1) * ts[s];
-			const full = Math.floor(span);
-			const out = q.slice(0, full + 1);
-			if (full < q.length - 1 && span > full) {
-				const a = q[full];
-				const b = q[full + 1];
-				const k = span - full;
-				out.push({ x: a.x + (b.x - a.x) * k, y: a.y + (b.y - a.y) * k, depth: a.depth });
-			}
-			return out;
-		});
+		const projected = stories.map((pts) => pts.map(proj));
+		const split = projected.map((q, s) => splitPath(q, ts[s]));
+		const visible = split.map((sp, s) => (ts[s] <= 0 ? [] : sp.head));
 
-		// Faint full path, for context on what is still to come.
+		// Faint remainder of each path, starting exactly where the drawn part ends.
 		if (ghost) {
 			ctx.strokeStyle = 'rgba(26, 26, 26, 0.12)';
 			ctx.lineWidth = Math.max(1, line * 0.5);
-			for (const pts of stories) {
-				const q = pts.map(proj);
+			split.forEach((sp, s) => {
+				const q = ts[s] <= 0 ? projected[s] : sp.tail;
+				if (q.length < 2) return;
 				ctx.beginPath();
 				ctx.moveTo(q[0].x, q[0].y);
 				for (const p of q.slice(1)) ctx.lineTo(p.x, p.y);
 				ctx.stroke();
-			}
+			});
 		}
 
 		// 3. Light halo under every path.
@@ -266,20 +257,20 @@
 			}
 		};
 		// Progress marker: soft halo, solid dot, and a label that flips or slides to stay inside the canvas.
-		const tip = (p: { x: number; y: number }, mk: { label: string; color?: string }) => {
+		const tip = (p: { x: number; y: number }, mk: { label: string; color?: string; ring?: string }) => {
 			const fill = mk.color ?? '#8c1515';
 			const r = Math.max(3.5, line * 1.5);
 			ctx.beginPath();
 			ctx.arc(p.x, p.y, r * 2.6, 0, Math.PI * 2);
 			ctx.fillStyle = fill;
-			ctx.globalAlpha = 0.2;
+			ctx.globalAlpha = mk.ring ? 0.3 : 0.2;
 			ctx.fill();
 			ctx.globalAlpha = 1;
 			ctx.beginPath();
 			ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
 			ctx.fill();
-			ctx.strokeStyle = '#ffffff';
-			ctx.lineWidth = 1.5;
+			ctx.strokeStyle = mk.ring ?? '#ffffff';
+			ctx.lineWidth = mk.ring ? 2 : 1.5;
 			ctx.stroke();
 			if (!showLabels) return;
 			const labelFont = Math.max(11, font);

@@ -16,7 +16,8 @@
 		footer,
 		progress,
 		markerLabel,
-		markerColor
+		markerColor,
+		markerRing
 	}: {
 		/** Story for the top-bar logo. */
 		storyId: string;
@@ -28,6 +29,7 @@
 		progress: number;
 		markerLabel: string;
 		markerColor?: string;
+		markerRing?: string;
 	} = $props();
 
 	const DRAW_MS = 2000;
@@ -100,7 +102,7 @@
 			gradients={[pathGradients[0]]}
 			idle={done}
 			ghost
-			marker={{ label: markerLabel, color: markerColor }}
+			marker={{ label: markerLabel, color: markerColor, ring: markerRing }}
 		/>
 	</div>
 

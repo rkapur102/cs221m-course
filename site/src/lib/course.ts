@@ -267,10 +267,10 @@ export const extras: Lecture[] = [
 		}
 ];
 
-export const closing = { bridging: '05_out_of_week_5.md', storyId: '748017' };
-
 /** The one path every lead-in and the closing page trace, so progress reads as a single journey. */
 export const courseStoryId = '748017';
+
+export const closing = { bridging: '05_out_of_week_5.md', storyId: courseStoryId };
 
 /** How far along the course path a page sits: week n of 5 stops at n/6, the closing page reaches the end. */
 export function progressFor(page: number | 'closing'): number {
