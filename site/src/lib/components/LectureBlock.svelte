@@ -51,7 +51,7 @@
 
 <style>
 	.lecture {
-		padding: 1.5rem 0 0.5rem;
+		padding: 1.5rem 0 1.1rem;
 		border-top: 1px solid rgba(26, 26, 26, 0.1);
 	}
 

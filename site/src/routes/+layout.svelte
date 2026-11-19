@@ -13,7 +13,12 @@
 	onMount(() => {
 		loadView();
 		// Reveal once the enrolled content has been rendered (see the script in app.html).
-		tick().then(() => (document.documentElement.dataset.ready = ''));
+		tick().then(() => {
+			// Enrolled-only sections are not in the prerendered HTML, so the browser's own
+			// fragment scroll misses them; scroll once they exist.
+			if (location.hash) document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView();
+			document.documentElement.dataset.ready = '';
+		});
 	});
 
 	const nav = $derived(neighbors(page.url.pathname));
@@ -50,7 +55,6 @@
 			right: 1rem;
 		}
 	}
-
 
 	/* Sticky footer: the page fills the viewport and the footer takes the leftover space above it. */
 	.page {

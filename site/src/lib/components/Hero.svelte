@@ -170,7 +170,12 @@
 		const skip = (e: Event) => {
 			// A tap's click fires after the Skip button has been swapped for the "Course details"
 			// link in the same spot, so swallow that one click to keep the page at the hero.
-			if (e.type === 'pointerdown' || e.type === 'touchstart') swallowNextClick();
+			if (
+				(e.type === 'pointerdown' || e.type === 'touchstart') &&
+				e.target instanceof Element &&
+				e.target.closest('.foot')
+			)
+				swallowNextClick();
 			intro.skip();
 		};
 		const events = ['wheel', 'touchstart', 'keydown', 'pointerdown'] as const;

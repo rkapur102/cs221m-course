@@ -4,13 +4,12 @@
 	import { setView, viewState } from '../view.svelte.ts';
 </script>
 
-<div class="toggle" role="radiogroup" aria-label="Course view">
+<div class="toggle" role="group" aria-label="Course view">
 	<button
 		type="button"
-		role="radio"
 		title="Self-paced view"
 		aria-label="Self-paced view"
-		aria-checked={viewState.current === 'self'}
+		aria-pressed={viewState.current === 'self'}
 		class:active={viewState.current === 'self'}
 		onclick={() => setView('self')}
 	>
@@ -19,10 +18,9 @@
 	<span class="divider" aria-hidden="true"></span>
 	<button
 		type="button"
-		role="radio"
 		title="Enrolled view"
 		aria-label="Enrolled view"
-		aria-checked={viewState.current === 'enrolled'}
+		aria-pressed={viewState.current === 'enrolled'}
 		class:active={viewState.current === 'enrolled'}
 		onclick={() => setView('enrolled')}
 	>

@@ -10,7 +10,7 @@
 </script>
 
 <svelte:head>
-	<title>Week {week.n} materials | CS 221M</title>
+	<title>Week {week.n}: Materials | CS 221M</title>
 </svelte:head>
 
 <TopBar storyId={week.storyId} />
