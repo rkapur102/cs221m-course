@@ -2,9 +2,10 @@
 	import Hero from '#lib/components/Hero.svelte';
 	import StaffGrid from '#lib/components/StaffGrid.svelte';
 	import Schedule from '#lib/components/Schedule.svelte';
+	import Logistics from '#lib/components/Logistics.svelte';
+	import Faq from '#lib/components/Faq.svelte';
 	import SiteFooter from '#lib/components/SiteFooter.svelte';
 	import { viewState } from '../lib/view.svelte.ts';
-	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 
 	/** Fade a section up the first time it scrolls into view (skipped under reduced motion). */
 	function reveal(node: HTMLElement) {
@@ -55,15 +56,24 @@
 		<StaffGrid />
 	</section>
 
+	{#if viewState.current === 'enrolled'}
+		<section id="logistics" class="section" use:reveal>
+			<h2>Logistics</h2>
+			<Logistics />
+		</section>
+	{/if}
+
 	<section id="schedule" class="section" use:reveal>
 		<h2>Schedule</h2>
 		<Schedule />
-		{#if viewState.current === 'enrolled'}
-			<p class="logistics">
-				<a href="/logistics">Logistics and FAQ <ArrowRight class="icon" aria-hidden="true" size="1em" strokeWidth={1.75} /></a>
-			</p>
-		{/if}
 	</section>
+
+	{#if viewState.current === 'enrolled'}
+		<section id="faq" class="section" use:reveal>
+			<h2>Frequently asked questions</h2>
+			<Faq />
+		</section>
+	{/if}
 </main>
 
 <SiteFooter />
@@ -93,23 +103,5 @@
 		margin: 0;
 		font-size: 1.08rem;
 		line-height: 1.75;
-	}
-
-	.logistics {
-		margin: 1.75rem 0 0;
-		font-family: var(--font-sub);
-		font-weight: 600;
-	}
-
-	.logistics a {
-		text-decoration: none;
-		display: inline-flex;
-		align-items: center;
-		gap: 0.35em;
-	}
-
-	.logistics a:hover {
-		text-decoration: underline;
-		text-underline-offset: 0.2em;
 	}
 </style>

@@ -30,6 +30,8 @@
 		/** Keep only Start, End and every Nth point of each path (for small renderings). */
 		simplify?: number;
 		cloudColors?: Record<Emotion, string>;
+		/** Multiplier on how much of the cell the cloud fills (1 leaves a margin for rotation). */
+		zoom?: number;
 		class?: string;
 	}
 
@@ -48,6 +50,7 @@
 		idle = false,
 		simplify = 0,
 		cloudColors = defaultCloudColors,
+		zoom = 1,
 		class: className = ''
 	}: Props = $props();
 
@@ -113,7 +116,7 @@
 
 		const angle = BASE_YAW + yaw + idleYaw;
 		const { center, radius } = frame;
-		const opts = { pitch: PITCH + Math.min(MAX_PITCH_OFFSET, Math.max(-MAX_PITCH_OFFSET, pitch)), persp: 0.12, scale: (showCloud ? 0.86 : 0.9) / radius };
+		const opts = { pitch: PITCH + Math.min(MAX_PITCH_OFFSET, Math.max(-MAX_PITCH_OFFSET, pitch)), persp: 0.12, scale: ((showCloud ? 0.86 : 0.9) * zoom) / radius };
 		const proj = (p: Vec3) =>
 			project([p[0] - center[0], p[1] - center[1], p[2] - center[2]], angle, size, opts);
 

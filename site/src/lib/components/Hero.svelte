@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
-	import ChevronDown from '@lucide/svelte/icons/chevron-down';
+	import ArrowDown from '@lucide/svelte/icons/arrow-down';
 	import Trajectory from '../trajectory/Trajectory.svelte';
 	import { animate, easeInOutCubic, prefersReducedMotion } from '../trajectory/animate';
 	import { pathGradients } from '../trajectory/palette';
@@ -27,6 +27,8 @@
 
 	const intro = new IntroController({ onComplete: () => scheduleAutoScroll() });
 	const gradients = pathGradients.slice(0, 3);
+	/** The hero cells are sized to the cloud, so it can fill more of them than in small previews. */
+	const zoom = 1.2;
 
 	let hero: HTMLElement;
 	let started = $state(false);
@@ -183,7 +185,7 @@
 <section class="hero" class:single bind:this={hero} aria-labelledby="course-title">
 	<header class="head">
 		<div class="mark">
-			<img src={stanfordLogo} alt="Stanford" width="44" height="44" />
+			<img src={stanfordLogo} alt="Stanford" width="44" height="44" class="su" />
 			<span class="times" aria-hidden="true">&times;</span>
 			<img src={goodfireLogo} alt="Goodfire" width="31" height="40" class="gf" />
 		</div>
@@ -215,12 +217,14 @@
 					{pitch}
 					gradients={[gradients[0]]}
 					idle={done && !dragging}
+					{zoom}
 				/>
 			</div>
 		{:else}
 			{#each homeStoryIds as id, i (id)}
 				<div class="cell">
-					<Trajectory storyIds={[id]} {draw} {yaw} {pitch} gradients={[gradients[i]]} idle={done && !dragging} />
+					<Trajectory storyIds={[id]} {draw} {yaw} {pitch} gradients={[gradients[i]]} idle={done && !dragging}
+					{zoom} />
 				</div>
 			{/each}
 		{/if}
@@ -232,7 +236,7 @@
 		{:else}
 			<a class="cue" class:fade={started} href="#about">
 				Course details
-				<ChevronDown size="1.4em" strokeWidth={1.75} aria-hidden="true" />
+				<ArrowDown size="1em" strokeWidth={1.25} aria-hidden="true" />
 			</a>
 		{/if}
 	</div>
@@ -256,6 +260,8 @@
 	}
 
 	.mark {
+		--seal: 2.6rem;
+		--gf: 2.2rem;
 		display: inline-flex;
 		align-items: center;
 		gap: 0.7rem;
@@ -264,12 +270,18 @@
 
 	.mark img {
 		display: block;
-		height: 2.6rem;
+		height: var(--seal);
 		width: auto;
 	}
 
+	/* The seal PNG carries ~7.3% transparent padding on each side; the Goodfire PNG has almost none.
+	   Pull the seal's right edge in so the ink-to-times gap matches the other side. */
+	.mark .su {
+		margin-right: calc(var(--seal) * -0.073);
+	}
+
 	.mark .gf {
-		height: 2.2rem;
+		height: var(--gf);
 	}
 
 	.times {
@@ -307,14 +319,18 @@
 	}
 
 	.plots {
-		flex: 1 1 auto;
+		--gap: clamp(0.5rem, 2vw, 2rem);
+		flex: 1 1 0;
 		min-height: 0;
 		width: 100%;
 		max-width: 84rem;
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
-		column-gap: clamp(0.5rem, 2vw, 2rem);
+		column-gap: var(--gap);
 		margin-top: clamp(0.5rem, 3vh, 2rem);
+		/* Rows never grow taller than one cell is wide, so each cloud fills its cell
+		   and the plots sit close under the subtitle. Shorter windows shrink them. */
+		max-height: calc((min(100vw - 2rem, 84rem) - 2 * var(--gap)) / 3 * 1.1);
 	}
 
 	.plots {
@@ -331,8 +347,7 @@
 	.plots.single {
 		grid-template-columns: minmax(0, 1fr);
 		max-width: 36rem;
-		/* One story fills the space between the subtitle and the cue. */
-		flex: 1 1 auto;
+		max-height: calc(min(100vw - 2rem, 36rem) * 1.1);
 	}
 
 	.cell {
@@ -343,6 +358,7 @@
 
 	.foot {
 		flex: 0 0 auto;
+		margin-top: auto;
 		height: clamp(3.25rem, 9vh, 5rem);
 		display: flex;
 		align-items: center;
@@ -358,6 +374,13 @@
 		text-transform: uppercase;
 		color: var(--muted);
 		text-decoration: none;
+	}
+
+	.cue {
+		font-size: 0.95rem;
+		font-weight: 400;
+		letter-spacing: normal;
+		text-transform: none;
 	}
 
 	.skip {
@@ -378,7 +401,7 @@
 		display: inline-flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 0.35rem;
+		gap: 0.25rem;
 		padding: 0.4rem 0.8rem;
 	}
 
@@ -388,7 +411,7 @@
 	}
 
 	.cue :global(svg) {
-		color: var(--gf-orange);
+		opacity: 0.75;
 	}
 
 	.cue.fade {
@@ -403,12 +426,9 @@
 	}
 
 	@media (max-width: 480px) {
-		.mark img {
-			height: 2.2rem;
-		}
-
-		.mark .gf {
-			height: 1.9rem;
+		.mark {
+			--seal: 2.2rem;
+			--gf: 1.9rem;
 		}
 
 		.hero {
@@ -432,12 +452,9 @@
 			margin-bottom: 0.5rem;
 		}
 
-		.mark img {
-			height: 1.8rem;
-		}
-
-		.mark .gf {
-			height: 1.55rem;
+		.mark {
+			--seal: 1.8rem;
+			--gf: 1.55rem;
 		}
 
 		h1,

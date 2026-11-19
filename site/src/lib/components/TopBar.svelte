@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/state';
 	import TrajectoryLogo from './TrajectoryLogo.svelte';
 	import ViewToggle from './ViewToggle.svelte';
 	import { viewState } from '../view.svelte.ts';
@@ -12,7 +11,7 @@
 	<div class="links">
 		<a href="/#schedule">Schedule</a>
 		{#if viewState.current === 'enrolled'}
-			<a href="/logistics" aria-current={page.url.pathname === '/logistics' ? 'page' : undefined}>Logistics</a>
+			<a href="/#logistics">Logistics</a>
 		{/if}
 		<ViewToggle />
 	</div>
@@ -61,8 +60,7 @@
 	}
 
 	.links a:hover::after,
-	.links a:focus-visible::after,
-	.links a[aria-current='page']::after {
+	.links a:focus-visible::after {
 		transform: scaleX(1);
 	}
 

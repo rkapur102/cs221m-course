@@ -67,11 +67,14 @@
 									{/if}
 								</span>
 								{#if row.readings}
-									<ul class="readings">
-										{#each row.readings as r (r.url)}
-											<li><a href={r.url} target="_blank" rel="noopener"><strong>{r.authors}</strong> ({r.year}), <em>{r.title}</em>. <ExternalLink class="ext" size="0.95em" strokeWidth={1.75} aria-hidden="true" /></a></li>
-										{/each}
-									</ul>
+									<details class="readings">
+										<summary>Suggested readings</summary>
+										<ul>
+											{#each row.readings as r (r.url)}
+												<li><a href={r.url} target="_blank" rel="noopener"><strong>{r.authors}</strong> ({r.year}), <em>{r.title}</em>. <ExternalLink class="ext" size="0.95em" strokeWidth={1.75} aria-hidden="true" /></a></li>
+											{/each}
+										</ul>
+									</details>
 								{/if}
 							</li>
 						{/each}
@@ -86,6 +89,7 @@
 				<ul class="items">
 					{#each extras as lec (lec.title)}
 						<li>
+							{#if shown.showDates}<span class="date" aria-hidden="true"></span>{/if}
 							<span class="title">
 								<span class="num">{lectureLabel(lec)}</span>
 								{@render titled(lec.title, lec.tag)}
@@ -176,10 +180,6 @@
 		grid-template-columns: 7.5rem 1fr;
 	}
 
-	.dated .extra .items li {
-		grid-template-columns: 1fr;
-	}
-
 	.date {
 		font-family: var(--font-sub);
 		font-size: 0.82rem;
@@ -225,10 +225,30 @@
 		display: block;
 		margin: 0.25rem 0 0.2rem;
 		padding: 0;
-		list-style: none;
 		font-family: var(--font-sub);
 		font-size: 0.8rem;
 		line-height: 1.45;
+	}
+
+	.readings summary {
+		cursor: pointer;
+		color: var(--muted);
+		width: fit-content;
+	}
+
+	.readings summary:hover {
+		color: var(--ink);
+	}
+
+	.readings summary:focus-visible {
+		outline: 2px solid var(--gf-orange);
+		outline-offset: 2px;
+	}
+
+	.readings ul {
+		list-style: none;
+		margin: 0.4rem 0 0;
+		padding: 0;
 	}
 
 	.items .readings li {
