@@ -4,6 +4,16 @@ Stanford University, Spring 2026
 
 Course website: [https://cs221m.stanford.edu/](https://cs221m.stanford.edu/)
 
+## Website
+
+The course website is a SvelteKit site in `site/`. To run it locally:
+
+```
+cd site && npm install && npm run dev
+```
+
+Then open http://localhost:5173. Build the static site with `npm run build`.
+
 ## Syllabus
 
 **Weeks 1-5**: core materials.

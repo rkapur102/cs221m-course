@@ -21,7 +21,7 @@
 	<ul class="facts">
 		<li><b>Time:</b> Monday, Wednesday 2:30pm-3:50pm</li>
 		<li><b>Location:</b> McMurtry Art Building, Oshman</li>
-		<li><b>Office hours:</b> By appointment: email course staff to schedule (<a href="mailto:{email}">{email}</a>)</li>
+		<li><b>Office hours:</b> By appointment. Email course staff to schedule (<a href="mailto:{email}">{email}</a>).</li>
 	</ul>
 
 	<h2>Coursework</h2>
