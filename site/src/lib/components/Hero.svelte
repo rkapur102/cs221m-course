@@ -16,8 +16,6 @@
 	/** Mirror the CSS: hero side padding and the plots row max-width (84rem), in px. */
 	const PAD = 16;
 	const MAX_ROW = 84 * 16;
-	/** Phone draw-in: each path gets its own slice of the timeline, slightly overlapping the next. */
-	const SLICE = 0.42;
 
 	/** Drag sensitivity, radians per pixel, and the pitch limit shared with Trajectory. */
 	const DRAG_YAW = 0.008;
@@ -40,12 +38,6 @@
 	const yaw = $derived(intro.spin * 2 * Math.PI + dragYaw);
 	const pitch = $derived(dragPitch);
 	const draw = $derived(1 - Math.pow(1 - intro.progress, 2));
-	const draws = $derived(
-		gradients.map((_, i) => {
-			const start = (i * (1 - SLICE)) / (gradients.length - 1);
-			return easeInOutCubic(Math.min(1, Math.max(0, (intro.progress - start) / SLICE)));
-		})
-	);
 
 	let cancelAutoScroll: (() => void) | undefined;
 
@@ -205,14 +197,12 @@
 		{#if single}
 			<div class="cell">
 				<Trajectory
-					storyIds={[...homeStoryIds]}
-					{draws}
+					storyIds={[homeStoryIds[0]]}
+					{draw}
 					{yaw}
-					{gradients}
-					idle={done && !dragging}
 					{pitch}
-					showLabels={false}
-					lineScale={0.78}
+					gradients={[gradients[0]]}
+					idle={done && !dragging}
 				/>
 			</div>
 		{:else}
@@ -329,17 +319,8 @@
 	.plots.single {
 		grid-template-columns: minmax(0, 1fr);
 		max-width: 36rem;
-		/* Keep the shared plot about square and let the title and plot sit together, centered. */
-		flex: 0 1 auto;
-		height: min(100vw, 40rem);
-	}
-
-	.hero.single .head {
-		margin-top: auto;
-	}
-
-	.hero.single .foot {
-		margin-top: auto;
+		/* One story fills the space between the subtitle and the cue. */
+		flex: 1 1 auto;
 	}
 
 	.cell {
