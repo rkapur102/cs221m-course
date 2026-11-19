@@ -153,7 +153,7 @@
 		}
 		.ctl:hover .dest,
 		.ctl:focus-visible .dest {
-			max-width: 16rem;
+			max-width: 22rem;
 			opacity: 1;
 		}
 	}

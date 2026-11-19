@@ -95,16 +95,19 @@
 		outline-offset: 1px;
 	}
 
-	/* Phones: stay top-right under the top bar like desktop, but scroll away with the page so
-	   the control never covers reading content or crowds Back and Next at the bottom. */
+	/* Phones: stay fixed top-right under the top bar (never near Back and Next at the bottom),
+	   compact: the active option shows its label, the other only its icon. */
 	@media (max-width: 40rem) {
 		.toggle {
-			position: absolute;
-			top: 3.4rem;
+			top: max(3.4rem, calc(env(safe-area-inset-top) + 3.4rem));
+			right: max(0.75rem, env(safe-area-inset-right));
+			background: rgba(255, 255, 255, 0.72);
+			backdrop-filter: blur(10px);
+			-webkit-backdrop-filter: blur(10px);
 		}
 
 		.toggle.home {
-			top: 0.75rem;
+			top: max(0.75rem, env(safe-area-inset-top));
 		}
 
 		button {

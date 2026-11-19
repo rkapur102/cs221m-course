@@ -34,7 +34,7 @@
 
 <style>
 	main {
-		padding: 5.5rem 0 0;
+		padding: var(--page-top) 0 0;
 	}
 
 	header {
