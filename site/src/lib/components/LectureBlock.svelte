@@ -30,7 +30,7 @@
 		<div class="supplemental">
 			<h3>{hasNotebook ? 'Supplemental' : 'Materials'}</h3>
 			{#if lecture.slides}
-				<p class="slides"><a href={slidesUrl(lecture.num)}>Lecture {lecture.num} slides (PDF)</a></p>
+				<p class="slides"><a href={slidesUrl(lecture.num)}>{lecture.num > 0 ? `Lecture ${lecture.num} slides` : 'Slides'} (PDF)</a></p>
 			{/if}
 			{#if lecture.readings.length > 0}
 				<ul class="readings">
