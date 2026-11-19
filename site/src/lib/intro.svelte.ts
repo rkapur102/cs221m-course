@@ -2,25 +2,6 @@ import { animate, easeInOutCubic } from './trajectory/animate';
 
 export type IntroPhase = 'drawing' | 'spinning' | 'done';
 
-const KEY = 'cs221m:intro-seen';
-
-/** Whether the homepage intro already played in this tab session. Storage failures read as "not seen". */
-export function introSeen(): boolean {
-	try {
-		return sessionStorage.getItem(KEY) === '1';
-	} catch {
-		return false;
-	}
-}
-
-export function markIntroSeen(): void {
-	try {
-		sessionStorage.setItem(KEY, '1');
-	} catch {
-		// Storage blocked: the intro simply plays again next time.
-	}
-}
-
 interface IntroOptions {
 	drawMs?: number;
 	spinMs?: number;
@@ -78,7 +59,6 @@ export class IntroController {
 		this.progress = 1;
 		this.spin = 0;
 		this.phase = 'done';
-		markIntroSeen();
 		this.#onDone?.();
 	}
 }

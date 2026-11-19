@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { afterNavigate } from '$app/navigation';
 	import ChevronDown from '@lucide/svelte/icons/chevron-down';
 	import Trajectory from '../trajectory/Trajectory.svelte';
 	import { animate, easeInOutCubic, prefersReducedMotion } from '../trajectory/animate';
 	import { pathGradients } from '../trajectory/palette';
 	import { homeStoryIds } from '../course';
 	import { viewState } from '../view.svelte.ts';
-	import { IntroController, introSeen } from '../intro.svelte.ts';
+	import { IntroController } from '../intro.svelte.ts';
 	import stanfordLogo from '../../../../images/stanford_logo.png';
 	import goodfireLogo from '../../../../images/goodfire_logo.PNG';
 
@@ -104,19 +105,20 @@
 		dragging = false;
 	}
 
-	onMount(() => {
-		const skipIntro =
-			introSeen() || prefersReducedMotion() || location.hash !== '' || window.scrollY > 0;
-		if (skipIntro) {
+	// Play on every arrival (load, reload, client navigation). Skip for reduced motion, a hash
+	// target, or browser Back/Forward, which restores the earlier scroll position.
+	afterNavigate(({ type }) => {
+		if (prefersReducedMotion() || location.hash !== '' || type === 'popstate') {
 			intro.skip();
 		} else {
 			started = true;
 			intro.start();
 		}
-		return () => {
-			intro.skip();
-			cancelAutoScroll?.();
-		};
+	});
+
+	onMount(() => () => {
+		intro.skip();
+		cancelAutoScroll?.();
 	});
 
 	// Pick the layout from the space the plots actually get.

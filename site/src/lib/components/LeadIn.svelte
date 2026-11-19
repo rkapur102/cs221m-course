@@ -36,38 +36,29 @@
 	let draw = $state(0);
 	let done = $state(false);
 	let controller: AbortController | undefined;
-	let returning = false;
 	let instant = $state(false);
 
 	function skip() {
 		controller?.abort();
 	}
 
-	// Restart the draw-in whenever the story changes.
-	$effect(() => {
-		void storyId;
-		void progress;
-		draw = 0;
-		done = false;
+	/** Restart the draw-in; browser Back/Forward shows the essay at once. */
+	function play(returning: boolean) {
+		controller?.abort();
 		const c = new AbortController();
 		controller = c;
-		// Arriving mid-page (scroll restored) or via Back/Forward: show the essay at once.
-		if (returning || (typeof window !== 'undefined' && window.scrollY > 0)) c.abort();
-		instant = returning || window.scrollY > 0;
-		returning = false;
+		draw = 0;
+		done = false;
+		instant = returning;
+		if (returning) c.abort();
 		animate(DRAW_MS, (t) => (draw = t), { signal: c.signal }).then(() => {
 			if (controller === c) done = true;
 		});
-		return () => c.abort();
-	});
+	}
 
-	afterNavigate(({ type }) => {
-		if (type === 'popstate') {
-			returning = true;
-			instant = true;
-			skip();
-		}
-	});
+	// Runs on first load and after every navigation, including week to week where the
+	// component instance is reused.
+	afterNavigate(({ type }) => play(type === 'popstate'));
 
 	onMount(() => {
 		const onKey = (e: KeyboardEvent) => {
@@ -80,6 +71,7 @@
 		window.addEventListener('touchstart', onAny, { passive: true });
 		window.addEventListener('pointerdown', onAny, { passive: true });
 		return () => {
+			controller?.abort();
 			window.removeEventListener('keydown', onKey);
 			window.removeEventListener('wheel', onAny);
 			window.removeEventListener('touchstart', onAny);
