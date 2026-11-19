@@ -25,10 +25,12 @@ interface IntroOptions {
 	drawMs?: number;
 	spinMs?: number;
 	onDone?: () => void;
+	/** Called only when the intro runs to its end on its own, never after skip(). */
+	onComplete?: () => void;
 }
 
 /**
- * Drives the homepage intro: a draw-in, then one synchronized spin, then done.
+ * Drives the homepage intro: a draw-in with one slow, synchronized spin running alongside it, then done.
  * `skip()` jumps straight to the finished state; repeated calls are harmless.
  */
 export class IntroController {
@@ -42,8 +44,10 @@ export class IntroController {
 	#drawMs: number;
 	#spinMs: number;
 	#onDone?: () => void;
+	#onComplete?: () => void;
 
-	constructor({ drawMs = 2200, spinMs = 1600, onDone }: IntroOptions = {}) {
+	constructor({ drawMs = 2200, spinMs = 1800, onDone, onComplete }: IntroOptions = {}) {
+		this.#onComplete = onComplete;
 		this.#drawMs = drawMs;
 		this.#spinMs = spinMs;
 		this.#onDone = onDone;
@@ -52,12 +56,16 @@ export class IntroController {
 	async start(): Promise<void> {
 		const { signal } = this.#ctrl;
 		if (this.phase === 'done' || signal.aborted) return;
+		const spinning = animate(this.#spinMs, (t) => (this.spin = t), {
+			ease: easeInOutCubic,
+			signal
+		});
 		await animate(this.#drawMs, (t) => (this.progress = t), { ease: (t) => t, signal });
-		if (!signal.aborted) {
-			this.phase = 'spinning';
-			await animate(this.#spinMs, (t) => (this.spin = t), { ease: easeInOutCubic, signal });
-		}
+		if (!signal.aborted) this.phase = 'spinning';
+		await spinning;
+		const natural = !signal.aborted;
 		this.#finish();
+		if (natural) this.#onComplete?.();
 	}
 
 	skip(): void {

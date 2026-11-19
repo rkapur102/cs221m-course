@@ -74,3 +74,33 @@ describe('session flag', () => {
 		expect(introSeen()).toBe(true);
 	});
 });
+
+describe('natural completion', () => {
+	it('calls onComplete when the intro runs out, but not when skipped', async () => {
+		vi.unstubAllGlobals();
+		vi.stubGlobal('matchMedia', (q: string) => ({ matches: false, media: q }));
+		vi.stubGlobal('sessionStorage', memoryStorage());
+		vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+		let clock = 0;
+		vi.stubGlobal('performance', { now: () => clock });
+		vi.stubGlobal('requestAnimationFrame', (cb: (t: number) => void) =>
+			setTimeout(() => cb((clock += 16)), 16)
+		);
+		vi.stubGlobal('cancelAnimationFrame', (id: number) => clearTimeout(id));
+		const onComplete = vi.fn();
+		const natural = new IntroController({ onComplete });
+		const run = natural.start();
+		await vi.advanceTimersByTimeAsync(6000);
+		await run;
+		expect(natural.phase).toBe('done');
+		expect(onComplete).toHaveBeenCalledTimes(1);
+
+		const skipped = vi.fn();
+		const intro = new IntroController({ onComplete: skipped });
+		const run2 = intro.start();
+		intro.skip();
+		await run2;
+		expect(skipped).not.toHaveBeenCalled();
+		vi.useRealTimers();
+	});
+});

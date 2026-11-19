@@ -15,6 +15,8 @@
 		lineScale?: number;
 		/** Extra rotation about the vertical axis, in radians. */
 		yaw?: number;
+		/** Tilt offset added to the base camera pitch, in radians (clamped to +/-0.6 in total). */
+		pitch?: number;
 		showCloud?: boolean;
 		showLabels?: boolean;
 		gradients?: string[][];
@@ -32,6 +34,7 @@
 		draws,
 		lineScale = 1,
 		yaw = 0,
+		pitch = 0,
 		showCloud = true,
 		showLabels = true,
 		gradients = pathGradients,
@@ -44,6 +47,7 @@
 	/** Base view, matching the demo camera at (1.45, 1.45, 1.05). */
 	const BASE_YAW = -0.75 * Math.PI;
 	const PITCH = Math.atan2(1.05, Math.hypot(1.45, 1.45));
+	const MAX_PITCH_OFFSET = 0.6;
 	const IDLE_SPEED = (2 * Math.PI) / 150; // radians per second
 	const EMOTIONS: Emotion[] = ['anger', 'disgust', 'fear', 'happiness', 'sadness', 'surprise'];
 
@@ -102,7 +106,7 @@
 
 		const angle = BASE_YAW + yaw + idleYaw;
 		const { center, radius } = frame;
-		const opts = { pitch: PITCH, persp: 0.12, scale: (showCloud ? 0.86 : 0.9) / radius };
+		const opts = { pitch: PITCH + Math.min(MAX_PITCH_OFFSET, Math.max(-MAX_PITCH_OFFSET, pitch)), persp: 0.12, scale: (showCloud ? 0.86 : 0.9) / radius };
 		const proj = (p: Vec3) =>
 			project([p[0] - center[0], p[1] - center[1], p[2] - center[2]], angle, size, opts);
 
@@ -251,7 +255,7 @@
 
 	// Redraw whenever an input changes.
 	$effect(() => {
-		void [draw, draws, lineScale, yaw, idleYaw, showCloud, showLabels, cloudColors, colors, frame, size.w, size.h];
+		void [draw, draws, lineScale, yaw, pitch, idleYaw, showCloud, showLabels, cloudColors, colors, frame, size.w, size.h];
 		render();
 	});
 

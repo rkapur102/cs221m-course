@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import ChevronDown from '@lucide/svelte/icons/chevron-down';
 	import Trajectory from '../trajectory/Trajectory.svelte';
-	import { easeInOutCubic, prefersReducedMotion } from '../trajectory/animate';
+	import { animate, easeInOutCubic, prefersReducedMotion } from '../trajectory/animate';
 	import { pathGradients } from '../trajectory/palette';
 	import { homeStoryIds } from '../course';
 	import { viewState } from '../view.svelte.ts';
@@ -19,7 +19,14 @@
 	/** Phone draw-in: each path gets its own slice of the timeline, slightly overlapping the next. */
 	const SLICE = 0.42;
 
-	const intro = new IntroController();
+	/** Drag sensitivity, radians per pixel, and the pitch limit shared with Trajectory. */
+	const DRAG_YAW = 0.008;
+	const DRAG_PITCH = 0.006;
+	const MAX_PITCH = 0.6;
+	const SCROLL_DELAY_MS = 600;
+	const SCROLL_MS = 1600;
+
+	const intro = new IntroController({ onComplete: () => scheduleAutoScroll() });
 	const gradients = pathGradients.slice(0, 3);
 
 	let hero: HTMLElement;
@@ -27,7 +34,11 @@
 	let single = $state(false);
 
 	const done = $derived(intro.phase === 'done');
-	const yaw = $derived(intro.spin * 2 * Math.PI);
+	let dragYaw = $state(0);
+	let dragPitch = $state(0);
+	let dragging = $state(false);
+	const yaw = $derived(intro.spin * 2 * Math.PI + dragYaw);
+	const pitch = $derived(dragPitch);
 	const draw = $derived(1 - Math.pow(1 - intro.progress, 2));
 	const draws = $derived(
 		gradients.map((_, i) => {
@@ -35,6 +46,71 @@
 			return easeInOutCubic(Math.min(1, Math.max(0, (intro.progress - start) / SLICE)));
 		})
 	);
+
+	let cancelAutoScroll: (() => void) | undefined;
+
+	/** After the intro runs out on its own, glide down to the course details unless the visitor acts first. */
+	function scheduleAutoScroll() {
+		const target = document.getElementById('about');
+		if (!target || prefersReducedMotion() || window.scrollY > 0) return;
+		const ctrl = new AbortController();
+		const { signal } = ctrl;
+		const events = ['wheel', 'touchstart', 'keydown', 'pointerdown', 'pagehide'] as const;
+		const cancel = () => {
+			ctrl.abort();
+			clearTimeout(timer);
+			for (const e of events) window.removeEventListener(e, cancel);
+			window.removeEventListener('scroll', onScroll);
+			cancelAutoScroll = undefined;
+		};
+		let expected = window.scrollY;
+		const onScroll = () => {
+			// Scrolls we did not make ourselves (scrollbar drag, anchor jump) take over.
+			if (Math.abs(window.scrollY - expected) > 3) cancel();
+		};
+		const timer = setTimeout(async () => {
+			const from = window.scrollY;
+			const to = Math.max(0, target.getBoundingClientRect().top + from - 16);
+			window.addEventListener('scroll', onScroll, { passive: true });
+			await animate(
+				SCROLL_MS,
+				(t) => {
+					if (signal.aborted) return;
+					expected = from + (to - from) * t;
+					window.scrollTo({ top: expected, behavior: 'instant' });
+				},
+				{ ease: easeInOutCubic, signal }
+			);
+			cancel();
+		}, SCROLL_DELAY_MS);
+		for (const e of events) window.addEventListener(e, cancel, { passive: true });
+		cancelAutoScroll = cancel;
+	}
+
+	let dragStart: { x: number; y: number; yaw: number; pitch: number; id: number } | null = null;
+
+	function onDragDown(e: PointerEvent) {
+		if (e.pointerType === 'mouse' && e.button !== 0) return;
+		dragStart = { x: e.clientX, y: e.clientY, yaw: dragYaw, pitch: dragPitch, id: e.pointerId };
+		dragging = true;
+		(e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+	}
+
+	function onDragMove(e: PointerEvent) {
+		if (!dragStart || e.pointerId !== dragStart.id) return;
+		dragYaw = dragStart.yaw + (e.clientX - dragStart.x) * DRAG_YAW;
+		// Touch keeps vertical swipes for scrolling, so only mouse and pen tilt the view.
+		if (e.pointerType !== 'touch') {
+			const next = dragStart.pitch + (e.clientY - dragStart.y) * DRAG_PITCH;
+			dragPitch = Math.min(MAX_PITCH, Math.max(-MAX_PITCH, next));
+		}
+	}
+
+	function onDragEnd(e: PointerEvent) {
+		if (!dragStart || e.pointerId !== dragStart.id) return;
+		dragStart = null;
+		dragging = false;
+	}
 
 	onMount(() => {
 		const skipIntro =
@@ -45,7 +121,10 @@
 			started = true;
 			intro.start();
 		}
-		return () => intro.skip();
+		return () => {
+			intro.skip();
+			cancelAutoScroll?.();
+		};
 	});
 
 	// Pick the layout from the space the plots actually get.
@@ -104,11 +183,24 @@
 			<span class="times" aria-hidden="true">&times;</span>
 			<img src={goodfireLogo} alt="Goodfire" width="31" height="40" class="gf" />
 		</div>
-		<h1 id="course-title">CS 221M: Mechanistic Interpretability</h1>
+		<h1 id="course-title">
+			<span class="line">CS 221M:</span>
+			<span class="line">Mechanistic</span>
+			<span class="line">Interpretability</span>
+		</h1>
 		<p class="sub">Stanford University{viewState.current === 'enrolled' ? ', Spring 2026' : ''}</p>
 	</header>
 
-	<div class="plots" class:single aria-hidden="true">
+	<div
+		class="plots"
+		class:single
+		class:dragging
+		aria-hidden="true"
+		onpointerdown={onDragDown}
+		onpointermove={onDragMove}
+		onpointerup={onDragEnd}
+		onpointercancel={onDragEnd}
+	>
 		{#if single}
 			<div class="cell">
 				<Trajectory
@@ -116,7 +208,8 @@
 					{draws}
 					{yaw}
 					{gradients}
-					idle={done}
+					idle={done && !dragging}
+					{pitch}
 					showLabels={false}
 					lineScale={0.78}
 				/>
@@ -124,7 +217,7 @@
 		{:else}
 			{#each homeStoryIds as id, i (id)}
 				<div class="cell">
-					<Trajectory storyIds={[id]} {draw} {yaw} gradients={[gradients[i]]} idle={done} />
+					<Trajectory storyIds={[id]} {draw} {yaw} {pitch} gradients={[gradients[i]]} idle={done && !dragging} />
 				</div>
 			{/each}
 		{/if}
@@ -156,7 +249,7 @@
 
 	.head {
 		text-align: center;
-		max-width: 46rem;
+		max-width: 100%;
 	}
 
 	.mark {
@@ -184,16 +277,27 @@
 	}
 
 	h1 {
-		font-size: clamp(2.1rem, 5.2vw, 3.9rem);
+		/* One line on wide screens: sized so the full title fits from the desktop cutoff upward. */
+		font-size: clamp(1.9rem, 4.6vw, 3.9rem);
 		letter-spacing: 0.005em;
-		text-wrap: balance;
+		white-space: nowrap;
+	}
+
+	/* The stacked phone layout shows each word group on its own line. */
+	.hero.single h1 {
+		white-space: normal;
+		font-size: clamp(2.1rem, 9vw, 3.4rem);
+	}
+
+	.hero.single h1 .line {
+		display: block;
 	}
 
 	.sub {
 		margin: 0.7rem 0 0;
 		font-family: var(--font-sub);
 		font-weight: 600;
-		font-size: 0.8rem;
+		font-size: 1.05rem;
 		letter-spacing: 0.16em;
 		text-transform: uppercase;
 		color: var(--cardinal);
@@ -208,6 +312,17 @@
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		column-gap: clamp(0.5rem, 2vw, 2rem);
 		margin-top: clamp(0.5rem, 3vh, 2rem);
+	}
+
+	.plots {
+		cursor: grab;
+		touch-action: pan-y;
+		user-select: none;
+		-webkit-user-select: none;
+	}
+
+	.plots.dragging {
+		cursor: grabbing;
 	}
 
 	.plots.single {
@@ -303,7 +418,7 @@
 		}
 
 		.sub {
-			font-size: 0.72rem;
+			font-size: 0.9rem;
 		}
 	}
 
