@@ -23,8 +23,8 @@
 	const DRAG_YAW = 0.008;
 	const DRAG_PITCH = 0.006;
 	const MAX_PITCH = 0.6;
-	const SCROLL_DELAY_MS = 600;
-	const SCROLL_MS = 1600;
+	const SCROLL_DELAY_MS = 1800;
+	const SCROLL_MS = 2200;
 
 	const intro = new IntroController({ onComplete: () => scheduleAutoScroll() });
 	const gradients = pathGradients.slice(0, 3);
@@ -71,7 +71,6 @@
 		const timer = setTimeout(async () => {
 			const from = window.scrollY;
 			const to = Math.max(0, target.getBoundingClientRect().top + from - 16);
-			window.addEventListener('scroll', onScroll, { passive: true });
 			await animate(
 				SCROLL_MS,
 				(t) => {
@@ -84,6 +83,7 @@
 			cancel();
 		}, SCROLL_DELAY_MS);
 		for (const e of events) window.addEventListener(e, cancel, { passive: true });
+		window.addEventListener('scroll', onScroll, { passive: true });
 		cancelAutoScroll = cancel;
 	}
 
