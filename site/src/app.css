@@ -132,6 +132,13 @@ html[data-view='enrolled']:not([data-ready]) body {
 		color 150ms ease;
 }
 
+/* Mixed-case labels read centered between the x-height and cap height, which sits a little
+   below the line box's middle; lower the icons to that optical center (scales with the text). */
+.btn-quiet svg {
+	flex: none;
+	transform: translateY(0.04em);
+}
+
 .btn-quiet:hover {
 	color: var(--cardinal);
 	border-color: var(--cardinal);

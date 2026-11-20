@@ -30,8 +30,8 @@
 
 <div class="schedule">
 	<p class="legend">
-		<span class="key"><span aria-hidden="true"><TagMark tag="inside" /></span> inside the model</span>
-		<span class="key"><span aria-hidden="true"><TagMark tag="outside" /></span> outside the model</span>
+		<span class="key"><span aria-hidden="true"><TagMark tag="inside" /></span> Inside the model</span>
+		<span class="key"><span aria-hidden="true"><TagMark tag="outside" /></span> Outside the model</span>
 	</p>
 
 	<ol class="weeks" class:dated={shown.showDates}>
