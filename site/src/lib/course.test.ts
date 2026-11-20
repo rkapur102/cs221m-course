@@ -1,7 +1,14 @@
 import { describe, it, expect } from 'vitest';
-import { weeks, colabUrl, slidesUrl, guestRows, extras, scheduleFor, progressFor, courseStoryId, lectureLabel } from './course';
+import { weeks, colabUrl, slidesUrl, guestRows, extras, scheduleFor, progressFor, courseStoryId, lectureLabel, guestParts } from './course';
 
 describe('course', () => {
+	it('splits guest rows into a label and the text beside it', () => {
+		expect(guestParts('Guest lecture: Neel Nanda')).toEqual({ label: 'Guest lecture', name: 'Neel Nanda' });
+		expect(guestParts('Mid-project check-in')).toEqual({ label: 'Project', name: 'Midpoint check-in' });
+		expect(guestParts('Project presentations')).toEqual({ label: 'Project', name: 'Presentations' });
+		expect(guestParts('No lecture (Memorial Day)')).toEqual({ label: '', name: 'No lecture (Memorial Day)' });
+	});
+
 	it('groups lectures by week', () => {
 		expect(weeks.map((w) => w.lectures.map((l) => l.num))).toEqual([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]]);
 	});

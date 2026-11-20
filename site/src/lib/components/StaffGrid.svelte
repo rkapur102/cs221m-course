@@ -8,6 +8,7 @@
 	import tao from '../../../../images/junyi_tao.jpg';
 	import yamakoshi from '../../../../images/taka_yamakoshi.jpg';
 	import vatsavaya from '../../../../images/siri_vatsavaya.jpg';
+	import kapur from '../../../../images/rhea_kapur.jpg';
 
 	type Org = 'Stanford' | 'Goodfire';
 	interface Member {
@@ -25,6 +26,13 @@
 		{ name: 'Jing Huang', role: 'Instructor', org: 'Stanford', photo: huang },
 		{ name: 'Junyi Tao', role: 'Teaching Assistant', org: 'Stanford', photo: tao },
 		{ name: 'Taka Yamakoshi', role: 'Teaching Assistant', org: 'Stanford', photo: yamakoshi },
+		{
+			name: 'Rhea Kapur',
+			role: 'Designer & Teaching Assistant',
+			org: 'Stanford',
+			photo: kapur,
+			position: 'center 25%'
+		},
 		{
 			name: 'Siri Vatsavaya',
 			role: 'Course Manager',
@@ -92,19 +100,21 @@
 		line-height: 1.3;
 	}
 
+	/* Inline so a long role wraps with its badge still at the start of the text. */
 	.role {
 		margin-top: 0.2rem;
-		display: inline-flex;
-		align-items: center;
-		gap: 0.3rem;
+		display: inline;
 		font-family: var(--font-sub);
 		font-size: 0.82rem;
 		color: var(--muted);
 	}
 
 	.badge {
+		display: inline;
 		width: auto;
 		height: 1em;
+		margin-right: 0.3rem;
+		vertical-align: -0.12em;
 		object-fit: contain;
 	}
 

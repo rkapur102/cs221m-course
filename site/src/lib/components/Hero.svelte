@@ -408,7 +408,8 @@
 		}
 
 		.hero {
-			padding-top: 3.6rem;
+			/* Clears the view toggle (now with words) above the logo mark. */
+			padding-top: 4.75rem;
 		}
 
 		.sub {
@@ -421,7 +422,8 @@
 	/* Landscape phones: keep the title compact so the plots and the cue stay on screen. */
 	@media (max-height: 520px) {
 		.hero {
-			padding-top: 1rem;
+			/* Still clear the view toggle in the top-right corner. */
+			padding-top: 3.5rem;
 		}
 
 		.mark {

@@ -52,6 +52,15 @@ export function lectureLabel(lec: Lecture): string {
 	return lec.label ?? `Lecture ${lec.num}`;
 }
 
+/** Split a guest-week row into the schedule's label column and the text beside it. */
+export function guestParts(title: string): { label: string; name: string } {
+	const guest = /^Guest lecture:\s*(.+)$/.exec(title);
+	if (guest) return { label: 'Guest lecture', name: guest[1] };
+	if (title === 'Mid-project check-in') return { label: 'Project', name: 'Midpoint check-in' };
+	if (title === 'Project presentations') return { label: 'Project', name: 'Presentations' };
+	return { label: '', name: title };
+}
+
 export function slidesUrl(n: number): string {
 	return `https://github.com/${REPO}/blob/main/materials/${String(n).padStart(2, '0')}_slides.pdf`;
 }

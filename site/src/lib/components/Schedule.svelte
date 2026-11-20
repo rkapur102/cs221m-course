@@ -1,11 +1,14 @@
 <script lang="ts">
-	import { extras, lectureLabel, scheduleFor, weeks, type ScheduleRow, type Tag } from '../course';
+	import { extras, guestParts, lectureLabel, scheduleFor, weeks, type ScheduleRow, type Tag } from '../course';
 	import { viewState } from '../view.svelte.ts';
 	import TagMark from './TagMark.svelte';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import ExternalLink from '@lucide/svelte/icons/external-link';
+	import ChevronDown from '@lucide/svelte/icons/chevron-down';
 
 	const shown = $derived(scheduleFor(viewState.current));
+	/** Which guest rows have their suggested readings expanded, keyed by date. */
+	let openReadings = $state<Record<string, boolean>>({});
 
 	const guestWeeks = $derived.by(() => {
 		const byWeek = new Map<number, ScheduleRow[]>();
@@ -58,23 +61,29 @@
 					<span class="week">Week {week.n}</span>
 					<ul class="items">
 						{#each week.rows as row (row.date)}
+							{@const parts = guestParts(row.title)}
 							<li>
 								{#if shown.showDates}<span class="date">{row.date}</span>{/if}
-								<span class="title">
-									<span class="name">{row.title}</span>
-									{#if row.link}
-										<a class="aside" href={row.link.url} target="_blank" rel="noopener">{row.link.label} <ExternalLink class="ext" size="0.9em" strokeWidth={1.75} aria-hidden="true" /></a>
-									{/if}
+								<span class="title numbered">
+									<span class="num">{parts.label}</span>
+									<span class="name"
+										>{parts.name}{#if row.link}<a class="tag" href={row.link.url} target="_blank" rel="noopener"
+												>{row.link.label}<ExternalLink class="ext" size="1em" strokeWidth={2} aria-hidden="true" /></a
+											>{/if}{#if row.readings}<button
+												type="button"
+												class="tag"
+												aria-expanded={openReadings[row.date] ?? false}
+												onclick={() => (openReadings[row.date] = !openReadings[row.date])}
+												>Suggested readings<ChevronDown class="chev" size="1em" strokeWidth={2} aria-hidden="true" /></button
+											>{/if}</span
+									>
 								</span>
-								{#if row.readings}
-									<details class="readings">
-										<summary>Suggested readings</summary>
-										<ul>
-											{#each row.readings as r (r.url)}
-												<li><a href={r.url} target="_blank" rel="noopener"><strong>{r.authors}</strong> ({r.year}), <em>{r.title}</em>. <ExternalLink class="ext" size="0.95em" strokeWidth={1.75} aria-hidden="true" /></a></li>
-											{/each}
-										</ul>
-									</details>
+								{#if row.readings && openReadings[row.date]}
+									<ul class="readings">
+										{#each row.readings as r (r.url)}
+											<li><a href={r.url} target="_blank" rel="noopener"><strong>{r.authors}</strong> ({r.year}), <em>{r.title}</em>. <ExternalLink class="ext" size="0.95em" strokeWidth={1.75} aria-hidden="true" /></a></li>
+										{/each}
+									</ul>
 								{/if}
 							</li>
 						{/each}
@@ -195,7 +204,7 @@
 	/* Label in its own column, so a wrapped title stays indented past "Lecture 10" / "Notebook". */
 	.title.numbered {
 		display: grid;
-		grid-template-columns: 4.4rem 1fr;
+		grid-template-columns: 6.25rem 1fr;
 		column-gap: 0.4rem;
 		align-items: baseline;
 	}
@@ -210,7 +219,7 @@
 		font-weight: 600;
 		color: var(--cardinal);
 		display: inline-block;
-		min-width: 4.4rem;
+		min-width: 6.25rem;
 		margin-right: 0.4rem;
 		white-space: nowrap;
 	}
@@ -227,42 +236,19 @@
 		color: var(--muted);
 	}
 
-	.aside {
-		font-family: var(--font-sub);
-		font-size: 0.8rem;
-		white-space: nowrap;
-	}
-
 	.items .readings {
 		grid-column: 2;
 		display: block;
-		margin: 0.25rem 0 0.2rem;
-		padding: 0;
+		list-style: none;
+		/* Indented past the label column, under the speaker's name. */
+		margin: 0.45rem 0 0.2rem;
+		padding: 0 0 0 6.65rem;
 		font-family: var(--font-sub);
 		font-size: 0.8rem;
 		line-height: 1.45;
 	}
 
-	.readings summary {
-		cursor: pointer;
-		color: var(--muted);
-		width: fit-content;
-	}
 
-	.readings summary:hover {
-		color: var(--ink);
-	}
-
-	.readings summary:focus-visible {
-		outline: 2px solid var(--gf-orange);
-		outline-offset: 2px;
-	}
-
-	.readings ul {
-		list-style: none;
-		margin: 0.4rem 0 0;
-		padding: 0;
-	}
 
 	.items .readings li {
 		display: block;
@@ -279,8 +265,7 @@
 		text-decoration-color: currentColor;
 	}
 
-	.readings :global(.ext),
-	.aside :global(.ext) {
+	.readings :global(.ext) {
 		vertical-align: -0.1em;
 		opacity: 0.7;
 	}
@@ -333,6 +318,55 @@
 	@media (prefers-reduced-motion: reduce) {
 		.linked,
 		.arrow {
+			transition: none;
+		}
+	}
+
+	/* Small clickable chips beside a guest row ("Slides", "Suggested readings"). */
+	.tag {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3em;
+		margin-left: 0.6rem;
+		padding: 0.15rem 0.45rem;
+		vertical-align: 0.1em;
+		border: 1px solid rgba(140, 21, 21, 0.3);
+		border-radius: 0.35rem;
+		background: transparent;
+		color: var(--cardinal);
+		font-family: var(--font-sub);
+		font-size: 0.66rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		line-height: 1.4;
+		text-transform: uppercase;
+		text-decoration: none;
+		white-space: nowrap;
+		cursor: pointer;
+		transition: background-color 150ms ease;
+	}
+
+	.tag:hover,
+	.tag:focus-visible {
+		background: rgba(196, 101, 45, 0.1);
+	}
+
+	.tag:focus-visible {
+		outline: 2px solid var(--gf-orange);
+		outline-offset: 2px;
+	}
+
+	.tag :global(.chev) {
+		transition: transform 150ms ease;
+	}
+
+	.tag[aria-expanded='true'] :global(.chev) {
+		transform: rotate(180deg);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.tag,
+		.tag :global(.chev) {
 			transition: none;
 		}
 	}

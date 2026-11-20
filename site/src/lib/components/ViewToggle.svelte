@@ -13,18 +13,20 @@
 		class:active={viewState.current === 'self'}
 		onclick={() => setView('self')}
 	>
-		<BookOpen size={17} strokeWidth={1.75} aria-hidden="true" />
+		<BookOpen size={16} strokeWidth={1.75} aria-hidden="true" />
+		<span>Self-paced</span>
 	</button>
 	<span class="divider" aria-hidden="true"></span>
 	<button
 		type="button"
-		title="Enrolled view"
-		aria-label="Enrolled view"
+		title="Student view"
+		aria-label="Student view"
 		aria-pressed={viewState.current === 'enrolled'}
 		class:active={viewState.current === 'enrolled'}
 		onclick={() => setView('enrolled')}
 	>
-		<GraduationCap size={18} strokeWidth={1.75} aria-hidden="true" />
+		<GraduationCap size={17} strokeWidth={1.75} aria-hidden="true" />
+		<span>Student</span>
 	</button>
 </div>
 
@@ -48,9 +50,13 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		width: 2.5rem;
+		gap: 0.4rem;
 		height: 2.25rem;
-		padding: 0;
+		padding: 0 0.7rem;
+		font-family: var(--font-sub);
+		font-size: 0.85rem;
+		font-weight: 600;
+		white-space: nowrap;
 		border: 0;
 		border-radius: 0;
 		background: transparent;
@@ -82,8 +88,9 @@
 
 	@media (max-width: 40rem) {
 		button {
-			width: 2.25rem;
 			height: 2.125rem;
+			padding: 0 0.55rem;
+			font-size: 0.8rem;
 		}
 	}
 
