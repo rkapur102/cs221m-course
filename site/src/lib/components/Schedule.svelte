@@ -243,9 +243,9 @@
 		/* Indented past the label column, under the speaker's name. */
 		margin: 0.45rem 0 0.2rem;
 		padding: 0 0 0 6.65rem;
-		/* Same as the FAQ answers: body font at body size. */
+		/* Same as the readings on the materials pages. */
 		font-family: var(--font-body);
-		font-size: 1rem;
+		font-size: 0.95rem;
 		line-height: 1.6;
 	}
 
@@ -314,10 +314,8 @@
 			grid-template-columns: 1fr;
 		}
 
-		/* Full width on phones: at body size the indented column would be too narrow. */
 		.items .readings {
 			grid-column: 1;
-			padding-left: 0;
 		}
 	}
 
