@@ -21,7 +21,7 @@
 				<p>Questions? You can reach the Spring 2026 course staff at <a href="mailto:{email}">{email}</a>.</p>
 			{/if}
 			<p class="credit">
-				Trajectory visual theme adapted from Goodfire's
+				Story trajectory visual theme adapted from Goodfire's
 				<a href="https://www.goodfire.com/research/stories-in-space"><em>Meandering on Manifolds</em></a>
 				(<a href="https://arxiv.org/abs/2605.12412">Bigelow et al., 2026</a>).
 			</p>
