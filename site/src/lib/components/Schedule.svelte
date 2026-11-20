@@ -68,13 +68,13 @@
 									<span class="num">{parts.label}</span>
 									<span class="name"
 										>{parts.name}{#if row.link}<a class="tag" href={row.link.url} target="_blank" rel="noopener"
-												>{row.link.label}<ExternalLink class="ext" size="1em" strokeWidth={2} aria-hidden="true" /></a
+												><span class="label">{row.link.label}</span><ExternalLink class="ext" size="1.15em" strokeWidth={2} aria-hidden="true" /></a
 											>{/if}{#if row.readings}<button
 												type="button"
 												class="tag"
 												aria-expanded={openReadings[row.date] ?? false}
 												onclick={() => (openReadings[row.date] = !openReadings[row.date])}
-												>Suggested readings<ChevronDown class="chev" size="1em" strokeWidth={2} aria-hidden="true" /></button
+												><span class="label">Suggested readings</span><ChevronDown class="chev" size="1.15em" strokeWidth={2} aria-hidden="true" /></button
 											>{/if}</span
 									>
 								</span>
@@ -330,24 +330,38 @@
 	.tag {
 		display: inline-flex;
 		align-items: center;
-		gap: 0.3em;
+		gap: 0.35em;
 		margin-left: 0.6rem;
-		padding: 0.15rem 0.45rem;
-		vertical-align: 0.1em;
+		padding: 0.3rem 0.5rem;
+		/* Centered on the name's x-height, then nudged (see --tag-nudge) to its optical middle. */
+		vertical-align: middle;
+		position: relative;
+		/* x-height middle is a hair low for a mixed-case name; lift to its optical middle. */
+		top: -0.1em;
 		border: 1px solid rgba(140, 21, 21, 0.3);
 		border-radius: 0.35rem;
 		background: transparent;
 		color: var(--cardinal);
 		font-family: var(--font-sub);
-		font-size: 0.66rem;
+		font-size: 0.72rem;
 		font-weight: 700;
-		letter-spacing: 0.08em;
-		line-height: 1.4;
+		letter-spacing: 0.12em;
+		line-height: 1;
 		text-transform: uppercase;
 		text-decoration: none;
 		white-space: nowrap;
 		cursor: pointer;
 		transition: background-color 150ms ease;
+	}
+
+	/* Caps sit high in a line-height:1 box; this centers them on the icons. */
+	.tag .label {
+		display: block;
+		padding-top: var(--caps-nudge);
+	}
+
+	.tag :global(svg) {
+		flex: none;
 	}
 
 	.tag:hover,
@@ -372,6 +386,17 @@
 		.tag,
 		.tag :global(.chev) {
 			transition: none;
+		}
+	}
+
+	/* Phones: the tag gets its own line under the name, so Slides and Suggested readings
+	   sit the same way instead of one inline and one wrapped. (After the base .tag rule.) */
+	@media (max-width: 640px) {
+		.tag {
+			display: flex;
+			width: fit-content;
+			margin: 0.4rem 0 0;
+			top: 0;
 		}
 	}
 </style>

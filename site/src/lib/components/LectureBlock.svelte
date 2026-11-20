@@ -18,16 +18,16 @@
 	<div class="buttons">
 		{#each lecture.notebooks as nb}
 			<a class="btn-quiet" href={colabUrl(nb.file)} target="_blank" rel="noopener">
-				<NotebookPen size="1em" strokeWidth={1.75} aria-hidden="true" />
-				Open notebook{nb.label ? ` (${nb.label})` : ''} in Colab
-				<ExternalLink size="0.85em" strokeWidth={1.75} aria-hidden="true" />
+				<NotebookPen size="1.35em" strokeWidth={1.75} aria-hidden="true" />
+				<span class="label">Open notebook{nb.label ? ` (${nb.label})` : ''} in Colab</span>
+				<ExternalLink size="1.15em" strokeWidth={1.75} aria-hidden="true" />
 			</a>
 		{/each}
 		{#if lecture.slides}
 			<a class="btn-quiet" href={slidesUrl(lecture.num)} target="_blank" rel="noopener">
-				<Presentation size="1em" strokeWidth={1.75} aria-hidden="true" />
-				Slides (PDF)
-				<ExternalLink size="0.85em" strokeWidth={1.75} aria-hidden="true" />
+				<Presentation size="1.35em" strokeWidth={1.75} aria-hidden="true" />
+				<span class="label">Slides (PDF)</span>
+				<ExternalLink size="1.15em" strokeWidth={1.75} aria-hidden="true" />
 			</a>
 		{/if}
 	</div>

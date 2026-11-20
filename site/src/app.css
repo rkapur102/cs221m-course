@@ -46,6 +46,8 @@
 	--ink: #1a1a1a;
 	/* Secondary text uses the same black as body text (no gray). */
 	--muted: #1a1a1a;
+	/* Nunito Sans caps in a line-height:1 box sit slightly high; this padding centers them on icons. */
+	--caps-nudge: 0.055em;
 	--bg: #ffffff;
 	--content: 60rem;
 	/* Side gutter for every content column; roomier on phones. */
@@ -115,12 +117,15 @@ html[data-view='enrolled']:not([data-ready]) body {
 .btn-quiet {
 	display: inline-flex;
 	align-items: center;
-	gap: 0.5em;
-	padding: 0.4rem 0.8rem;
+	gap: 0.6em;
+	padding: 0.55rem 0.85rem;
 	font-family: var(--font-sub);
-	font-weight: 600;
-	font-size: 0.95rem;
-	line-height: 1.3;
+	font-weight: 700;
+	font-size: 0.72rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	line-height: 1;
+	white-space: nowrap;
 	color: var(--ink);
 	background: rgba(255, 255, 255, 0.85);
 	border: 1px solid rgba(26, 26, 26, 0.25);
@@ -132,11 +137,14 @@ html[data-view='enrolled']:not([data-ready]) body {
 		color 150ms ease;
 }
 
-/* Mixed-case labels read centered between the x-height and cap height, which sits a little
-   below the line box's middle; lower the icons to that optical center (scales with the text). */
 .btn-quiet svg {
 	flex: none;
-	transform: translateY(0.04em);
+}
+
+/* Caps sit high in a line-height:1 box; this centers them on the icons. */
+.btn-quiet .label {
+	display: block;
+	padding-top: var(--caps-nudge);
 }
 
 .btn-quiet:hover {

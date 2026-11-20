@@ -78,7 +78,7 @@
 	/* Caps sit high in the line box; nudge them so they center on the icon. */
 	button span {
 		display: block;
-		padding-top: 0.07em;
+		padding-top: var(--caps-nudge);
 	}
 
 	button:hover {
