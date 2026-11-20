@@ -16,7 +16,7 @@ export interface Notebook {
 
 export interface Lecture {
 	num: number;
-	/** Shown instead of "Lecture N", e.g. "Extra 1". */
+	/** Shown instead of "Lecture N", e.g. "Notebook". */
 	label?: string;
 	title: string;
 	date: string;
@@ -259,7 +259,7 @@ export const guestRows: ScheduleRow[] = [
 export const extras: Lecture[] = [
 		{
 			num: 0,
-			label: 'Extra 1',
+			label: 'Notebook',
 			title: 'Pragmatic inference and Rational Speech Acts',
 			date: 'Extra',
 			tag: 'inside',

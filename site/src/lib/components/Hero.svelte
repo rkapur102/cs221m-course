@@ -146,38 +146,13 @@
 		return () => ro.disconnect();
 	});
 
-	/** Cancel the next click anywhere (once), or give up after a short while if none comes. */
-	function swallowNextClick() {
-		const onClick = (e: MouseEvent) => {
-			e.preventDefault();
-			e.stopPropagation();
-			stop();
-		};
-		const timer = setTimeout(() => stop(), 800);
-		const stop = () => {
-			clearTimeout(timer);
-			window.removeEventListener('click', onClick, true);
-		};
-		window.addEventListener('click', onClick, true);
-	}
-
 	// While the intro plays, hold the page still; any input fast-forwards it.
 	$effect(() => {
 		if (!started || done) return;
 		const root = document.documentElement;
 		const prev = root.style.overflow;
 		root.style.overflow = 'hidden';
-		const skip = (e: Event) => {
-			// A tap's click fires after the Skip button has been swapped for the "Course details"
-			// link in the same spot, so swallow that one click to keep the page at the hero.
-			if (
-				(e.type === 'pointerdown' || e.type === 'touchstart') &&
-				e.target instanceof Element &&
-				e.target.closest('.foot')
-			)
-				swallowNextClick();
-			intro.skip();
-		};
+		const skip = () => intro.skip();
 		const events = ['wheel', 'touchstart', 'keydown', 'pointerdown'] as const;
 		for (const e of events) window.addEventListener(e, skip, { passive: true });
 		return () => {
@@ -236,14 +211,11 @@
 	</div>
 
 	<div class="foot">
-		{#if started && !done}
-			<button type="button" class="skip" onclick={() => intro.skip()}>Skip intro</button>
-		{:else}
-			<a class="cue" class:fade={started} href="#about">
-				Course details
-				<ArrowDown size="1em" strokeWidth={1.25} aria-hidden="true" />
-			</a>
-		{/if}
+		<!-- Always laid out so the plots do not shift when the cue appears after the intro. -->
+		<a class="cue" class:fade={started && done} class:pending={!done} href="#about" tabindex={done ? 0 : -1}>
+			Course details
+			<ArrowDown size="1em" strokeWidth={1.25} aria-hidden="true" />
+		</a>
 	</div>
 </section>
 
@@ -260,6 +232,7 @@
 	}
 
 	.head {
+		padding-bottom: calc(clamp(0.5rem, 3vh, 2rem) + 0.4rem);
 		text-align: center;
 		max-width: 100%;
 	}
@@ -332,7 +305,8 @@
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		column-gap: var(--gap);
-		margin-top: clamp(0.5rem, 3vh, 2rem);
+		/* Centered between the subtitle and the cue (the foot sits right below). */
+		margin-block: auto;
 		/* Rows never grow taller than one cell is wide, so each cloud fills its cell
 		   and the plots sit close under the subtitle. Shorter windows shrink them. */
 		max-height: calc((min(100vw - 2rem, 84rem) - 2 * var(--gap)) / 3 * 1.1);
@@ -363,43 +337,21 @@
 
 	.foot {
 		flex: 0 0 auto;
-		margin-top: auto;
-		height: clamp(3.25rem, 9vh, 5rem);
+		margin-top: clamp(0.5rem, 3vh, 2rem);
+		padding-bottom: clamp(0.75rem, 4vh, 2.5rem);
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	}
 
-	.skip,
 	.cue {
 		font-family: var(--font-sub);
 		font-size: 0.78rem;
 		font-weight: 600;
-		letter-spacing: 0.12em;
+		letter-spacing: 0.16em;
 		text-transform: uppercase;
 		color: var(--muted);
 		text-decoration: none;
-	}
-
-	.cue {
-		font-size: 0.95rem;
-		font-weight: 400;
-		letter-spacing: normal;
-		text-transform: none;
-	}
-
-	.skip {
-		background: none;
-		border: 1px solid rgba(26, 26, 26, 0.18);
-		border-radius: 999px;
-		padding: 0.45rem 1rem;
-		cursor: pointer;
-	}
-
-	.skip:hover,
-	.skip:focus-visible {
-		color: var(--ink);
-		border-color: var(--gf-orange);
 	}
 
 	.cue {
@@ -417,6 +369,10 @@
 
 	.cue :global(svg) {
 		opacity: 0.75;
+	}
+
+	.cue.pending {
+		visibility: hidden;
 	}
 
 	.cue.fade {
@@ -447,7 +403,7 @@
 		}
 	}
 
-	/* Landscape phones: keep the title compact so the plots and the skip button stay on screen. */
+	/* Landscape phones: keep the title compact so the plots and the cue stay on screen. */
 	@media (max-height: 520px) {
 		.hero {
 			padding-top: 1rem;
@@ -475,12 +431,13 @@
 			margin-top: 0.35rem;
 		}
 
-		.plots {
-			margin-top: 0.5rem;
+		.head {
+			padding-bottom: calc(0.5rem + 0.4rem);
 		}
 
 		.foot {
-			height: 2.75rem;
+			margin-top: 0.5rem;
+			padding-bottom: 0.4rem;
 		}
 	}
 

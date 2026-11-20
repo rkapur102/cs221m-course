@@ -106,8 +106,9 @@
 <style>
 	.legend {
 		display: flex;
-		flex-wrap: wrap;
-		gap: 0.4rem 1.5rem;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.4rem;
 		margin: 0 0 1.25rem;
 		font-family: var(--font-sub);
 		font-size: 0.85rem;

@@ -8,7 +8,7 @@ describe('course', () => {
 	it('tags', () => {
 		expect(weeks.flatMap((w) => w.lectures).filter((l) => l.tag === 'outside').map((l) => l.num)).toEqual([3]);
 		expect(extras[0].tag).toBe('inside');
-		expect(lectureLabel(extras[0])).toBe('Extra 1');
+		expect(lectureLabel(extras[0])).toBe('Notebook');
 		expect(lectureLabel(weeks[0].lectures[0])).toBe('Lecture 1');
 	});
 	it('slides flags', () => {
