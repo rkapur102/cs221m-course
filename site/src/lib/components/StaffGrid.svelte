@@ -28,7 +28,8 @@
 		{ name: 'Taka Yamakoshi', role: 'Teaching Assistant', org: 'Stanford', photo: yamakoshi },
 		{
 			name: 'Rhea Kapur',
-			role: 'Designer & Teaching Assistant',
+			// The newline puts "Assistant" on its own line at every width.
+			role: 'Designer & Teaching\nAssistant',
 			org: 'Stanford',
 			photo: kapur,
 			position: 'center 25%'
@@ -60,7 +61,7 @@
 			/>
 			<span class="name">{m.name}</span>
 			<span class="role">
-				<img class="badge" src={badges[m.org]} alt={m.org} width="14" height="14" />{m.role}
+				<img class="badge" src={badges[m.org]} alt={m.org} width="14" height="14" />{#each m.role.split('\n') as line, i}{#if i > 0}<br />{/if}<span class="line">{line}</span>{/each}
 			</span>
 		</li>
 	{/each}
@@ -109,6 +110,11 @@
 		color: var(--muted);
 	}
 
+	/* Each written line of a role stays whole; only the newline in the data breaks it. */
+	.line {
+		white-space: nowrap;
+	}
+
 	.badge {
 		display: inline;
 		width: auto;
@@ -127,6 +133,11 @@
 		.headshot {
 			width: 6rem;
 			height: 6rem;
+		}
+
+		/* Small enough that "Designer & Teaching" plus its badge fits a 320px phone column. */
+		.role {
+			font-size: 0.74rem;
 		}
 	}
 </style>
