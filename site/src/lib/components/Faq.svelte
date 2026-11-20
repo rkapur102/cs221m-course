@@ -57,8 +57,35 @@
 	summary {
 		cursor: pointer;
 		font-weight: 500;
-		list-style-position: outside;
-		padding-left: 0.25rem;
+		list-style: none;
+		position: relative;
+		padding-left: 1.4rem;
+	}
+
+	summary::-webkit-details-marker {
+		display: none;
+	}
+
+	/* Disclosure triangle drawn inside the column, so it respects the page gutter. */
+	summary::before {
+		content: '';
+		position: absolute;
+		left: 0.1rem;
+		top: 0.55em;
+		border-style: solid;
+		border-width: 0.32em 0 0.32em 0.5em;
+		border-color: transparent transparent transparent var(--gf-orange);
+		transition: transform 160ms ease;
+	}
+
+	details[open] > summary::before {
+		transform: rotate(90deg);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		summary::before {
+			transition: none;
+		}
 	}
 
 	summary:focus-visible {

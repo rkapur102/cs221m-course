@@ -31,8 +31,9 @@
 	}
 
 	h3 {
-		margin: 2rem 0 0.5rem;
-		font-size: 1.5rem;
+		margin: 2.5rem 0 1rem;
+		/* Same size as the section heading ("Logistics") above it. */
+		font-size: clamp(1.9rem, 4vw, 2.4rem);
 	}
 
 	ul {

@@ -40,28 +40,18 @@
 	}
 
 	.links a {
-		position: relative;
 		color: var(--ink);
 		text-decoration: none;
 		padding: 0.4rem 0;
 	}
 
-	.links a::after {
-		content: '';
-		position: absolute;
-		left: 0;
-		right: 0;
-		bottom: 0.1rem;
-		height: 1px;
-		background: var(--gf-orange);
-		transform: scaleX(0);
-		transform-origin: left;
-		transition: transform 220ms ease;
+	.links a:hover,
+	.links a:focus-visible {
+		color: var(--cardinal);
 	}
 
-	.links a:hover::after,
-	.links a:focus-visible::after {
-		transform: scaleX(1);
+	.links a {
+		transition: color 160ms ease;
 	}
 
 	.links a:focus-visible {
@@ -81,7 +71,7 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.links a::after {
+		.links a {
 			transition: none;
 		}
 	}

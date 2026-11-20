@@ -40,7 +40,7 @@
 						{#each week.lectures as lec (lec.num)}
 							<li>
 								{#if shown.showDates}<span class="date">{lec.date}</span>{/if}
-								<span class="title">
+								<span class="title numbered">
 									<span class="num">Lecture {lec.num}</span>
 									{@render titled(lec.title, lec.tag)}
 								</span>
@@ -90,7 +90,7 @@
 					{#each extras as lec (lec.title)}
 						<li>
 							{#if shown.showDates}<span class="date" aria-hidden="true"></span>{/if}
-							<span class="title">
+							<span class="title numbered">
 								<span class="num">{lectureLabel(lec)}</span>
 								{@render titled(lec.title, lec.tag)}
 							</span>
@@ -190,6 +190,18 @@
 
 	.title {
 		display: inline;
+	}
+
+	/* Label in its own column, so a wrapped title stays indented past "Lecture 10" / "Notebook". */
+	.title.numbered {
+		display: grid;
+		grid-template-columns: 4.4rem 1fr;
+		column-gap: 0.4rem;
+		align-items: baseline;
+	}
+
+	.title.numbered .num {
+		margin-right: 0;
 	}
 
 	.num {
