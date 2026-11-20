@@ -31,7 +31,8 @@
 
 	function typing(el: Element | null): boolean {
 		if (!(el instanceof HTMLElement)) return false;
-		return el.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(el.tagName);
+		// Also leave arrow keys alone on buttons and disclosures, which may use them.
+		return el.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'SUMMARY'].includes(el.tagName);
 	}
 
 	function onkeydown(e: KeyboardEvent) {
@@ -100,13 +101,13 @@
 		flex-direction: column;
 		align-items: center;
 		padding: 0.4rem 0.65rem;
-		background: #fff;
+		background: var(--bg);
 		border: 1px solid rgba(140, 21, 21, 0.3);
 		border-radius: 0.4rem;
 		color: var(--cardinal);
 		text-decoration: none;
 		font-family: var(--font-sub);
-		max-width: calc(50vw - 1.25rem);
+		max-width: calc(50vw - var(--gutter) - 0.375rem);
 		transition: background-color 150ms ease;
 	}
 	.back {
@@ -120,7 +121,7 @@
 		background: #fdf4ee;
 	}
 	.ctl:focus-visible {
-		outline: 2px solid var(--gf-orange);
+		outline: 2px solid var(--cardinal);
 		outline-offset: 2px;
 	}
 	.word {
@@ -155,9 +156,8 @@
 		text-transform: uppercase;
 		line-height: 1.3;
 		color: var(--muted);
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
+		/* Wrap instead of truncating when the box is narrow (small phones). */
+		white-space: normal;
 	}
 	.dest {
 		text-align: center;

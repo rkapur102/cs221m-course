@@ -16,7 +16,8 @@
 		node.classList.add('pending');
 		const io = new IntersectionObserver(
 			([entry]) => {
-				if (!entry.isIntersecting) return;
+				// Reveal on entering view, or if the page jumped past it (restored scroll, anchor).
+				if (!entry.isIntersecting && entry.boundingClientRect.top > 0) return;
 				node.classList.remove('pending');
 				io.disconnect();
 			},

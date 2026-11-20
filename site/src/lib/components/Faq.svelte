@@ -89,7 +89,7 @@
 	}
 
 	summary:focus-visible {
-		outline: 3px solid var(--gf-gold);
+		outline: 2px solid var(--cardinal);
 		outline-offset: 3px;
 	}
 

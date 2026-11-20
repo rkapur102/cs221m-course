@@ -10,7 +10,7 @@
 	<div class="inner">
 		<div class="sponsor">
 			<span class="label">Sponsor</span>
-			<a href="https://www.goodfire.com/" class="sponsor-logo">
+			<a href="https://www.goodfire.com/" class="sponsor-logo" target="_blank" rel="noopener">
 				<img src={goodfire} alt="Goodfire" width="163" height="35" />
 			</a>
 		</div>
@@ -22,16 +22,16 @@
 			{/if}
 			<p class="credit">
 				Story trajectory visual theme adapted from Goodfire's
-				<a href="https://www.goodfire.com/research/stories-in-space"><em>Meandering on Manifolds</em></a>
-				(<a href="https://arxiv.org/abs/2605.12412">Bigelow et al., 2026</a>).
+				<a href="https://www.goodfire.com/research/stories-in-space" target="_blank" rel="noopener"><em>Meandering on Manifolds</em></a>
+				(<a href="https://arxiv.org/abs/2605.12412" target="_blank" rel="noopener">Bigelow et al., 2026</a>).
 			</p>
 			{#if viewState.current === 'enrolled'}
-				<p>You can access the <a href="https://github.com/rkapur102/cs221m-course">course materials on GitHub</a>.</p>
+				<p>You can access the <a href="https://github.com/rkapur102/cs221m-course" target="_blank" rel="noopener">course materials on GitHub</a>.</p>
 			{:else}
 				<p>
 					Based on the
 					<button type="button" class="linklike" onclick={() => setView('enrolled')}>Spring 2026 course offering</button>.
-					You can access the <a href="https://github.com/rkapur102/cs221m-course">course materials on GitHub</a>.
+					You can access the <a href="https://github.com/rkapur102/cs221m-course" target="_blank" rel="noopener">course materials on GitHub</a>.
 				</p>
 			{/if}
 		</div>
@@ -109,7 +109,7 @@
 	}
 
 	.linklike:focus-visible {
-		outline: 2px solid var(--gf-orange);
+		outline: 2px solid var(--cardinal);
 		outline-offset: 2px;
 	}
 

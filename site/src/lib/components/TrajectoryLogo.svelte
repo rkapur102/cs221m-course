@@ -60,4 +60,10 @@
 		height: 4rem;
 		flex: none;
 	}
+
+	.logo:focus-visible {
+		outline: 2px solid var(--cardinal);
+		outline-offset: 4px;
+		border-radius: 0.4rem;
+	}
 </style>

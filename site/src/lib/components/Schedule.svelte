@@ -164,7 +164,7 @@
 	}
 
 	.linked:focus-visible {
-		outline: 2px solid var(--gf-orange);
+		outline: 2px solid var(--cardinal);
 		outline-offset: -2px;
 	}
 
@@ -197,10 +197,6 @@
 		white-space: nowrap;
 	}
 
-	.title {
-		display: inline;
-	}
-
 	/* Label in its own column, so a wrapped title stays indented past "Lecture 10" / "Notebook". */
 	.title.numbered {
 		display: grid;
@@ -209,18 +205,11 @@
 		align-items: baseline;
 	}
 
-	.title.numbered .num {
-		margin-right: 0;
-	}
-
 	.num {
 		font-family: var(--font-sub);
 		font-size: 0.82rem;
 		font-weight: 600;
 		color: var(--cardinal);
-		display: inline-block;
-		min-width: 6.25rem;
-		margin-right: 0.4rem;
 		white-space: nowrap;
 	}
 
@@ -230,10 +219,6 @@
 
 	.nowrap {
 		white-space: nowrap;
-	}
-
-	.row:not(.linked) .name {
-		color: var(--muted);
 	}
 
 	.items .readings {
@@ -248,8 +233,6 @@
 		font-size: 0.95rem;
 		line-height: 1.6;
 	}
-
-
 
 	.items .readings li {
 		display: block;
@@ -333,7 +316,7 @@
 		gap: 0.35em;
 		margin-left: 0.6rem;
 		padding: 0.3rem 0.5rem;
-		/* Centered on the name's x-height, then nudged (see --tag-nudge) to its optical middle. */
+		/* Centered on the name's x-height, then lifted (top below) to its optical middle. */
 		vertical-align: middle;
 		position: relative;
 		/* x-height middle is a hair low for a mixed-case name; lift to its optical middle. */
@@ -370,7 +353,7 @@
 	}
 
 	.tag:focus-visible {
-		outline: 2px solid var(--gf-orange);
+		outline: 2px solid var(--cardinal);
 		outline-offset: 2px;
 	}
 
@@ -395,8 +378,11 @@
 		.tag {
 			display: flex;
 			width: fit-content;
+			max-width: 100%;
 			margin: 0.4rem 0 0;
 			top: 0;
+			white-space: normal;
+			text-align: left;
 		}
 	}
 </style>

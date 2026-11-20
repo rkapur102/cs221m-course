@@ -20,7 +20,7 @@
 	</ul>
 
 	<h3>Syllabus</h3>
-	<p>Please download the syllabus <a href="https://github.com/rkapur102/cs221m-course/blob/main/materials/syllabus.pdf"><b>here</b></a>.</p>
+	<p>Please download the syllabus <a href="https://github.com/rkapur102/cs221m-course/blob/main/materials/syllabus.pdf" target="_blank" rel="noopener"><b>here</b></a>.</p>
 </div>
 
 <style>
