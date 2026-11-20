@@ -92,127 +92,91 @@
 {/if}
 
 <style>
+	/* Styled like the schedule's "Slides" / "Suggested readings" tags: thin red outline,
+	   small all-caps label, white backing so they read over the page. */
 	.ctl {
 		position: fixed;
 		bottom: max(1.25rem, env(safe-area-inset-bottom));
 		z-index: 20;
-		display: flex;
+		display: grid;
+		grid-template-columns: auto auto;
+		grid-template-areas: 'a b' 'd d';
 		align-items: center;
-		gap: 0.6rem;
-		padding: 0.5rem 0.25rem;
-		color: var(--ink);
+		column-gap: 0.45rem;
+		padding: 0.4rem 0.65rem;
+		background: #fff;
+		border: 1px solid rgba(140, 21, 21, 0.3);
+		border-radius: 0.4rem;
+		color: var(--cardinal);
 		text-decoration: none;
 		font-family: var(--font-sub);
-		font-size: 1.1rem;
-		font-weight: 600;
-		letter-spacing: 0.02em;
+		max-width: calc(50vw - 1.25rem);
+		transition: background-color 150ms ease;
 	}
 	.back {
-		left: max(1rem, env(safe-area-inset-left));
+		left: max(var(--gutter), env(safe-area-inset-left));
 	}
 	.next {
-		right: max(1rem, env(safe-area-inset-right));
+		right: max(var(--gutter), env(safe-area-inset-right));
 	}
 	.ctl:hover,
 	.ctl:focus-visible {
-		color: var(--cardinal);
+		background: #fdf4ee;
 	}
 	.ctl:focus-visible {
-		outline: 2px solid var(--cardinal);
+		outline: 2px solid var(--gf-orange);
 		outline-offset: 2px;
+	}
+	.word {
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		line-height: 1.3;
 	}
 	.glyph {
 		display: block;
-		width: 28px;
-		height: 28px;
+		width: 22px;
+		height: 22px;
 		flex: none;
 	}
 	.flip {
 		transform: scaleX(-1);
 	}
+	.back .glyph {
+		grid-area: a;
+	}
+	.back .word {
+		grid-area: b;
+	}
+	.next .word {
+		grid-area: a;
+	}
+	.next .glyph {
+		grid-area: b;
+	}
 	.dest {
-		display: none;
-		font-weight: 400;
+		grid-area: d;
+		display: block;
+		margin-top: 0.1rem;
+		font-size: 0.66rem;
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		line-height: 1.3;
 		color: var(--muted);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
-	/* Boxed like the view toggle, destination as a small second line: phones, and any width where
-	   the plain controls would run into the 60rem text column (they need ~15rem each side). */
-	@media (hover: none), (max-width: 89.99rem) {
-		.ctl {
-			padding: 0.35rem 0.55rem;
-			background: #fff;
-			border: 1px solid rgba(26, 26, 26, 0.18);
-			border-radius: 0.5rem;
-			display: grid;
-			grid-template-columns: auto auto;
-			grid-template-areas: 'a b' 'd d';
-			align-items: center;
-			column-gap: 0.4rem;
-			row-gap: 0;
-			max-width: calc(50vw - 1.25rem);
-		}
-		.back .glyph {
-			grid-area: a;
-		}
-		.back .word {
-			grid-area: b;
-		}
-		.next .word {
-			grid-area: a;
-		}
-		.next .glyph {
-			grid-area: b;
-		}
-		.dest {
-			grid-area: d;
-			display: block;
-			font-family: var(--font-sub);
-			font-size: 0.7rem;
-			line-height: 1.25;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-		.back .dest {
-			text-align: left;
-		}
-		.next .dest {
-			text-align: right;
-		}
+	.back .dest {
+		text-align: left;
 	}
-	@media (hover: hover) and (min-width: 90rem) {
-		/* Back reads "Week 2: Materials, glyph, Back": the destination opens on the outer side. */
-		.back .dest {
-			order: -1;
-		}
-		.dest {
-			display: block;
-			font-size: 0.95rem;
-			max-width: 0;
-			overflow: hidden;
-			white-space: nowrap;
-			opacity: 0;
-			transition:
-				max-width 0.3s ease,
-				opacity 0.3s ease;
-		}
-		/* Cancel the flex gap while the label is collapsed, so the glyph does not shift on hover. */
-		.back .dest {
-			margin-right: -0.6rem;
-		}
-		.next .dest {
-			margin-left: -0.6rem;
-		}
-		.ctl:hover .dest,
-		.ctl:focus-visible .dest {
-			max-width: 22rem;
-			opacity: 1;
-			margin-left: 0;
-			margin-right: 0;
-		}
+	.next .dest {
+		text-align: right;
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.dest {
+		.ctl {
 			transition: none;
 		}
 	}

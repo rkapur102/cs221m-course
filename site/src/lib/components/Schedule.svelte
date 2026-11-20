@@ -243,9 +243,10 @@
 		/* Indented past the label column, under the speaker's name. */
 		margin: 0.45rem 0 0.2rem;
 		padding: 0 0 0 6.65rem;
-		font-family: var(--font-sub);
-		font-size: 0.8rem;
-		line-height: 1.45;
+		/* Same as the FAQ answers: body font at body size. */
+		font-family: var(--font-body);
+		font-size: 1rem;
+		line-height: 1.6;
 	}
 
 
@@ -294,24 +295,29 @@
 		}
 
 		.week {
-			grid-column: 1 / -1;
+			grid-column: 1;
+			grid-row: 1;
 		}
 
 		.items {
 			grid-column: 1;
+			grid-row: 2;
 		}
 
+		/* Span the week heading and its items, so the arrow sits centered on the whole row. */
 		.arrow {
 			grid-column: 2;
-			grid-row: 2;
+			grid-row: 1 / span 2;
 		}
 
 		.dated .items li {
 			grid-template-columns: 1fr;
 		}
 
+		/* Full width on phones: at body size the indented column would be too narrow. */
 		.items .readings {
 			grid-column: 1;
+			padding-left: 0;
 		}
 	}
 

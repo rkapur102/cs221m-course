@@ -238,7 +238,8 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		padding: clamp(1.75rem, 6vh, 4rem) 1rem 0;
+		/* Always clear the view toggle in the top-right corner (top 1.25rem + 2.25rem tall) with room to spare. */
+		padding: max(5.25rem, clamp(1.75rem, 6vh, 4rem)) 1rem 0;
 		overflow: hidden;
 	}
 
@@ -409,7 +410,7 @@
 
 		.hero {
 			/* Clears the view toggle (now with words) above the logo mark. */
-			padding-top: 4.75rem;
+			padding-top: 5.25rem;
 		}
 
 		.sub {
