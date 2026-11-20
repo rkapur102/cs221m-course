@@ -26,7 +26,7 @@
 				(<a href="https://arxiv.org/abs/2605.12412">Bigelow et al., 2026</a>).
 			</p>
 			{#if viewState.current === 'enrolled'}
-				<p><a href="https://github.com/rkapur102/cs221m-course">Course materials on GitHub</a></p>
+				<p>You can access the <a href="https://github.com/rkapur102/cs221m-course">course materials on GitHub</a>.</p>
 			{:else}
 				<p>
 					Based on the
