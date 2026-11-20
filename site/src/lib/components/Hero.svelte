@@ -239,7 +239,8 @@
 		flex-direction: column;
 		align-items: center;
 		/* Always clear the view toggle in the top-right corner (top 1.25rem + 2.25rem tall) with room to spare. */
-		padding: max(5.25rem, clamp(1.75rem, 6vh, 4rem)) 1rem 0;
+		/* Same distance below the top bar as a subpage title ("Week 5"). */
+		padding: var(--page-top) 1rem 0;
 		overflow: hidden;
 	}
 
@@ -409,8 +410,7 @@
 		}
 
 		.hero {
-			/* Clears the view toggle (now with words) above the logo mark. */
-			padding-top: 5.25rem;
+			padding-top: var(--page-top);
 		}
 
 		.sub {

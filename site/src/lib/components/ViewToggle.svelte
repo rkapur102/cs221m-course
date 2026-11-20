@@ -54,8 +54,10 @@
 		height: 2.25rem;
 		padding: 0 0.85rem;
 		font-family: var(--font-sub);
-		font-size: 0.85rem;
-		font-weight: 600;
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
 		white-space: nowrap;
 		border: 0;
 		border-radius: 0;
@@ -90,7 +92,8 @@
 		button {
 			height: 2.125rem;
 			padding: 0 0.65rem;
-			font-size: 0.8rem;
+			font-size: 0.68rem;
+			letter-spacing: 0.08em;
 		}
 	}
 

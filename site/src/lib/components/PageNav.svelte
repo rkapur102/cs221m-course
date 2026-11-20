@@ -70,8 +70,7 @@
 		onfocus={() => trace('back')}
 		onpointerdown={() => trace('back')}
 	>
-		{@render glyph(backDraw, true)}
-		<span class="word">Back</span>
+		<span class="top">{@render glyph(backDraw, true)}<span class="word">Back</span></span>
 		<span class="dest">{nav.back.label}</span>
 	</a>
 {/if}
@@ -85,8 +84,7 @@
 		onfocus={() => trace('next')}
 		onpointerdown={() => trace('next')}
 	>
-		<span class="word">Next</span>
-		{@render glyph(nextDraw, false)}
+		<span class="top"><span class="word">Next</span>{@render glyph(nextDraw, false)}</span>
 		<span class="dest">{nav.next.label}</span>
 	</a>
 {/if}
@@ -98,11 +96,9 @@
 		position: fixed;
 		bottom: max(1.25rem, env(safe-area-inset-bottom));
 		z-index: 20;
-		display: grid;
-		grid-template-columns: auto auto;
-		grid-template-areas: 'a b' 'd d';
+		display: flex;
+		flex-direction: column;
 		align-items: center;
-		column-gap: 0.45rem;
 		padding: 0.4rem 0.65rem;
 		background: #fff;
 		border: 1px solid rgba(140, 21, 21, 0.3);
@@ -143,31 +139,15 @@
 	.flip {
 		transform: scaleX(-1);
 	}
-	/* Mirror images: Back is [glyph BACK ....], Next is [.... NEXT glyph], so the glyph always
-	   sits at the outer edge whatever the width of the destination line. */
-	.back {
-		grid-template-columns: auto 1fr;
-	}
-	.next {
-		grid-template-columns: 1fr auto;
-	}
-	.back .glyph {
-		grid-area: a;
-	}
-	.back .word {
-		grid-area: b;
-		justify-self: start;
-	}
-	.next .word {
-		grid-area: a;
-		justify-self: end;
-	}
-	.next .glyph {
-		grid-area: b;
+	/* "Back" or "Next" with its glyph, centered on the top line above the destination. */
+	.top {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
 	}
 	.dest {
-		grid-area: d;
 		display: block;
+		max-width: 100%;
 		margin-top: 0.1rem;
 		font-size: 0.66rem;
 		font-weight: 600;
@@ -179,11 +159,8 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
-	.back .dest {
-		text-align: left;
-	}
-	.next .dest {
-		text-align: right;
+	.dest {
+		text-align: center;
 	}
 	@media (prefers-reduced-motion: reduce) {
 		.ctl {
