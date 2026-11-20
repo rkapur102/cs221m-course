@@ -44,7 +44,8 @@
 	--gf-orange: #c4652d;
 	--gf-gold: #eab651;
 	--ink: #1a1a1a;
-	--muted: #5c5c5c;
+	/* Secondary text uses the same black as body text (no gray). */
+	--muted: #1a1a1a;
 	--bg: #ffffff;
 	--content: 60rem;
 	/* Side gutter for every content column; roomier on phones. */

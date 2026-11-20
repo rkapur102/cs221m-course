@@ -14,18 +14,30 @@
 
 	onDestroy(() => ctrl.abort());
 
+	/** Go home; on the homepage itself, reload it so the intro plays again. */
+	function home() {
+		spinning = false;
+		if (location.pathname === '/') {
+			// Drop any #section so the reload starts at the top with the intro.
+			if (location.hash) history.replaceState(history.state, '', '/');
+			location.reload();
+		} else {
+			goto('/');
+		}
+	}
+
 	async function onclick(e: MouseEvent) {
 		if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
 		e.preventDefault();
 		if (spinning) return;
 		if (prefersReducedMotion()) {
-			await goto('/');
+			home();
 			return;
 		}
 		spinning = true;
 		await animate(SPIN_MS, (t) => (yaw = t * Math.PI * 2), { signal: ctrl.signal });
 		if (ctrl.signal.aborted) return;
-		await goto('/');
+		home();
 	}
 </script>
 

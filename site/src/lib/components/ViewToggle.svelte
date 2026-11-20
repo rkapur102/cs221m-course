@@ -59,6 +59,7 @@
 		letter-spacing: 0.1em;
 		text-transform: uppercase;
 		white-space: nowrap;
+		line-height: 1;
 		border: 0;
 		border-radius: 0;
 		background: transparent;
@@ -71,6 +72,13 @@
 
 	button :global(svg) {
 		color: currentColor;
+		flex: none;
+	}
+
+	/* Caps sit high in the line box; nudge them so they center on the icon. */
+	button span {
+		display: block;
+		padding-top: 0.12em;
 	}
 
 	button:hover {
