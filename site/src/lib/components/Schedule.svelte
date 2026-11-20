@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { extras, guestParts, lectureLabel, scheduleFor, weeks, type ScheduleRow, type Tag } from '../course';
 	import { viewState } from '../view.svelte.ts';
+	import { href } from '../paths';
 	import TagMark from './TagMark.svelte';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import ExternalLink from '@lucide/svelte/icons/external-link';
@@ -37,7 +38,7 @@
 	<ol class="weeks" class:dated={shown.showDates}>
 		{#each weeks as week (week.n)}
 			<li>
-				<a class="row linked" href="/week/{week.n}">
+				<a class="row linked" href={href(`/week/${week.n}`)}>
 					<span class="week">Week {week.n}</span>
 					<ul class="items">
 						{#each week.lectures as lec (lec.num)}
@@ -93,7 +94,7 @@
 		{/each}
 
 		<li>
-			<a class="row linked extra" href="/extras">
+			<a class="row linked extra" href={href('/extras')}>
 				<span class="week">Extras</span>
 				<ul class="items">
 					{#each extras as lec (lec.title)}

@@ -2,6 +2,7 @@
 	import '../app.css';
 	import type { LayoutProps } from './$types';
 	import { page } from '$app/state';
+	import { href, sitePath } from '../lib/paths';
 	import { neighbors } from '../lib/sequence';
 	import PageNav from '../lib/components/PageNav.svelte';
 	import { loadView } from '../lib/view.svelte.ts';
@@ -20,12 +21,16 @@
 		});
 	});
 
-	const nav = $derived(neighbors(page.url.pathname));
+	const nav = $derived(neighbors(sitePath(page.url.pathname)));
 	const hasNav = $derived(Boolean(nav.back || nav.next));
 </script>
 
 <svelte:head>
-	<link rel="preload" href="/fonts/Forum-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+	{#if import.meta.env.VITE_NOINDEX === '1'}
+		<!-- Temporary preview: keep search engines out. -->
+		<meta name="robots" content="noindex, nofollow" />
+	{/if}
+	<link rel="preload" href={href('/fonts/Forum-Regular.woff2')} as="font" type="font/woff2" crossorigin="anonymous" />
 </svelte:head>
 
 <div class="page" class:with-nav={hasNav}>

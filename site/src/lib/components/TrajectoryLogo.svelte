@@ -4,6 +4,7 @@
 	import Trajectory from '../trajectory/Trajectory.svelte';
 	import { animate, prefersReducedMotion } from '../trajectory/animate';
 	import { pathGradients } from '../trajectory/palette';
+	import { href, sitePath } from '../paths';
 
 	let { storyId }: { storyId: string } = $props();
 
@@ -17,12 +18,12 @@
 	/** Go home; on the homepage itself, reload it so the intro plays again. */
 	function home() {
 		spinning = false;
-		if (location.pathname === '/') {
+		if (sitePath(location.pathname) === '/') {
 			// Drop any #section so the reload starts at the top with the intro.
-			if (location.hash) history.replaceState(history.state, '', '/');
+			if (location.hash) history.replaceState(history.state, '', href('/'));
 			location.reload();
 		} else {
-			goto('/');
+			goto(href('/'));
 		}
 	}
 
@@ -41,7 +42,7 @@
 	}
 </script>
 
-<a class="logo" href="/" aria-label="CS 221M home" {onclick}>
+<a class="logo" href={href('/')} aria-label="CS 221M home" {onclick}>
 	<Trajectory
 		storyIds={[storyId]}
 		{yaw}

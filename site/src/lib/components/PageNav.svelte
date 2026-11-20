@@ -3,13 +3,14 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { neighbors, type PageRef } from '../sequence';
+	import { href, sitePath } from '../paths';
 	import { homeStoryIds } from '../course';
 	import Trajectory from '../trajectory/Trajectory.svelte';
 	import { animate } from '../trajectory/animate';
 	import { pathGradients } from '../trajectory/palette';
 
 	const TRACE_MS = 500;
-	const nav = $derived(neighbors(page.url.pathname));
+	const nav = $derived(neighbors(sitePath(page.url.pathname)));
 
 	let backDraw = $state(1);
 	let nextDraw = $state(1);
@@ -42,7 +43,7 @@
 			e.key === 'ArrowLeft' ? nav.back : e.key === 'ArrowRight' ? nav.next : null;
 		if (!target) return;
 		e.preventDefault();
-		goto(target.href);
+		goto(href(target.href));
 	}
 </script>
 
@@ -65,7 +66,7 @@
 {#if nav.back}
 	<a
 		class="ctl back"
-		href={nav.back.href}
+		href={href(nav.back.href)}
 		aria-label={`Back: ${nav.back.label}`}
 		onmouseenter={() => trace('back')}
 		onfocus={() => trace('back')}
@@ -79,7 +80,7 @@
 {#if nav.next}
 	<a
 		class="ctl next"
-		href={nav.next.href}
+		href={href(nav.next.href)}
 		aria-label={`Next: ${nav.next.label}`}
 		onmouseenter={() => trace('next')}
 		onfocus={() => trace('next')}
