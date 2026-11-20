@@ -21,7 +21,7 @@
 	.tag-mark {
 		display: inline-flex;
 		align-items: center;
-		vertical-align: -0.05em;
+		vertical-align: -0.12em;
 		line-height: 1;
 	}
 

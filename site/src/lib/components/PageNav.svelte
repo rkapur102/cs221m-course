@@ -135,6 +135,51 @@
 		font-weight: 400;
 		color: var(--muted);
 	}
+	/* Phones: boxed like the view toggle, destination as a small second line. */
+	@media not ((hover: hover) and (min-width: 48rem)) {
+		.ctl {
+			gap: 0.4rem;
+			padding: 0.35rem 0.55rem;
+			background: rgba(255, 255, 255, 0.92);
+			border: 1px solid rgba(26, 26, 26, 0.18);
+			border-radius: 0.5rem;
+			display: grid;
+			grid-template-columns: auto auto;
+			grid-template-areas: 'a b' 'd d';
+			align-items: center;
+			column-gap: 0.4rem;
+			row-gap: 0;
+			max-width: calc(50vw - 1.25rem);
+		}
+		.back .glyph {
+			grid-area: a;
+		}
+		.back .word {
+			grid-area: b;
+		}
+		.next .word {
+			grid-area: a;
+		}
+		.next .glyph {
+			grid-area: b;
+		}
+		.dest {
+			grid-area: d;
+			display: block;
+			font-family: var(--font-sub);
+			font-size: 0.7rem;
+			line-height: 1.25;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		.back .dest {
+			text-align: left;
+		}
+		.next .dest {
+			text-align: right;
+		}
+	}
 	@media (hover: hover) and (min-width: 48rem) {
 		.dest {
 			display: block;

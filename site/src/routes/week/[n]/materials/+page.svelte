@@ -2,7 +2,6 @@
 	import TopBar from '#lib/components/TopBar.svelte';
 	import LectureBlock from '#lib/components/LectureBlock.svelte';
 	import SiteFooter from '#lib/components/SiteFooter.svelte';
-	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -18,7 +17,6 @@
 <main>
 	<header>
 		<h1>Week {week.n}</h1>
-		<p class="back"><a href="/week/{week.n}"><ArrowLeft size="1em" strokeWidth={1.75} aria-hidden="true" /> Week {week.n} lead-in</a></p>
 	</header>
 
 	<div class="blocks">
@@ -43,25 +41,6 @@
 
 	h1 {
 		font-size: clamp(2.6rem, 7vw, 4rem);
-	}
-
-	.back {
-		margin: 0.9rem 0 0;
-		font-family: var(--font-sub);
-		font-size: 0.95rem;
-		font-weight: 600;
-	}
-
-	.back a {
-		text-decoration: none;
-		display: inline-flex;
-		align-items: center;
-		gap: 0.35em;
-	}
-
-	.back a:hover {
-		text-decoration: underline;
-		text-underline-offset: 0.2em;
 	}
 
 	.blocks {

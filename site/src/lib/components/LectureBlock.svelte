@@ -6,13 +6,13 @@
 	import { colabUrl, lectureLabel, slidesUrl, type Lecture } from '../course';
 
 	let { lecture }: { lecture: Lecture } = $props();
+	const headText = $derived(`${lectureLabel(lecture)}: ${lecture.title}`);
 	const hasNotebook = $derived(lecture.notebooks.length > 0);
 </script>
 
 <section class="lecture">
 	<h2>
-		{lectureLabel(lecture)}: {lecture.title}
-		<TagMark tag={lecture.tag} />
+		{headText.slice(0, headText.lastIndexOf(' ') + 1)}<span class="tail">{headText.slice(headText.lastIndexOf(' ') + 1)}{#if lecture.tag}&nbsp;{/if}<TagMark tag={lecture.tag} /></span>
 	</h2>
 
 	<div class="buttons">
@@ -60,6 +60,11 @@
 		font-size: 1.7rem;
 	}
 
+	/* Keeps the mark on the same line as the last word. */
+	.tail {
+		white-space: nowrap;
+	}
+
 	.buttons {
 		display: flex;
 		flex-wrap: wrap;
@@ -67,18 +72,18 @@
 	}
 
 	.none {
-		margin: 0.7rem 0 0;
+		margin: 1.05rem 0 0;
 		font-family: var(--font-sub);
 		color: var(--muted);
 	}
 
 	.supplemental {
-		margin-top: 1.1rem;
+		margin-top: 1.5rem;
 		font-size: 0.95rem;
 	}
 
 	h3 {
-		margin: 0 0 0.5rem;
+		margin: 0 0 0.8rem;
 		font-family: var(--font-sub);
 		font-size: 0.72rem;
 		font-weight: 700;

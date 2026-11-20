@@ -8,11 +8,11 @@ const HOME: PageRef = { href: '/', label: 'Home' };
 export function readingOrder(): PageRef[] {
 	const pages: PageRef[] = [];
 	for (let n = 1; n <= 5; n++) {
-		pages.push({ href: `/week/${n}`, label: `Week ${n}` });
+		pages.push({ href: `/week/${n}`, label: `Week ${n}: Lead-In` });
 		pages.push({ href: `/week/${n}/materials`, label: `Week ${n}: Materials` });
 	}
 	pages.push({ href: '/closing', label: 'Closing' });
-	pages.push({ href: '/extras', label: 'Extra notebooks' });
+	pages.push({ href: '/extras', label: 'Extras' });
 	return pages;
 }
 

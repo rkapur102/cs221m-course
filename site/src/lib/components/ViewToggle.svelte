@@ -70,8 +70,9 @@
 	}
 
 	button.active {
-		color: var(--ink);
-		background: rgba(26, 26, 26, 0.07);
+		color: var(--cardinal);
+		background: rgba(196, 101, 45, 0.12);
+		box-shadow: inset 0 0 0 1px rgba(196, 101, 45, 0.45);
 	}
 
 	button:focus-visible {

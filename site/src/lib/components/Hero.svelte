@@ -146,6 +146,17 @@
 		return () => ro.disconnect();
 	});
 
+	// A tap that skips the intro can be followed by a click on the freshly shown cue; ignore it briefly.
+	let cueArmed = $state(false);
+	$effect(() => {
+		if (!done) {
+			cueArmed = false;
+			return;
+		}
+		const t = setTimeout(() => (cueArmed = true), 450);
+		return () => clearTimeout(t);
+	});
+
 	// While the intro plays, hold the page still; any input fast-forwards it.
 	$effect(() => {
 		if (!started || done) return;
@@ -212,7 +223,7 @@
 
 	<div class="foot">
 		<!-- Always laid out so the plots do not shift when the cue appears after the intro. -->
-		<a class="cue" class:fade={started && done} class:pending={!done} href="#about" tabindex={done ? 0 : -1}>
+		<a class="cue" class:fade={started && done} class:pending={!done} class:unarmed={!cueArmed} href="#about" tabindex={done ? 0 : -1}>
 			Course details
 			<ArrowDown size="1em" strokeWidth={1.25} aria-hidden="true" />
 		</a>
@@ -369,6 +380,10 @@
 
 	.cue :global(svg) {
 		opacity: 0.75;
+	}
+
+	.cue.unarmed {
+		pointer-events: none;
 	}
 
 	.cue.pending {
