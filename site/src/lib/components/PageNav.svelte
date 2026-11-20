@@ -143,14 +143,24 @@
 	.flip {
 		transform: scaleX(-1);
 	}
+	/* Mirror images: Back is [glyph BACK ....], Next is [.... NEXT glyph], so the glyph always
+	   sits at the outer edge whatever the width of the destination line. */
+	.back {
+		grid-template-columns: auto 1fr;
+	}
+	.next {
+		grid-template-columns: 1fr auto;
+	}
 	.back .glyph {
 		grid-area: a;
 	}
 	.back .word {
 		grid-area: b;
+		justify-self: start;
 	}
 	.next .word {
 		grid-area: a;
+		justify-self: end;
 	}
 	.next .glyph {
 		grid-area: b;

@@ -1,5 +1,7 @@
 <script lang="ts">
 	import Hero from '#lib/components/Hero.svelte';
+	import TopBar from '#lib/components/TopBar.svelte';
+	import { homeStoryIds } from '../lib/course';
 	import StaffGrid from '#lib/components/StaffGrid.svelte';
 	import Schedule from '#lib/components/Schedule.svelte';
 	import Logistics from '#lib/components/Logistics.svelte';
@@ -33,6 +35,7 @@
 	/>
 </svelte:head>
 
+<TopBar storyId={homeStoryIds[0]} />
 <Hero />
 
 <main>

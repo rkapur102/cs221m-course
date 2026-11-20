@@ -4,7 +4,6 @@
 	import { page } from '$app/state';
 	import { neighbors } from '../lib/sequence';
 	import PageNav from '../lib/components/PageNav.svelte';
-	import ViewToggle from '../lib/components/ViewToggle.svelte';
 	import { loadView } from '../lib/view.svelte.ts';
 	import { onMount, tick } from 'svelte';
 
@@ -33,24 +32,11 @@
 	{@render children()}
 </div>
 
-{#if page.url.pathname === '/'}
-	<div class="home-toggle"><ViewToggle /></div>
-{/if}
-
 {#if hasNav}
 	<PageNav />
 {/if}
 
 <style>
-	/* The homepage has no top bar; the toggle sits where the bar's last item would. */
-	.home-toggle {
-		position: absolute;
-		/* Same inset as the top bar on subpages, so the toggle sits in the same spot everywhere. */
-		top: 1.25rem;
-		right: var(--gutter);
-		z-index: 15;
-	}
-
 	/* Sticky footer: the page fills the viewport and the footer takes the leftover space above it. */
 	.page {
 		display: flex;

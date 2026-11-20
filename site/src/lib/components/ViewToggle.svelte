@@ -50,9 +50,9 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		gap: 0.4rem;
+		gap: 0.45rem;
 		height: 2.25rem;
-		padding: 0 0.7rem;
+		padding: 0 0.85rem;
 		font-family: var(--font-sub);
 		font-size: 0.85rem;
 		font-weight: 600;
@@ -89,7 +89,7 @@
 	@media (max-width: 40rem) {
 		button {
 			height: 2.125rem;
-			padding: 0 0.55rem;
+			padding: 0 0.65rem;
 			font-size: 0.8rem;
 		}
 	}
