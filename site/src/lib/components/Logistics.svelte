@@ -1,3 +1,7 @@
+<script lang="ts">
+	const email = 'cs221m-spr2526-staff@lists.stanford.edu';
+</script>
+
 <div class="logistics">
 	<ul class="facts">
 		<li><b>Time:</b> Monday, Wednesday 2:30pm-3:50pm</li>
