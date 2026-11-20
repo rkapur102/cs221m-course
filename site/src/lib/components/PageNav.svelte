@@ -136,7 +136,7 @@
 		color: var(--muted);
 	}
 	/* Phones: boxed like the view toggle, destination as a small second line. */
-	@media not ((hover: hover) and (min-width: 48rem)) {
+	@media (hover: none), (max-width: 47.99rem) {
 		.ctl {
 			padding: 0.35rem 0.55rem;
 			background: #fff;

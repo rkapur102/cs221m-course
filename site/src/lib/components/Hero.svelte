@@ -223,7 +223,7 @@
 
 	<div class="foot">
 		<!-- Always laid out so the plots do not shift when the cue appears after the intro. -->
-		<a class="cue" class:fade={started && done} class:pending={!done} class:unarmed={!cueArmed} href="#about" tabindex={done ? 0 : -1}>
+		<a class="cue" class:fade={started && done} class:pending={started && !done} class:unarmed={(started || done) && !cueArmed} href="#about" tabindex={started && !done ? -1 : 0}>
 			Course details
 			<ArrowDown size="1em" strokeWidth={1.25} aria-hidden="true" />
 		</a>
