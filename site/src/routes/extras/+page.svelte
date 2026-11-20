@@ -6,14 +6,14 @@
 </script>
 
 <svelte:head>
-	<title>Extra notebooks | CS 221M</title>
+	<title>Extras | CS 221M</title>
 </svelte:head>
 
 <TopBar storyId={courseStoryId} />
 
 <main>
 	<header>
-		<h1>Extra notebooks</h1>
+		<h1>Extras</h1>
 	</header>
 
 	<div class="blocks">
@@ -31,7 +31,7 @@
 	}
 
 	header {
-		width: min(var(--content), 100% - 2rem);
+		width: min(var(--content), 100% - 2 * var(--gutter));
 		margin: 0 auto;
 		text-align: center;
 	}
@@ -41,7 +41,7 @@
 	}
 
 	.blocks {
-		width: min(var(--content), 100% - 2rem);
+		width: min(var(--content), 100% - 2 * var(--gutter));
 		margin: 2.5rem auto 0;
 	}
 </style>

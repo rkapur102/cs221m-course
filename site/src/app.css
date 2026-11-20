@@ -47,12 +47,20 @@
 	--muted: #5c5c5c;
 	--bg: #ffffff;
 	--content: 60rem;
+	/* Side gutter for every content column; roomier on phones. */
+	--gutter: 1rem;
 	/* Space above a subpage's title, clearing the top bar (logo 4rem plus its padding). */
 	--page-top: 6.25rem;
 
 	--font-title: 'Forum', Georgia, serif;
 	--font-sub: 'Nunito Sans', system-ui, sans-serif;
 	--font-body: 'Prompt', system-ui, sans-serif;
+}
+
+@media (max-width: 40rem) {
+	:root {
+		--gutter: 1.5rem;
+	}
 }
 
 *,

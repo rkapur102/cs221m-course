@@ -34,7 +34,7 @@
 	}
 
 	header {
-		width: min(var(--content), 100% - 2rem);
+		width: min(var(--content), 100% - 2 * var(--gutter));
 		margin: 0 auto;
 		text-align: center;
 	}
@@ -44,7 +44,7 @@
 	}
 
 	.blocks {
-		width: min(var(--content), 100% - 2rem);
+		width: min(var(--content), 100% - 2 * var(--gutter));
 		margin: 2.5rem auto 0;
 	}
 </style>

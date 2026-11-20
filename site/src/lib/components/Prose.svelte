@@ -8,7 +8,7 @@
 
 <style>
 	.prose {
-		width: min(var(--content), 100% - 2rem);
+		width: min(var(--content), 100% - 2 * var(--gutter));
 		margin: 0 auto;
 		font-size: 1.05rem;
 		line-height: 1.8;

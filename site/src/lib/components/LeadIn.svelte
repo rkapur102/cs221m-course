@@ -38,6 +38,38 @@
 	let controller: AbortController | undefined;
 	let instant = $state(false);
 
+	/** Drag to rotate, matching the homepage plots: horizontal turns, vertical tilts (mouse and pen). */
+	const DRAG_YAW = 0.008;
+	const DRAG_PITCH = 0.006;
+	const MAX_PITCH = 0.6;
+	let dragYaw = $state(0);
+	let dragPitch = $state(0);
+	let dragging = $state(false);
+	let dragStart: { x: number; y: number; yaw: number; pitch: number; id: number } | null = null;
+
+	function onDragDown(e: PointerEvent) {
+		if (e.pointerType === 'mouse' && e.button !== 0) return;
+		dragStart = { x: e.clientX, y: e.clientY, yaw: dragYaw, pitch: dragPitch, id: e.pointerId };
+		dragging = true;
+		(e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+	}
+
+	function onDragMove(e: PointerEvent) {
+		if (!dragStart || e.pointerId !== dragStart.id) return;
+		dragYaw = dragStart.yaw + (e.clientX - dragStart.x) * DRAG_YAW;
+		// Touch keeps vertical swipes for scrolling, so only mouse and pen tilt the view.
+		if (e.pointerType !== 'touch') {
+			const next = dragStart.pitch + (e.clientY - dragStart.y) * DRAG_PITCH;
+			dragPitch = Math.min(MAX_PITCH, Math.max(-MAX_PITCH, next));
+		}
+	}
+
+	function onDragEnd(e: PointerEvent) {
+		if (!dragStart || e.pointerId !== dragStart.id) return;
+		dragStart = null;
+		dragging = false;
+	}
+
 	function skip() {
 		controller?.abort();
 	}
@@ -97,12 +129,23 @@
 		{@render header()}
 	</header>
 
-	<div class="stage">
+	<div
+		class="stage"
+		class:dragging
+		aria-hidden="true"
+		onpointerdown={onDragDown}
+		onpointermove={onDragMove}
+		onpointerup={onDragEnd}
+		onpointercancel={onDragEnd}
+		onlostpointercapture={onDragEnd}
+	>
 		<Trajectory
 			storyIds={[courseStoryId]}
 			draw={draw * progress}
+			yaw={dragYaw}
+			pitch={dragPitch}
 			gradients={[pathGradients[0]]}
-			idle={done}
+			idle={done && !dragging}
 			ghost
 			marker={{ label: markerLabel, color: markerColor, ring: markerRing }}
 		/>
@@ -122,16 +165,24 @@
 	}
 
 	header {
-		width: min(var(--content), 100% - 2rem);
+		width: min(var(--content), 100% - 2 * var(--gutter));
 		margin: 0 auto;
 		text-align: center;
 	}
 
 	.stage {
-		width: min(var(--content), 100% - 2rem);
+		width: min(var(--content), 100% - 2 * var(--gutter));
 		aspect-ratio: 16 / 9;
 		max-height: min(70vh, 34rem);
 		margin: 1.5rem auto 2rem;
+		cursor: grab;
+		touch-action: pan-y;
+		user-select: none;
+		-webkit-user-select: none;
+	}
+
+	.stage.dragging {
+		cursor: grabbing;
 	}
 
 	@media (max-width: 640px) {

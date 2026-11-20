@@ -80,7 +80,7 @@
 
 <style>
 	.section {
-		width: min(var(--content), 100% - 2rem);
+		width: min(var(--content), 100% - 2 * var(--gutter));
 		margin: 0 auto;
 		padding-top: clamp(3.5rem, 9vh, 6rem);
 		scroll-margin-top: 1rem;

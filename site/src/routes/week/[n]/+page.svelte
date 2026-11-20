@@ -38,7 +38,7 @@
 	}
 
 	.cta {
-		width: min(var(--content), 100% - 2rem);
+		width: min(var(--content), 100% - 2 * var(--gutter));
 		margin: 2.5rem auto 0;
 		text-align: center;
 	}
