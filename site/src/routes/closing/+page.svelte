@@ -20,7 +20,7 @@
 >
 	{#snippet header()}
 		<h1>Closing</h1>
-		<p class="done">You've reached the end of the course.</p>
+		<p class="done">You've reached the end of the course!</p>
 	{/snippet}
 </LeadIn>
 
