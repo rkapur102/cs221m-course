@@ -196,10 +196,19 @@
 				max-width 0.3s ease,
 				opacity 0.3s ease;
 		}
+		/* Cancel the flex gap while the label is collapsed, so the glyph does not shift on hover. */
+		.back .dest {
+			margin-right: -0.6rem;
+		}
+		.next .dest {
+			margin-left: -0.6rem;
+		}
 		.ctl:hover .dest,
 		.ctl:focus-visible .dest {
 			max-width: 22rem;
 			opacity: 1;
+			margin-left: 0;
+			margin-right: 0;
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
