@@ -41,7 +41,7 @@
 <style>
 	.site-footer {
 		border-top: 1px solid rgba(26, 26, 26, 0.1);
-		padding: 2.5rem 1rem 3rem;
+		padding: 2.5rem var(--gutter) 3rem;
 		font-size: 0.9rem;
 		color: var(--muted);
 	}

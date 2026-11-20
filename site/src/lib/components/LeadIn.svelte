@@ -96,6 +96,10 @@
 		controller?.abort();
 		draw = 0;
 		done = false;
+		dragYaw = 0;
+		dragPitch = 0;
+		dragStart = null;
+		dragging = false;
 	});
 
 	// Runs on first load and after every navigation, including week to week where the
