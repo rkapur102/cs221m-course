@@ -53,6 +53,12 @@
 
 	<section id="staff" class="section" use:reveal>
 		<h2>Staff</h2>
+		{#if viewState.current === 'enrolled'}
+			<p class="contact">
+				Please reach the staff at
+				<a href="mailto:cs221m-spr2526-staff@lists.stanford.edu">cs221m-spr2526-staff@lists.stanford.edu</a>.
+			</p>
+		{/if}
 		<StaffGrid />
 	</section>
 
@@ -82,7 +88,7 @@
 	.section {
 		width: min(var(--content), 100% - 2 * var(--gutter));
 		margin: 0 auto;
-		padding-top: clamp(3.5rem, 9vh, 6rem);
+		padding-top: var(--section-gap);
 		scroll-margin-top: 1rem;
 		transition:
 			opacity 700ms ease,
@@ -96,7 +102,18 @@
 
 	h2 {
 		font-size: clamp(1.9rem, 4vw, 2.4rem);
-		margin-bottom: 1.5rem;
+		margin-bottom: 1.25rem;
+	}
+
+	.contact {
+		margin: 0 0 1.5rem;
+	}
+
+	.contact a {
+		color: var(--cardinal);
+		text-decoration-color: rgba(140, 21, 21, 0.35);
+		text-underline-offset: 0.15em;
+		overflow-wrap: anywhere;
 	}
 
 	.lede {

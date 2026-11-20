@@ -135,8 +135,9 @@
 		font-weight: 400;
 		color: var(--muted);
 	}
-	/* Phones: boxed like the view toggle, destination as a small second line. */
-	@media (hover: none), (max-width: 47.99rem) {
+	/* Boxed like the view toggle, destination as a small second line: phones, and any width where
+	   the plain controls would run into the 60rem text column (they need ~15rem each side). */
+	@media (hover: none), (max-width: 89.99rem) {
 		.ctl {
 			padding: 0.35rem 0.55rem;
 			background: #fff;
@@ -179,7 +180,11 @@
 			text-align: right;
 		}
 	}
-	@media (hover: hover) and (min-width: 48rem) {
+	@media (hover: hover) and (min-width: 90rem) {
+		/* Back reads "Week 2: Materials, glyph, Back": the destination opens on the outer side. */
+		.back .dest {
+			order: -1;
+		}
 		.dest {
 			display: block;
 			font-size: 0.95rem;

@@ -3,8 +3,6 @@
 </script>
 
 <div class="logistics">
-	<p>Please reach the staff at <a href="mailto:{email}">{email}</a>.</p>
-
 	<ul class="facts">
 		<li><b>Time:</b> Monday, Wednesday 2:30pm-3:50pm</li>
 		<li><b>Location:</b> McMurtry Art Building, Oshman</li>
@@ -30,8 +28,9 @@
 		line-height: 1.65;
 	}
 
+	/* Subsections use the same rhythm as the homepage sections around them. */
 	h3 {
-		margin: 2.5rem 0 1rem;
+		margin: var(--section-gap) 0 1.25rem;
 		/* Same size as the section heading ("Logistics") above it. */
 		font-size: clamp(1.9rem, 4vw, 2.4rem);
 	}
@@ -41,8 +40,17 @@
 	}
 
 	.facts {
-		list-style: none;
-		padding: 0;
+		margin: 0;
+	}
+
+	p,
+	ul {
+		margin: 0 0 1rem;
+	}
+
+	p:last-child,
+	ul:last-child {
+		margin-bottom: 0;
 	}
 
 	a {

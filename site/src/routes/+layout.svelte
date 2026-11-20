@@ -45,15 +45,10 @@
 	/* The homepage has no top bar; the toggle sits where the bar's last item would. */
 	.home-toggle {
 		position: absolute;
-		top: 0.9rem;
-		right: 1.5rem;
+		/* Same inset as the top bar on subpages, so the toggle sits in the same spot everywhere. */
+		top: 1.25rem;
+		right: var(--gutter);
 		z-index: 15;
-	}
-
-	@media (max-width: 40rem) {
-		.home-toggle {
-			right: 1rem;
-		}
 	}
 
 	/* Sticky footer: the page fills the viewport and the footer takes the leftover space above it. */
