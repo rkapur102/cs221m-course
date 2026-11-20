@@ -138,9 +138,8 @@
 	/* Phones: boxed like the view toggle, destination as a small second line. */
 	@media not ((hover: hover) and (min-width: 48rem)) {
 		.ctl {
-			gap: 0.4rem;
 			padding: 0.35rem 0.55rem;
-			background: rgba(255, 255, 255, 0.92);
+			background: #fff;
 			border: 1px solid rgba(26, 26, 26, 0.18);
 			border-radius: 0.5rem;
 			display: grid;
