@@ -30,8 +30,8 @@
 			{:else}
 				<p>
 					Based on the
-					<button type="button" class="linklike" onclick={() => setView('enrolled')}>Spring 2026 course offering</button>,
-					you can access the <a href="https://github.com/rkapur102/cs221m-course">course materials on GitHub</a>.
+					<button type="button" class="linklike" onclick={() => setView('enrolled')}>Spring 2026 course offering</button>.
+					You can access the <a href="https://github.com/rkapur102/cs221m-course">course materials on GitHub</a>.
 				</p>
 			{/if}
 		</div>
