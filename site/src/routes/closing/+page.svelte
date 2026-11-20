@@ -14,7 +14,7 @@
 	storyId={courseStoryId}
 	{html}
 	progress={progressFor('closing')}
-	markerLabel="The end"
+	markerLabel="The end!"
 	markerColor="#eab651"
 	markerRing="#8c1515"
 >
