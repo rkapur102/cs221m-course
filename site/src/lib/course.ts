@@ -61,10 +61,9 @@ export function guestParts(title: string): { label: string; name: string } {
 	return { label: '', name: title };
 }
 
-/** Anchor id for a guest-week row on the homepage schedule, e.g. "guest-chris-potts". */
-export function guestAnchor(row: ScheduleRow): string {
-	const slug = guestParts(row.title).name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-	return `guest-${slug}`;
+/** Anchor id for a guest week's row on the homepage schedule, e.g. "schedule-week-6". */
+export function scheduleWeekAnchor(n: number): string {
+	return `schedule-week-${n}`;
 }
 
 export function slidesUrl(n: number): string {

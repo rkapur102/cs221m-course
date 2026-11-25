@@ -1,4 +1,4 @@
-import { guestAnchor, guestParts, scheduleFor, weeks } from './course';
+import { guestParts, scheduleFor, scheduleWeekAnchor, weeks } from './course';
 import type { View } from './view.svelte.ts';
 
 export interface ContentsItem {
@@ -77,19 +77,21 @@ export function contentsFor(view: View): ContentsGroup[] {
 			}))
 		});
 	}
-	const guests = scheduleFor(view)
-		.guestRows.map((row) => ({ row, parts: guestParts(row.title) }))
-		.filter(({ parts }) => parts.label);
-	if (guests.length) {
-		groups.push({
-			heading: 'Guest lectures',
-			items: guests.map(({ row, parts }) => ({
-				href: `/#${guestAnchor(row)}`,
-				label: parts.name,
-				tag: parts.label === 'Guest lecture' ? 'Guest' : parts.label
-			}))
+	// Student view: the guest weeks continue the course's own week numbering, as on the schedule. Each week
+	// heading and each session under it jump to the top of that week's row.
+	const byWeek = new Map<number, ContentsItem[]>();
+	for (const row of scheduleFor(view).guestRows) {
+		const parts = guestParts(row.title);
+		if (!parts.label) continue; // e.g. "No lecture (Memorial Day)"
+		const items = byWeek.get(row.week) ?? [];
+		items.push({
+			href: `/#${scheduleWeekAnchor(row.week)}`,
+			label: parts.name,
+			tag: parts.label === 'Guest lecture' ? 'Guest' : parts.label
 		});
+		byWeek.set(row.week, items);
 	}
+	for (const [n, items] of byWeek) groups.push({ heading: `Week ${n}`, href: `/#${scheduleWeekAnchor(n)}`, items });
 	groups.push({
 		heading: 'Wrap-up',
 		items: [

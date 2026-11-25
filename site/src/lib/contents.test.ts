@@ -22,15 +22,23 @@ describe('contentsFor', () => {
 		expect(labels).not.toContain('Materials');
 		expect(new Set(labels).size).toBe(labels.length);
 	});
-	it('shows guest lectures and project sessions only in the Student view', () => {
+	it('continues the weeks with the guest and project sessions in the Student view only', () => {
 		expect(contentsFor('self').map((g) => g.heading)).toEqual(['Home', 'Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Wrap-up']);
-		const guests = contentsFor('enrolled').find((g) => g.heading === 'Guest lectures')!;
-		expect(guests.items[0]).toEqual({ href: '/#guest-chris-potts', label: 'Chris Potts', tag: 'Guest' });
-		expect(guests.items.find((i) => i.label === 'Midpoint check-in')?.href).toBe('/#guest-midpoint-check-in');
-		expect(new Set(guests.items.map((i) => i.href)).size).toBe(guests.items.length);
-		expect(guests.items.map((i) => i.label)).toContain('Neel Nanda');
-		expect(guests.items.find((i) => i.label === 'Presentations')?.tag).toBe('Project');
-		expect(guests.items.some((i) => /Memorial/.test(i.label))).toBe(false);
+		const groups = contentsFor('enrolled');
+		expect(groups.map((g) => g.heading)).toEqual([
+			'Home', 'Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8', 'Week 9', 'Week 10', 'Wrap-up'
+		]);
+		const week7 = groups.find((g) => g.heading === 'Week 7')!;
+		expect(week7.href).toBe('/#schedule-week-7');
+		expect(week7.items).toEqual([
+			{ href: '/#schedule-week-7', label: 'David Bau', tag: 'Guest' },
+			{ href: '/#schedule-week-7', label: 'Midpoint check-in', tag: 'Project' }
+		]);
+		const week9 = groups.find((g) => g.heading === 'Week 9')!;
+		expect(week9.items.map((i) => i.label)).toEqual(['Jack Lindsey']);
+		expect(groups.find((g) => g.heading === 'Week 10')!.items.at(-1)).toEqual({
+			href: '/#schedule-week-10', label: 'Presentations', tag: 'Project'
+		});
 	});
 	it('ends with the wrap-up pages', () => {
 		expect(contentsFor('self').at(-1)!.items.map((i) => i.href)).toEqual(['/closing', '/extras']);

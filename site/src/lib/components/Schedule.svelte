@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { extras, guestAnchor, guestParts, lectureLabel, scheduleFor, weeks, type ScheduleRow, type Tag } from '../course';
+	import { extras, guestParts, lectureLabel, scheduleFor, scheduleWeekAnchor, weeks, type ScheduleRow, type Tag } from '../course';
 	import { viewState } from '../view.svelte.ts';
 	import { href } from '../paths';
 	import TagMark from './TagMark.svelte';
@@ -57,14 +57,14 @@
 		{/each}
 
 		{#each guestWeeks as week (week.n)}
-			<li>
+			<!-- Anchor so the navigator's contents can jump to the top of this week. -->
+			<li id={scheduleWeekAnchor(week.n)}>
 				<div class="row">
 					<span class="week">Week {week.n}</span>
 					<ul class="items">
 						{#each week.rows as row (row.date)}
 							{@const parts = guestParts(row.title)}
-							<!-- Anchor so the navigator's contents can jump straight to this row. -->
-							<li id={guestAnchor(row)} class="guest">
+							<li>
 								{#if shown.showDates}<span class="date">{row.date}</span>{/if}
 								<span class="title numbered">
 									<span class="num">{parts.label}</span>
@@ -115,10 +115,6 @@
 </div>
 
 <style>
-	/* Room above a guest row when the navigator jumps to it. */
-	.guest {
-		scroll-margin-top: 2rem;
-	}
 
 	.legend {
 		display: flex;
@@ -150,6 +146,8 @@
 
 	.weeks > li {
 		border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+		/* A jump to a week stops 1px early, so the divider above it (the previous week's bottom border) sits at the very top. */
+		scroll-margin-top: 1px;
 	}
 
 	.row {
