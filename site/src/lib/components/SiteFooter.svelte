@@ -15,25 +15,25 @@
 			</a>
 		</div>
 		<div class="text">
-			{#if viewState.current === 'enrolled'}
-				<p>Please reach the staff at <a href="mailto:{email}">{email}</a>.</p>
-			{:else}
-				<p>Questions? You can reach the Spring 2026 course staff at <a href="mailto:{email}">{email}</a>.</p>
-			{/if}
-			<p class="credit">
-				Story trajectory visual theme adapted from Goodfire's
-				<a href="https://www.goodfire.com/research/stories-in-space" target="_blank" rel="noopener"><em>Meandering on Manifolds</em></a>
-				(<a href="https://arxiv.org/abs/2605.12412" target="_blank" rel="noopener">Bigelow et al., 2026</a>).
-			</p>
+			<!-- Order: what this is and where the materials are, who to ask, then how the site was made. -->
 			{#if viewState.current === 'enrolled'}
 				<p>You can access the <a href="https://github.com/rkapur102/cs221m-course" target="_blank" rel="noopener">course materials on GitHub</a>.</p>
+				<p>Questions? Email the course staff at <a href="mailto:{email}">{email}</a>.</p>
 			{:else}
 				<p>
 					Based on the
 					<button type="button" class="linklike" onclick={() => setView('enrolled')}>Spring 2026 course offering</button>.
 					You can access the <a href="https://github.com/rkapur102/cs221m-course" target="_blank" rel="noopener">course materials on GitHub</a>.
 				</p>
+				<p>Questions? Email the course staff at <a href="mailto:{email}">{email}</a>.</p>
 			{/if}
+			<p class="credit">
+				Story trajectory visual theme adapted from Goodfire’s
+				“<a href="https://www.goodfire.com/research/stories-in-space" target="_blank" rel="noopener">Meandering on Manifolds</a>”
+				(<a href="https://arxiv.org/abs/2605.12412" target="_blank" rel="noopener">Bigelow et al., 2026</a>). Navigation style inspired by
+				Notion’s “<a href="https://www.notion.com/a-new-shape-for-work#why-factories-matter" target="_blank" rel="noopener">A new shape for work</a>.”
+			</p>
+			<p class="credit">Special thanks to <a href="https://x.com/reathchris" target="_blank" rel="noopener">Chris Reath</a> for design feedback.</p>
 		</div>
 	</div>
 </footer>
