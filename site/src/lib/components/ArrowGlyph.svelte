@@ -1,15 +1,18 @@
 <script lang="ts">
 	import { arrowGlyph, bestSpan } from '../trajectory/arrow';
-	import { arrowChoice } from '../arrowChoice.svelte.ts';
+	import { arrowChoice, type Side } from '../arrowChoice.svelte.ts';
 
 	let {
-		flip = false,
+		side = 'next',
+		flip = side === 'back',
 		draw = 1,
 		storyId,
 		stretch,
 		tame
 	}: {
-		/** Point left instead of right. */
+		/** Which arrow's chosen trajectory to draw. */
+		side?: Side;
+		/** Point left instead of right (default: when side is back). */
 		flip?: boolean;
 		/** How much of the path is drawn, 0..1 (the head appears at the end). */
 		draw?: number;
@@ -20,10 +23,11 @@
 	} = $props();
 
 	const uid = $props.id();
-	const id = $derived(storyId ?? arrowChoice.storyId);
+	const spec = $derived(arrowChoice[side]);
 	const glyph = $derived.by(() => {
-		const useStretch = stretch ?? arrowChoice.stretch;
-		return arrowGlyph(id, { tame: tame ?? arrowChoice.tame, span: useStretch ? bestSpan(id) : undefined });
+		const id = storyId ?? spec.storyId;
+		const useStretch = stretch ?? spec.stretch;
+		return arrowGlyph(id, { tame: tame ?? spec.tame, span: useStretch ? bestSpan(id) : undefined });
 	});
 </script>
 

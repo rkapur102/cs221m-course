@@ -1,7 +1,7 @@
 import { storyIds } from './trajectory/data';
 
-/** Prototype only: which trajectory the navigator's arrows are drawn from, chosen in the arrow picker. */
-export interface ArrowChoice {
+/** Prototype only: which trajectory each navigator arrow is drawn from, chosen in the arrow lab. */
+export interface ArrowSpec {
 	storyId: string;
 	/** Use the story's most forward-running stretch instead of the whole path. */
 	stretch: boolean;
@@ -9,17 +9,23 @@ export interface ArrowChoice {
 	tame: number;
 }
 
-const KEY = 'cs221m-arrow-v2';
-const DEFAULT: ArrowChoice = { storyId: '1469084', stretch: true, tame: 0.15 };
+export type Side = 'back' | 'next';
 
-export const arrowChoice = $state<ArrowChoice>({ ...DEFAULT });
+const KEY = 'cs221m-arrow-v3';
+
+export const arrowChoice = $state<Record<Side, ArrowSpec>>({
+	back: { storyId: '1469084', stretch: true, tame: 0.15 },
+	next: { storyId: '1469084', stretch: true, tame: 0.15 }
+});
 
 export function loadArrowChoice(): void {
 	try {
 		const saved = JSON.parse(localStorage.getItem(KEY) ?? 'null');
-		if (saved && storyIds.includes(saved.storyId)) Object.assign(arrowChoice, saved);
+		for (const side of ['back', 'next'] as const) {
+			if (saved?.[side] && storyIds.includes(saved[side].storyId)) Object.assign(arrowChoice[side], saved[side]);
+		}
 	} catch {
-		// Keep the default.
+		// Keep the defaults.
 	}
 }
 

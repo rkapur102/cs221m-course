@@ -9,6 +9,20 @@
 	import { viewState } from '../view.svelte.ts';
 	import { animate } from '../trajectory/animate';
 	import ArrowGlyph from './ArrowGlyph.svelte';
+	import { cubicOut } from 'svelte/easing';
+	import { prefersReducedMotion } from '../trajectory/animate';
+
+	/** The menu rises out of the bar: revealed upward from the bar's own outline, fading in. */
+	function grow(node: HTMLElement) {
+		if (prefersReducedMotion()) return { duration: 0 };
+		const hidden = Math.max(0, node.offsetHeight - node.parentElement!.querySelector<HTMLElement>('.pill')!.offsetHeight);
+		return {
+			duration: 220,
+			easing: cubicOut,
+			css: (t: number) =>
+				`opacity: ${Math.min(1, 0.3 + t)}; clip-path: inset(${(1 - t) * hidden}px 0 0 0 round 1.25rem);`
+		};
+	}
 
 	const TRACE_MS = 450;
 	const path = $derived.by(() => {
@@ -79,29 +93,7 @@
 <svelte:window {onkeydown} {onpointerdown} />
 
 <div class="dock" bind:this={dock}>
-	{#if open}
-		<div class="card" id="contents" role="navigation" aria-label="Contents" bind:this={card}>
-			{#each groups as g (g.heading)}
-				<p class="heading">{g.heading}</p>
-				<ul>
-					{#each g.items as item (item.href)}
-						<li>
-							<a
-								href={href(item.href)}
-								aria-current={item.href === path ? 'page' : undefined}
-								onclick={() => (open = false)}
-							>
-								<span class="num">{item.num ?? ''}</span>
-								<span>{item.label}</span>
-							</a>
-						</li>
-					{/each}
-				</ul>
-			{/each}
-		</div>
-	{/if}
-
-	<nav class="pill" aria-label="Course pages">
+	<nav class="pill" aria-label="Course pages" inert={open}>
 		{#if nav.back}
 			<a
 				class="arrow"
@@ -111,14 +103,14 @@
 				onmouseenter={() => trace('back')}
 				onfocus={() => trace('back')}
 			>
-				<ArrowGlyph flip draw={backDraw} />
+				<ArrowGlyph side="back" draw={backDraw} />
 			</a>
 		{:else}
-			<span class="arrow off" aria-hidden="true"><ArrowGlyph flip /></span>
+			<span class="arrow off" aria-hidden="true"><ArrowGlyph side="back" /></span>
 		{/if}
 
 		<button class="current" aria-expanded={open} aria-controls="contents" onclick={toggle}>
-			<List size="1em" strokeWidth={2} aria-hidden="true" />
+			<List size="1.1em" strokeWidth={1.75} aria-hidden="true" />
 			<span class="label">{current?.label ?? 'Contents'}</span>
 		</button>
 
@@ -131,38 +123,60 @@
 				onmouseenter={() => trace('next')}
 				onfocus={() => trace('next')}
 			>
-				<ArrowGlyph draw={nextDraw} />
+				<ArrowGlyph side="next" draw={nextDraw} />
 			</a>
 		{:else}
-			<span class="arrow off" aria-hidden="true"><ArrowGlyph /></span>
+			<span class="arrow off" aria-hidden="true"><ArrowGlyph side="next" /></span>
 		{/if}
 	</nav>
+
+	{#if open}
+		<!-- Grows out of the bar: same width, same bottom edge, so the bar becomes the foot of the menu. -->
+		<div class="panel" transition:grow>
+			<div class="scroller" id="contents" role="navigation" aria-label="Contents" bind:this={card}>
+				{#each groups as g (g.heading)}
+					<p class="heading">{g.heading}</p>
+					<ul>
+						{#each g.items as item (item.href)}
+							<li>
+								<a
+									href={href(item.href)}
+									aria-current={item.href === path ? 'page' : undefined}
+									onclick={() => (open = false)}
+								>
+									<span class="num">{item.num ?? ''}</span>
+									<span class="text">{item.label}</span>
+								</a>
+							</li>
+						{/each}
+					</ul>
+				{/each}
+			</div>
+		</div>
+	{/if}
 </div>
 
 <style>
 	.dock {
+		--nav-w: min(23.75rem, calc(100vw - 2 * var(--gutter)));
+		--nav-h: 2.75rem;
+		--nav-shadow: 0 14px 28px -6px rgba(26, 26, 26, 0.22), 0 0 0 1px rgba(26, 26, 26, 0.06);
 		position: fixed;
 		left: 50%;
 		bottom: max(1.25rem, env(safe-area-inset-bottom));
 		transform: translateX(-50%);
 		z-index: 20;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.5rem;
-		width: max-content;
-		max-width: calc(100vw - 2 * var(--gutter));
+		width: var(--nav-w);
 		font-family: var(--font-sub);
 	}
 
 	.pill {
 		display: flex;
 		align-items: stretch;
-		max-width: 100%;
+		height: var(--nav-h);
 		background: var(--bg);
-		border: 1px solid rgba(26, 26, 26, 0.12);
-		border-radius: 0.75rem;
-		box-shadow: 0 6px 20px rgba(26, 26, 26, 0.08);
+		border-radius: 999px;
+		box-shadow: var(--nav-shadow);
 	}
 
 	.arrow {
@@ -170,26 +184,28 @@
 		align-items: center;
 		justify-content: center;
 		flex: none;
-		padding: 0 0.7rem;
-		border-radius: 0.75rem;
-		color: var(--ink);
+		width: 3.75rem;
+		border-radius: 999px;
+	}
+	.arrow :global(.arrow-glyph) {
+		width: 1.75rem;
 	}
 	.arrow:hover {
 		background: #fdf4ee;
 	}
 	.arrow.off {
-		opacity: 0.25;
+		opacity: 0.2;
 	}
 
 	.current {
+		flex: 1;
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
+		justify-content: center;
+		gap: 0.55rem;
 		min-width: 0;
-		padding: 0.6rem 0.75rem;
+		padding: 0 0.25rem;
 		border: 0;
-		border-left: 1px solid rgba(26, 26, 26, 0.08);
-		border-right: 1px solid rgba(26, 26, 26, 0.08);
 		background: none;
 		color: var(--ink);
 		font-family: var(--font-sub);
@@ -209,30 +225,50 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
-	.current:hover,
-	.current[aria-expanded='true'] {
+	.current:hover {
 		color: var(--cardinal);
+	}
+	/* Small phones: tighter arrow cells so the longest page name ("Week 5: Materials") still fits. */
+	@media (max-width: 400px) {
+		.arrow {
+			width: 2.85rem;
+		}
+		.arrow :global(.arrow-glyph) {
+			width: 1.5rem;
+		}
+		.current {
+			gap: 0.4rem;
+			letter-spacing: 0.08em;
+		}
 	}
 
 	.arrow:focus-visible,
 	.current:focus-visible,
-	.card a:focus-visible {
+	.panel a:focus-visible {
 		outline: 2px solid var(--cardinal);
 		outline-offset: 2px;
 	}
 
-	.card {
-		width: min(19rem, calc(100vw - 2 * var(--gutter)));
-		max-height: min(26rem, calc(100dvh - 7rem));
-		overflow-y: auto;
-		padding: 0.9rem 1.1rem 1rem;
+	.panel {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
 		background: var(--bg);
-		border: 1px solid rgba(26, 26, 26, 0.12);
-		border-radius: 0.9rem;
-		box-shadow: 0 10px 30px rgba(26, 26, 26, 0.12);
+		border-radius: 1.25rem;
+		box-shadow: var(--nav-shadow);
+		overflow: hidden;
+	}
+	.scroller {
+		max-height: min(24rem, calc(100dvh - 6rem));
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		padding: 1.75rem clamp(1.5rem, 10%, 2.5rem) 3rem;
+		/* Fade the list out at its top and bottom edges as it scrolls. */
+		mask-image: linear-gradient(to bottom, transparent, #000 1.25rem, #000 calc(100% - 2.5rem), transparent);
 	}
 	.heading {
-		margin: 0.85rem 0 0.25rem 2.1rem;
+		margin: 1.1rem 0 0.3rem 2rem;
 		font-size: 0.68rem;
 		font-weight: 700;
 		letter-spacing: 0.1em;
@@ -247,26 +283,27 @@
 		margin: 0;
 		padding: 0;
 	}
-	.card a {
+	.panel a {
 		display: flex;
-		gap: 0.5rem;
-		padding: 0.2rem 0;
+		padding: 0.18rem 0;
 		color: var(--ink);
 		text-decoration: none;
-		font-size: 0.88rem;
+		font-size: 0.9rem;
 		font-weight: 500;
 		line-height: 1.35;
 		border-radius: 0.25rem;
 	}
-	.card a:hover {
-		color: var(--cardinal);
-	}
 	.num {
 		flex: none;
-		width: 1.6rem;
+		width: 2rem;
 		font-variant-numeric: tabular-nums;
 	}
-	.card a[aria-current='page'] {
+	.panel a:hover .text,
+	.panel a:hover .num {
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+	.panel a[aria-current='page'] {
 		color: var(--cardinal);
 		font-weight: 800;
 	}
