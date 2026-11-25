@@ -5,8 +5,7 @@ import { arrowStoryIds } from '../course';
 
 describe('arrow glyphs', () => {
 	it('uses stories that exist', () => {
-		expect(storyIds).toContain(arrowStoryIds.back);
-		expect(storyIds).toContain(arrowStoryIds.next);
+		for (const id of Object.values(arrowStoryIds)) expect(storyIds).toContain(id);
 	});
 	it('picks a stretch that runs forward more than the whole story does', () => {
 		for (const id of Object.values(arrowStoryIds)) {

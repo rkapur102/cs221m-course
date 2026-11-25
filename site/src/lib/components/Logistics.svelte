@@ -6,10 +6,10 @@
 	<ul class="facts">
 		<li><b>Time:</b> Monday, Wednesday 2:30pm-3:50pm</li>
 		<li><b>Location:</b> McMurtry Art Building, Oshman</li>
-		<li><b>Office hours:</b> By appointment. Email course staff to schedule (<a href="mailto:{email}">{email}</a>).</li>
+		<li id="logistics-office-hours"><b>Office hours:</b> By appointment. Email course staff to schedule (<a href="mailto:{email}">{email}</a>).</li>
 	</ul>
 
-	<h3>Coursework</h3>
+	<h3 id="logistics-coursework">Coursework</h3>
 	<p>
 		The course will have five weeks of notebook-guided lectures, four weeks of guest lectures, and one week of final presentations.
 		Students will be graded for participation in lectures and for their final project.
@@ -19,7 +19,7 @@
 		<li><b>Final project:</b> Students will implement and present the key results from a recent paper in mechanistic interpretability.</li>
 	</ul>
 
-	<h3>Syllabus</h3>
+	<h3 id="logistics-syllabus">Syllabus</h3>
 	<p>Please download the syllabus <a href="https://github.com/rkapur102/cs221m-course/blob/main/materials/syllabus.pdf" target="_blank" rel="noopener"><b>here</b></a>.</p>
 </div>
 
@@ -37,6 +37,11 @@
 
 	ul {
 		padding-left: 1.25rem;
+	}
+
+	/* Room above each part when the navigator's contents jump to it. */
+	[id] {
+		scroll-margin-top: 1.5rem;
 	}
 
 	.facts {

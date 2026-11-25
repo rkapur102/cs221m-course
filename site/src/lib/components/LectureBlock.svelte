@@ -10,7 +10,8 @@
 	const hasNotebook = $derived(lecture.notebooks.length > 0);
 </script>
 
-<section class="lecture">
+<!-- Anchor for the navigator's contents menu (extras notebooks have no lecture number). -->
+<section class="lecture" id={lecture.label ? undefined : `lecture-${lecture.num}`}>
 	<h2>
 		{headText.slice(0, headText.lastIndexOf(' ') + 1)}<span class="tail">{headText.slice(headText.lastIndexOf(' ') + 1)}{#if lecture.tag}&nbsp;{/if}<TagMark tag={lecture.tag} /></span>
 	</h2>
@@ -51,6 +52,7 @@
 
 <style>
 	.lecture {
+		scroll-margin-top: 2rem;
 		padding: 1.5rem 0 1.1rem;
 		border-top: 1px solid rgba(26, 26, 26, 0.1);
 	}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { extras, guestParts, lectureLabel, scheduleFor, weeks, type ScheduleRow, type Tag } from '../course';
+	import { extras, guestAnchor, guestParts, lectureLabel, scheduleFor, weeks, type ScheduleRow, type Tag } from '../course';
 	import { viewState } from '../view.svelte.ts';
 	import { href } from '../paths';
 	import TagMark from './TagMark.svelte';
@@ -63,7 +63,8 @@
 					<ul class="items">
 						{#each week.rows as row (row.date)}
 							{@const parts = guestParts(row.title)}
-							<li>
+							<!-- Anchor so the navigator's contents can jump straight to this row. -->
+							<li id={guestAnchor(row)} class="guest">
 								{#if shown.showDates}<span class="date">{row.date}</span>{/if}
 								<span class="title numbered">
 									<span class="num">{parts.label}</span>
@@ -114,6 +115,11 @@
 </div>
 
 <style>
+	/* Room above a guest row when the navigator jumps to it. */
+	.guest {
+		scroll-margin-top: 2rem;
+	}
+
 	.legend {
 		display: flex;
 		flex-wrap: wrap;

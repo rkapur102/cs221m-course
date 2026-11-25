@@ -4,7 +4,8 @@
 	import { setView, viewState } from '../view.svelte.ts';
 </script>
 
-<div class="toggle" role="group" aria-label="Course view">
+<!-- data-keeps-menu: switching views updates the open contents menu instead of closing it. -->
+<div class="toggle" role="group" aria-label="Course view" data-keeps-menu>
 	<button
 		type="button"
 		title="Self-paced view"

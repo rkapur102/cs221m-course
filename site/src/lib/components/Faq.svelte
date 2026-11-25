@@ -1,5 +1,23 @@
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import { afterNavigate } from '$app/navigation';
+
+	/** Opening a link to one question (e.g. from the navigator's contents) opens that question. */
+	function openTarget() {
+		const id = decodeURIComponent(location.hash.slice(1));
+		const el = id ? document.getElementById(id) : null;
+		if (el instanceof HTMLDetailsElement) el.open = true;
+	}
+	onMount(() => {
+		openTarget();
+		window.addEventListener('hashchange', openTarget);
+		return () => window.removeEventListener('hashchange', openTarget);
+	});
+	afterNavigate(openTarget);
+</script>
+
 <div class="faq">
-	<details>
+	<details id="faq-enrolling">
 		<summary>I have submitted an application but have not heard back by Mar 27th, is it still possible to enroll in the course?</summary>
 		<p>
 			We have received more than 200 applications, far more than what we initially
@@ -12,7 +30,7 @@
 			check it out next spring!
 		</p>
 	</details>
-	<details>
+	<details id="faq-auditing">
 		<summary>Can I audit this course without enrollment?</summary>
 		<p>
 			We generally do not allow auditing. However, you are more than welcome to attend the guest
@@ -20,7 +38,7 @@
 			try to make most of the course materials public.
 		</p>
 	</details>
-	<details>
+	<details id="faq-missing-lectures">
 		<summary>I have enrolled in the class, but cannot attend some lectures in person.</summary>
 		<p>
 			We value participation. Students are expected to attend all
@@ -31,7 +49,7 @@
 			absence. We will follow up with you as necessary.
 		</p>
 	</details>
-	<details>
+	<details id="faq-recordings">
 		<summary>Will the lecture be recorded? Will the recordings be available online?</summary>
 		<p>
 			As this is the first offering of the course, lectures during the first half of the course will not be recorded.
@@ -46,6 +64,8 @@
 	}
 
 	.faq details {
+		/* Room above a question when the navigator's contents jump to it. */
+		scroll-margin-top: 1.5rem;
 		border-top: 1px solid rgba(26, 26, 26, 0.1);
 		padding: 0.9rem 0;
 	}

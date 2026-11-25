@@ -61,6 +61,12 @@ export function guestParts(title: string): { label: string; name: string } {
 	return { label: '', name: title };
 }
 
+/** Anchor id for a guest-week row on the homepage schedule, e.g. "guest-chris-potts". */
+export function guestAnchor(row: ScheduleRow): string {
+	const slug = guestParts(row.title).name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+	return `guest-${slug}`;
+}
+
 export function slidesUrl(n: number): string {
 	return `https://github.com/${REPO}/blob/main/materials/${String(n).padStart(2, '0')}_slides.pdf`;
 }
@@ -295,8 +301,8 @@ export function progressFor(page: number | 'closing'): number {
 
 export const homeStoryIds: [string, string, string] = ['2109652', '539105', '1596061'];
 
-/** Stories the navigator's Back and Next arrows are drawn from (their straightest stretch). */
-export const arrowStoryIds = { back: '2023196', next: '2109652' } as const;
+/** Stories the navigator's arrows are drawn from (their straightest stretch): Back, Next, and the phone menu's close handle (points down). */
+export const arrowStoryIds = { back: '2023196', next: '2109652', down: '942571' } as const;
 
 /** What the homepage schedule shows in each view. Final project links never appear. */
 export function scheduleFor(view: View): { showDates: boolean; guestRows: ScheduleRow[] } {

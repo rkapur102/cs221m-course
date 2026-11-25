@@ -8,10 +8,13 @@
 	import Faq from '#lib/components/Faq.svelte';
 	import SiteFooter from '#lib/components/SiteFooter.svelte';
 	import { viewState } from '../lib/view.svelte.ts';
+	import { page } from '$app/state';
 
 	/** Fade a section up the first time it scrolls into view (skipped under reduced motion). */
 	function reveal(node: HTMLElement) {
 		if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		// Arriving at a specific spot (/#faq-auditing): show everything in place, so the jump lands exactly.
+		if (page.url.hash) return;
 		if (node.getBoundingClientRect().top < innerHeight) return;
 		node.classList.add('pending');
 		const io = new IntersectionObserver(
