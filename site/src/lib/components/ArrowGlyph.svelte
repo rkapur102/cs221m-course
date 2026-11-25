@@ -1,34 +1,27 @@
-<script lang="ts">
+<script lang="ts" module>
 	import { arrowGlyph, bestSpan } from '../trajectory/arrow';
-	import { arrowChoice, type Side } from '../arrowChoice.svelte.ts';
+	import { arrowStoryIds } from '../course';
 
+	/** Computed once: each arrow is the straightest stretch of its story, with the story's own wiggle kept. */
+	const GLYPHS = {
+		back: arrowGlyph(arrowStoryIds.back, { tame: 0, span: bestSpan(arrowStoryIds.back) }),
+		next: arrowGlyph(arrowStoryIds.next, { tame: 0, span: bestSpan(arrowStoryIds.next) })
+	};
+</script>
+
+<script lang="ts">
 	let {
 		side = 'next',
-		flip = side === 'back',
-		draw = 1,
-		storyId,
-		stretch,
-		tame
+		draw = 1
 	}: {
-		/** Which arrow's chosen trajectory to draw. */
-		side?: Side;
-		/** Point left instead of right (default: when side is back). */
-		flip?: boolean;
+		side?: 'back' | 'next';
 		/** How much of the path is drawn, 0..1 (the head appears at the end). */
 		draw?: number;
-		/** Overrides for the picker's previews; otherwise the current choice is used. */
-		storyId?: string;
-		stretch?: boolean;
-		tame?: number;
 	} = $props();
 
 	const uid = $props.id();
-	const spec = $derived(arrowChoice[side]);
-	const glyph = $derived.by(() => {
-		const id = storyId ?? spec.storyId;
-		const useStretch = stretch ?? spec.stretch;
-		return arrowGlyph(id, { tame: tame ?? spec.tame, span: useStretch ? bestSpan(id) : undefined });
-	});
+	const flip = $derived(side === 'back');
+	const glyph = $derived(GLYPHS[side]);
 </script>
 
 <svg

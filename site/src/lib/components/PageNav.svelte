@@ -158,7 +158,7 @@
 
 <style>
 	.dock {
-		--nav-w: min(23.75rem, calc(100vw - 2 * var(--gutter)));
+		--nav-w: min(17.5rem, calc(100vw - 2 * var(--gutter)));
 		--nav-h: 2.75rem;
 		--nav-shadow: 0 14px 28px -6px rgba(26, 26, 26, 0.22), 0 0 0 1px rgba(26, 26, 26, 0.06);
 		position: fixed;
@@ -184,7 +184,7 @@
 		align-items: center;
 		justify-content: center;
 		flex: none;
-		width: 3.75rem;
+		width: 3rem;
 		border-radius: 999px;
 	}
 	.arrow :global(.arrow-glyph) {
@@ -231,7 +231,7 @@
 	/* Small phones: tighter arrow cells so the longest page name ("Week 5: Materials") still fits. */
 	@media (max-width: 400px) {
 		.arrow {
-			width: 2.85rem;
+			width: 2.75rem;
 		}
 		.arrow :global(.arrow-glyph) {
 			width: 1.5rem;
@@ -263,12 +263,13 @@
 		max-height: min(24rem, calc(100dvh - 6rem));
 		overflow-y: auto;
 		overscroll-behavior: contain;
-		padding: 1.75rem clamp(1.5rem, 10%, 2.5rem) 3rem;
+		/* The site's standard gutter on every side. */
+		padding: var(--gutter);
 		/* Fade the list out at its top and bottom edges as it scrolls. */
-		mask-image: linear-gradient(to bottom, transparent, #000 1.25rem, #000 calc(100% - 2.5rem), transparent);
+		mask-image: linear-gradient(to bottom, transparent, #000 1rem, #000 calc(100% - 1.25rem), transparent);
 	}
 	.heading {
-		margin: 1.1rem 0 0.3rem 2rem;
+		margin: 1rem 0 0.25rem 2rem;
 		font-size: 0.68rem;
 		font-weight: 700;
 		letter-spacing: 0.1em;

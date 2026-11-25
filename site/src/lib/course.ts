@@ -295,6 +295,9 @@ export function progressFor(page: number | 'closing'): number {
 
 export const homeStoryIds: [string, string, string] = ['2109652', '539105', '1596061'];
 
+/** Stories the navigator's Back and Next arrows are drawn from (their straightest stretch). */
+export const arrowStoryIds = { back: '2023196', next: '2109652' } as const;
+
 /** What the homepage schedule shows in each view. Final project links never appear. */
 export function scheduleFor(view: View): { showDates: boolean; guestRows: ScheduleRow[] } {
 	if (view === 'self') return { showDates: false, guestRows: [] };

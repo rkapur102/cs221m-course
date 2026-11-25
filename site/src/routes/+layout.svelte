@@ -5,7 +5,6 @@
 	import { href, sitePath } from '../lib/paths';
 	import { neighbors } from '../lib/sequence';
 	import PageNav from '../lib/components/PageNav.svelte';
-	import ArrowLab from '../lib/components/ArrowLab.svelte';
 	import { loadView } from '../lib/view.svelte.ts';
 	import { onMount, tick } from 'svelte';
 
@@ -40,8 +39,6 @@
 
 {#if hasNav}
 	<PageNav />
-	<!-- Prototype only: arrow picker. -->
-	<ArrowLab />
 {/if}
 
 <style>
