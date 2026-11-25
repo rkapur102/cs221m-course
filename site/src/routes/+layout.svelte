@@ -5,6 +5,7 @@
 	import { href, sitePath } from '../lib/paths';
 	import { neighbors } from '../lib/sequence';
 	import PageNav from '../lib/components/PageNav.svelte';
+	import ArrowLab from '../lib/components/ArrowLab.svelte';
 	import { loadView } from '../lib/view.svelte.ts';
 	import { onMount, tick } from 'svelte';
 
@@ -39,6 +40,8 @@
 
 {#if hasNav}
 	<PageNav />
+	<!-- Prototype only: arrow picker. -->
+	<ArrowLab />
 {/if}
 
 <style>
@@ -58,7 +61,7 @@
 		margin-top: auto;
 	}
 
-	/* Back/Next float 1.25rem from the bottom, about 2.5rem tall. This band, plus the footer's own bottom padding, keeps them clear of footer text. */
+	/* The navigator floats 1.25rem from the bottom, about 2.5rem tall. This band, plus the footer's own bottom padding, keeps them clear of footer text. */
 	.with-nav {
 		padding-bottom: calc(3.5rem + env(safe-area-inset-bottom));
 	}
